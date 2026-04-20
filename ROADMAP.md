@@ -1,5 +1,7 @@
-Setup environment
------------------
+~3j pour tout réintégrer (?).
+
+Setup environment [1j]
+----------------------
 
 - Use WebpackFramework.
     - Document WebpackFramework (entries selection rules + usage)
@@ -15,26 +17,28 @@ Setup environment
     - use unit tests.
         - Deno
         - Web page tests (?) ~> iframe (?).
+    - add "npm run tests"
+    + vscode/github config files...
     - try out .d.ts bundle. (cf Chart.js) + tester...
     - [?]
 
-Map
----
+Map [^]
+-------
 
 - marquer les principes.
 - image des différents dossiers, de leur dépendance, et fonctions.
 - /index.ts => export vs /core/ (internal) vs README.md.
 - libs: multi-generation ?
 
-WebComp
--------
+WebComp [1j]
+------------
 
 - importer Crypto/WebComp
     - refactors
     - features
 
-Components
-----------
+Components [1j]
+---------------
 
 - Code
 - Editor
