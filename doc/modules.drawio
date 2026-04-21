@@ -7,6 +7,9 @@
         <mxCell id="0Uy7GqTW0jUOIACXcNpz-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;types&lt;/b&gt;&lt;div&gt;Misc. TS type definitions&lt;/div&gt;" vertex="1">
           <mxGeometry height="60" width="80" x="170" y="60" as="geometry" />
         </mxCell>
+        <mxCell id="62NbFZ29oYnqbgaArY9Z-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Properties&lt;/b&gt;&lt;br&gt;&lt;div&gt;Defines properties (fixed, computed, etc;)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="150" x="300" y="120" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>

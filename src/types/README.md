@@ -1,8 +1,9 @@
 ## Frequently used types
 
-- `Cstr<object, [...args]>`: represents a class constructor.
-- `Constructible<object, [...args]>`: represents a factory (class or function).
-- `isClass<object, [...args]>(o)`: type guard.
+- classes:
+  - `Cstr<object, [...args]>`: represents a class constructor.
+  - `Constructible<object, [...args]>`: represents a factory (class or function).
+  - `isClass<object, [...args]>(o)`: type guard.
 - `Mutable<T>`/`mutable(t)`: makes an object mutable.
 
 ## Tips

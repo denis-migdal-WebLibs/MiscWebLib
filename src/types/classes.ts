@@ -7,7 +7,7 @@ export type Cstr<T    extends object    = object,
             > = {new(...args: ARGS): T};
 
 export type Constructible<
-                              T    extends object = object,
+                              T    extends object    = object,
                               Args extends unknown[] = never[]
                     > = Cstr<T, Args> | ((...args: Args) => T);
 

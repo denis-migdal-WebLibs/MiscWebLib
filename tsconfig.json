@@ -2,7 +2,7 @@
     "extends": "./build/WebpackFramework/files/tsconfig.json",
 
     "include": ["./src"],
-    "exclude": ["./src/events", "./src/DOM", "./src/customElements", "./src/extensions", "./src/debug.ts", "./src/History.ts", "./src/IS_INTERACTIVE.ts", "./src/isClass.ts", "./src/Proxy.ts", "./src/WithUpdate.ts"],
+    "exclude": ["./src/signals", "./src/ui", "./src/debug.ts", "./src/History.ts", "./src/Proxy.ts" ],
 
     "compilerOptions": {
 
