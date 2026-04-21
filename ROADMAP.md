@@ -4,23 +4,7 @@ Setup environment [1j]
 ----------------------
 
 - Use WebpackFramework.
-    - Document WebpackFramework (entries selection rules + usage)
-        - src/pages[/assets|/components]
-        - src/pages/templates (replace skeletons).
-        - src/pages/tests (?).
-        - src/libs[/test] [deno]
-        - src/core/
-        - tests/ [deno].
-        - README.md (usage + principles)
-        - TODO.md
-        - ARCHITECTURE.md
-    - use unit tests.
-        - Deno
-        - Web page tests (?) ~> iframe (?).
-    - add "npm run tests"
-    + vscode/github config files...
-    - try out .d.ts bundle. (cf Chart.js) + tester...
-    - [?]
+- Web page tests (?) ~> iframe (?).
 
 Map [^]
 -------
