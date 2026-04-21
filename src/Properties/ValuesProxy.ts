@@ -5,7 +5,7 @@ export type KeysOf<T> = Extract<keyof T, string>;
 
 export type ProxyTarget<T extends Record<string, any>> = {
     get: <K extends KeysOf<T>>(name: K) => T[K];
-    set: <K extends KeysOf<T>>(name: K, value: T[K], source?: unknown) => void;
+    set: <K extends KeysOf<T>>(name: K, value: NoInfer<T[K]>, source?: unknown) => void;
 }
 
 export type ValuesProxy<
