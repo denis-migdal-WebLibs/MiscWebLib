@@ -1,0 +1,37 @@
+{
+    "name"       : "PROJECT_NAME",
+    "version"    : "1.0.0",
+    "description": "[PROJECT_DESC]",
+    "author"     : "[AUTHOR]",
+    "license"    : "[LICENCE]",
+    "private"    : "true",
+    "type"       : "module",
+    "repository": {
+        "type": "git",
+        "url": "git+[PROJECT_REPOSITORY]"
+    },
+    "scripts": {
+        "build"     : "clear ; webpack --no-watch --mode=development",
+        "watch"     : "clear ; webpack --watch    --mode=development",
+        "build-prod": "clear ; webpack --no-watch --mode=production",
+        "tests"     : "clear ; deno task --cwd ./tests test",
+        "types"     : "clear ; ./build/WebpackFramework/files/genTypes.sh"
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "webpack": "^5.106.2",
+        "webpack-cli": "^7.0.2",
+        "copy-webpack-plugin": "^14.0.0",
+        "glob": "^13.0.6",
+
+        "css-loader": "^7.1.2",
+        "mini-css-extract-plugin": "^2.9.0",
+        
+        "swc-loader": "^0.2.6",
+        "@swc/core": "^1.15.18",
+        "fork-ts-checker-notifier-webpack-plugin": "^9.0.0",
+        "fork-ts-checker-webpack-plugin": "^9.0.2",
+        "bundle-declarations-webpack-plugin": "^6.0.0"
+    }
+}
+  

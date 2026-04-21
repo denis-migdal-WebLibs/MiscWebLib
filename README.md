@@ -1,26 +1,28 @@
-# MWL : Miscellaneous Web Library
+<div align="center">
+  <h1>MWL : Miscellaneous Web Library</h1>
 
-A library of miscellaneous agnostic functions/classes I use in my projects.
+  <p>A library of miscellaneous agnostic functions/classes I use in my projects.</p>
+</div>
 
+## Build
+
+- `npm run build`: build the project.
+- `npm run watch`: re-build the project after each changes.
+- `npm run tests`: run unit tests.
+- `npm run types`: create the `.d.ts` files for templates and libraries.
+- `npm run build-prod`: build the production version of the project.
+
+## Modules
+
+<center>
+  <img src="./doc/modules.svg">
+</center>
+
+## X
 
 <center>
   <img src="./doc/deps.svg">
 </center>
-
-
-## TODO
-
-- from LISS
-  - DOM/utils
-  - signal raw API (for compat)
-  - move signal (?)
-  - réfléchir API + profondément...
-- marquer des trucs comme obsolètes.
-- regarder les dossiers utils d'autres dépôts
-- marker les libs/deps des autres dépôts.
-
-- download/upload
-- check other repos (1/25)
 
 ## Content
 

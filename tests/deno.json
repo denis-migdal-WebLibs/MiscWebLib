@@ -1,0 +1,9 @@
+{
+    "tasks": {
+        "test": "deno test ./**/*.ts --allow-all --unstable-sloppy-imports --unstable-node-globals"
+    },
+    "imports": {
+        "std/assert": "jsr:@std/assert",
+        "@/"        : "../dist/dev/libs/"
+    }
+}

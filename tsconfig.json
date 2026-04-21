@@ -1,0 +1,15 @@
+{
+    "extends": "./build/WebpackFramework/files/tsconfig.json",
+
+    "include": ["./src"],
+
+    "compilerOptions": {
+
+        "rootDir": "./src",
+        "outDir": "./build/TS",
+
+        "paths": {
+            "@/*": ["./src/*"]
+        }
+    }
+}
