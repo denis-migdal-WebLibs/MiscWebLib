@@ -3,7 +3,6 @@
 Setup environment [1j]
 ----------------------
 
-- Use WebpackFramework.
 - Web page tests (?) ~> iframe (?).
 
 Map [^]
@@ -20,6 +19,22 @@ WebComp [1j]
 - importer Crypto/WebComp
     - refactors
     - features
+    (cf TODO Crypto/WebComp)
+
+=> to move
+    - Properties
+    - Hooks (?)
+    - FrameScheduler
+    - createInstance/installMethods (?).
+    -> View...
+
+=> old code
+    => Properties
+    => ui
+    => Signals
+    => debug/history
+
+=> move Event.ts...
 
 Components [1j]
 ---------------

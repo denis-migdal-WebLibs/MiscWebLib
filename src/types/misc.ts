@@ -6,3 +6,5 @@ export type UnionToIntersection<U> = (
 ) extends (k: infer I) => void
     ? I
     : never;
+
+export type KeysOf<T> = Extract<keyof T, string>;

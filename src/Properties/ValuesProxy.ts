@@ -1,7 +1,6 @@
-export const PROXY_TARGET = Symbol();
+import { KeysOf } from "@/types/misc";
 
-//TODO: move to types (?).
-export type KeysOf<T> = Extract<keyof T, string>;
+export const PROXY_TARGET = Symbol();
 
 export type ProxyTarget<T extends Record<string, any>> = {
     get: <K extends KeysOf<T>>(name: K) => T[K];
@@ -50,7 +49,7 @@ export default function createProxyClass<
     return ValuesProxy as any;
 }
 
-/**/
+/**
 // tests...
 const Value = createProxyClass<{ok: string, count: number}>("ok", "count");
 

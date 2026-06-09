@@ -1,4 +1,6 @@
+- KeysOf in types.
 
+=====
 - from LISS
   - DOM/utils
   - signal raw API (for compat)
