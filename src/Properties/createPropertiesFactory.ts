@@ -25,3 +25,5 @@ const c = createPropertiesFactory({foo: Value(34)});
 
 const p = c();
 const v = p[PROXY_TARGET];
+
+void v;

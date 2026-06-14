@@ -1,10 +1,5 @@
 ~3j pour tout réintégrer (?).
 
-Setup environment [1j]
-----------------------
-
-- Web page tests (?) ~> iframe (?).
-
 Map [^]
 -------
 
