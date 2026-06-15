@@ -2,8 +2,17 @@
     "tasks": {
         "test": "deno test ./**/*.ts --allow-all --unstable-sloppy-imports --unstable-node-globals"
     },
+    "nodeModulesDir": "auto",
+    "exclude": [
+        "node_modules/"
+    ],
+    "compilerOptions": {
+        "lib": ["deno.ns", "dom", "dom.iterable"]
+    },
     "imports": {
         "std/assert": "jsr:@std/assert",
-        "@/"        : "../dist/dev/libs/"
+        "npm/linkedom": "npm:linkedom",
+        "@/": "../src/",
+        "@config": "./config.ts"
     }
 }
