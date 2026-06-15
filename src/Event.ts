@@ -6,6 +6,8 @@ import { NULL_OP } from "./types";
  * trigger(event, ...args)
  */
 
+//TODO: use CallbackRegistry
+
 export type Listener<T, ARGS extends any[] = []>
                         = (event: REvent<T, ARGS>, ...args: ARGS) => void;
 
