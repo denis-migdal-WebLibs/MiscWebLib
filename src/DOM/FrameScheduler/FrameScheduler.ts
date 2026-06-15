@@ -1,40 +1,44 @@
-import StateGuard from "@/StateGuard";
+import CallbackRegistry from "@/CallbackRegistry";
+import GuardedState from "@/GuardedState";
 
 type FrameTask = () => void;
 
+class FrameSchedulerCore {
+
+    private readonly callback: FrameTask;
+    constructor(callback: FrameTask) {
+        this.callback = callback;
+    }
+
+    schedule() {
+        this.Scheduled.enter();
+    }
+
+    // avoid recrating it at upon each enter.
+    private readonly rAF_callback = () => this.Scheduled.leave();
+
+    private readonly Scheduled = new GuardedState(
+        () => requestAnimationFrame( this.rAF_callback ),
+        () => this.callback(),
+    )
+}
+
 export class FrameScheduler {
 
-    private readonly renderTasks: FrameTask[] = [];
+    private readonly tasks = new CallbackRegistry();
 
-    private readonly AFGuard = new StateGuard(
-        () => this.schedule(),
-        () => this.execute(),
-    )
+    private readonly core  = new FrameSchedulerCore( () => {
+        this.tasks.trigger();
+        this.tasks.clear();
+    });
 
     scheduleTask( task: FrameTask ) {
-        this.renderTasks.push(task);
-        this.AFGuard.enter();
+        this.tasks.add(task);
+        this.core.schedule();
     }
 
-    private readonly rAF_callback = () => this.AFGuard.leave();
-
-    // called by AFGuard...
-    private schedule() {
-        requestAnimationFrame( this.rAF_callback );
-    }
-
-    private execute() {
-        // renderTasks could be added during execution.
-        for(let i = 0; i < this.renderTasks.length; ++i)
-            this.renderTasks[i]();
-
-        if( __DEBUG__ ) {
-            const set = new Set( this.renderTasks );
-            if( set.size !== this.renderTasks.length )
-                throw new Error(`Re-entry`);
-        }
-
-        this.renderTasks.length = 0;
+    cancelScheduledTask(task: FrameTask) {
+        this.tasks.remove(task);
     }
 }
 

@@ -1,40 +1,46 @@
-import StateGuard from "@/StateGuard";
+import GuardedState from "@/GuardedState";
 import scheduler from "./FrameScheduler";
-
-function taskScheduler(callback: () => void) {
-
-    const task = () => scheduleGuard.leave();
-
-    const scheduleGuard = new StateGuard(
-        () => scheduler.scheduleTask( task ),
-        callback,
-    )
-
-    return () => scheduleGuard.enter();
-}
+import { NULL_OP } from "@/types";
 
 export default class Task {
 
-    private readonly callback   : () => void;
+    private readonly task = () => this.Requested.leave();
+    private readonly _scheduleTask = () => scheduler.scheduleTask(this.task);
+    private scheduleTask = this._scheduleTask;
 
-    private readonly executionGuard = new StateGuard(
-        taskScheduler( () => this.executionGuard.leave() ),
-        () => this.callback() // due to initialization issues.
-    )
+    private readonly Requested = new GuardedState(
+                                    this.scheduleTask,
+                                    () => this.callback
+                                );
+    private readonly Suspended = new GuardedState(
+        () => {
+            this.scheduleTask = NULL_OP;
 
+            if( this.Requested.isInside ) {
+                // Requested will not be able to leave.
+                scheduler.cancelScheduledTask(this.task);
+            }
+        },
+        () => {
+            this.scheduleTask = this._scheduleTask;
+            if( this.Requested.isInside )
+                this.scheduleTask(); // Requested will be able to leave.
+        }
+    );
+
+    private readonly callback: () => void;
     constructor(callback: () => void) {
         this.callback = callback;
     }
 
-    schedule() {
-        this.executionGuard.enter();
-    }
+    schedule() { this.Requested.enter(); }
+    cancel  () { this.Requested.cancel(); }
 
-    cancel() {
-        this.executionGuard.cancel();
-    }
+    suspend() { this.Suspended.enter(); }
+    resume () { this.Suspended.leave(); }
 
     executeNow() {
-        this.executionGuard.leave(); // force early.
+        this.Requested.cancel();
+        this.callback();
     }
 }

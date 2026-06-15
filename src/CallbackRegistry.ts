@@ -5,7 +5,7 @@ type Callback<ARGS extends any[] = []> = (...args: ARGS) => void;
 export default class CallbackRegistry<ARGS extends any[] = []> {
 
     private readonly callbacks = new Array<Callback<ARGS>>();
-    
+
     trigger(...args: ARGS) {
         for(let i = 0; i < this.callbacks.length; ++i)
             this.callbacks[i](...args);
@@ -27,6 +27,12 @@ export default class CallbackRegistry<ARGS extends any[] = []> {
     }
 
     private removalPending = false;
+
+    // do NOT call it during a trigger.
+    clear() {
+        this.callbacks.length = 0;
+        this.removalPending = false;
+    }
 
     compactListeners() {
 
