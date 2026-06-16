@@ -18,7 +18,7 @@ type InitializeCallback<E extends Elements, C> = ViewCallback<ViewCtx<E>, [
                         renderer  : TaskList
                     ], void>;
 
-type ViewFactoryArgs<
+export type ViewFactoryArgs<
                         C extends object|null,
                         E extends Elements
                 > = ShadowTemplateArgs
@@ -37,7 +37,7 @@ export default function createViewFactory<
                         E extends Elements    = {},
                         A extends any[]       = []
                 >(
-                    Controller: (target: HTMLElement, ...args: A) => C,
+                    Controller: (this: HTMLElement, ...args: A) => C,
                     // ViewFactoryControllerProvider<C, D>,
                     args      : ViewFactoryArgs<NoInfer<C>, E>
                 ) {
@@ -52,7 +52,7 @@ export default function createViewFactory<
             ...args: A
         ) => {
 
-        const controller = Controller(target, ...args);
+        const controller = Controller.apply(target, args);
 
         const root     = template.createShadowRoot(target);
         const elements = elementsResolver(root);

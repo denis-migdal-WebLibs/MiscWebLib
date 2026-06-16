@@ -4,7 +4,7 @@ class X {
     foo() {}
 }
 
-const factory = createViewFactory( (_target, _a: number) => new X(),
+const factory = createViewFactory( (_a: number) => new X(),
     {
         content : "<div data-wcid='ok'>ok</div>",
         style   : ":host{ background-color: blue }",
