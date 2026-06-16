@@ -4,10 +4,14 @@ import getElements from "./getElements";
 import resolveElements, { Resolver, Resolvers } from "./resolveElements";
 import classResolver from "./resolvers/classResolver";
 import instanceResolver from "./resolvers/instanceResolver";
+import { FCT_NULL_OBJ } from "@/types/NullObjects";
 
 type Descriptors<E extends Elements> = {
     [K in keyof E]: Resolver<E[K]>|Cstr<E[K]>|E[K]
 }
+
+export {type Elements} from "./core/types";
+export {Descriptors as ElementsDescriptors};
 
 export default class ElementsResolver<E extends Elements> {
 
@@ -45,4 +49,22 @@ export function resolve<E extends Elements>(
                     ) {
     const resolver = new ElementsResolver(descriptors);
     return resolver.resolve(target);
+}
+
+export function createResolver<E extends Elements>(
+                                        descriptors?: Descriptors<E>
+                                    ) {
+
+    // opti
+    if( descriptors === undefined || isEmptyObject(descriptors) )
+        return FCT_NULL_OBJ<E>;
+
+    const resolver = new ElementsResolver(descriptors);
+    
+    return (target: ExtractionTarget) => resolver.resolve(target);
+}
+
+//TODO: move ?
+function isEmptyObject(obj: object) {
+  return Object.keys(obj).length === 0;
 }
