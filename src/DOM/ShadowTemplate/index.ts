@@ -7,7 +7,8 @@ type ContentType = ContentGenerator|null;
 type StyleType   = CSSStyleSheet[];
 
 type RawContentType = string|ContentGenerator|null;
-type RawStyleType   = string|CSSStyleSheet[]|CSSStyleSheet;
+type RawStyle       = string|CSSStyleSheet
+type RawStyleType   = RawStyle|RawStyle[];
 
 export type ShadowTemplateArgs = {
     content  ?: RawContentType,
@@ -30,13 +31,10 @@ export default class ShadowTemplate {
 
     static parseStyle(rawStyle: RawStyleType): StyleType {
 
-        if( typeof rawStyle === "string" )
-            return [style(rawStyle)];
-
         if( ! Array.isArray(rawStyle) )
-            return [rawStyle];
-        
-        return rawStyle;
+            rawStyle = [rawStyle];
+
+        return rawStyle.map( s => style(s) );
     }
 
     constructor({

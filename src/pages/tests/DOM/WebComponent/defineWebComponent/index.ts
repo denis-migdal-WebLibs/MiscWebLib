@@ -2,6 +2,9 @@ import defineWebComponent from "@/DOM/WebComponent/defineWebComponent";
 
 const Klass = defineWebComponent(
     class X {
+        constructor(_data: {foo?: string}) {
+
+        }
         foo() {}
     },
     {
@@ -17,5 +20,5 @@ const Klass = defineWebComponent(
     });
 
 
-const elem = new Klass();
+const elem = new Klass({foo:"34"});
 document.body.append( elem );
