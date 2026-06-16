@@ -6,7 +6,7 @@ class X {
 
 const factory = createViewFactory( (_target, _a: number) => new X(),
     {
-        content : "<div data-wcid='ok'></div>",
+        content : "<div data-wcid='ok'>ok</div>",
         style   : ":host{ background-color: blue }",
         elements: {
             ok: HTMLDivElement
