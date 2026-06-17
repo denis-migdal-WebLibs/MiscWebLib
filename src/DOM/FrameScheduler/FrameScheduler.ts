@@ -28,8 +28,7 @@ export class FrameScheduler {
     private readonly tasks = new CallbackRegistry();
 
     private readonly core  = new FrameSchedulerCore( () => {
-        this.tasks.trigger();
-        this.tasks.clear();
+        this.tasks.triggerAndClear();
     });
 
     scheduleTask( task: FrameTask ) {

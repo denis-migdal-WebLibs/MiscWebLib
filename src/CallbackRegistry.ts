@@ -6,7 +6,9 @@ export default class CallbackRegistry<ARGS extends any[] = []> {
 
     private readonly callbacks = new Array<Callback<ARGS>>();
 
-    trigger(...args: ARGS) {
+    // avoid using it directly
+    // use compactAndTrigger or triggerAndClear
+    protected trigger(...args: ARGS) {
         for(let i = 0; i < this.callbacks.length; ++i)
             this.callbacks[i](...args);
     }
@@ -32,6 +34,16 @@ export default class CallbackRegistry<ARGS extends any[] = []> {
     clear() {
         this.callbacks.length = 0;
         this.removalPending = false;
+    }
+
+    compactAndTrigger(...args: ARGS) {
+        this.compactListeners();
+        this.trigger(...args);
+    }
+
+    triggerAndClear(...args: ARGS) {
+        this.trigger(...args);
+        this.clear();
     }
 
     compactListeners() {

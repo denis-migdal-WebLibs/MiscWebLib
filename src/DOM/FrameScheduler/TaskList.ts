@@ -11,8 +11,7 @@ export default class TaskList implements Public<Task> {
 
     constructor() {
         this.globalTask = new Task( () => {
-            this.tasks.compactListeners();
-            this.tasks.trigger();
+            this.tasks.compactAndTrigger();
         });
     }
     schedule  (): void { this.globalTask.schedule(); }
