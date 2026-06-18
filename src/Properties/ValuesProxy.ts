@@ -2,6 +2,12 @@ import { KeysOf } from "@/types/misc";
 
 export const PROXY_TARGET = Symbol();
 
+// dunno why, but sometimes returned type is "any"...
+export function getProxyTarget<P extends ValuesProxy<Record<string,any>,any>>(proxy: P): P[typeof PROXY_TARGET] {
+    return proxy[PROXY_TARGET];
+}
+
+
 export type ProxyTarget<T extends Record<string, any>> = {
     get: <K extends KeysOf<T>>(name: K) => T[K];
     set: <K extends KeysOf<T>>(name: K, value: NoInfer<T[K]>, source?: unknown) => void;
@@ -48,23 +54,3 @@ export default function createProxyClass<
 
     return ValuesProxy as any;
 }
-
-/**
-// tests...
-const Value = createProxyClass<{ok: string, count: number}>("ok", "count");
-
-type Props = {
-    ok   : string,
-    count: number
-}
-
-const target = {
-    get<K extends KeysOf<Props>>(name: K) { return {} as Props[K] },
-    set<K extends KeysOf<Props>>(name: K, value: Props[K]) {},
-    foo() {}
-}
-
-const values = new Value(target);
-
-values.count
-/**/

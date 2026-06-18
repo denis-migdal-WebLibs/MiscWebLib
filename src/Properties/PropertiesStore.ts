@@ -3,7 +3,7 @@ import { ProxyTarget, ValuesProxy } from "./ValuesProxy";
 
 import { createEventFactory, trigger } from "@/Event";
 
-type PropertiesProxy<T extends Record<string, any>>
+export type PropertiesProxy<T extends Record<string, any>>
         = ValuesProxy<T, PropertiesStore<T>>;
 
 // source can be arbitrary.

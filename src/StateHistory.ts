@@ -1,7 +1,7 @@
 /**
  * 
  */
-export default class History<T> {
+export default class StateHistory<T> {
 
     readonly #states = new Array<T>();
     #stateIDX = -1; // when using prev/next
@@ -30,6 +30,10 @@ export default class History<T> {
     push(state: T) {
         this.#states[++this.#stateIDX] = state;
         this.#states.length = this.#stateIDX + 1;
+    }
+
+    get hasState() {
+        return this.#stateIDX !== -1;
     }
 
     get currentState() {

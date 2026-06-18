@@ -4,13 +4,13 @@ import { NULL_OP } from "@/types";
 
 export default class Task {
 
-    private readonly task = () => this.Requested.leave();
+    private readonly task          = () => this.Requested.leave();
     private readonly _scheduleTask = () => scheduler.scheduleTask(this.task);
     private scheduleTask = this._scheduleTask;
 
     private readonly Requested = new GuardedState(
                                     this.scheduleTask,
-                                    () => this.callback
+                                    () => this.callback()
                                 );
     private readonly Suspended = new GuardedState(
         () => {

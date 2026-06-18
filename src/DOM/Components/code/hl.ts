@@ -4,8 +4,8 @@ import hljs from './highlight.min.js';
 // javascript (?)
 // need to add "export default hljs;" at the end of the file
 
-export function hl(code: string, language: string): string {
-    return hljs.highlight(code, { language }).value;
+export function hl(code: string, language: string|null): string {
+    return hljs.highlight(code, { language: language??"text" }).value;
 }
 
 type CursorPos = number|null;

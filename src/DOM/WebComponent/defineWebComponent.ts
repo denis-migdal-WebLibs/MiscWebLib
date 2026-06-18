@@ -2,23 +2,30 @@ import { Cstr, FCT_NULL, isClass, NULL_OBJ } from "@/types";
 import { Elements } from "../ElementsResolver/core/types";
 import createViewFactory, { ViewFactoryArgs } from "./createViewFactory";
 
-//TODO: Controller
-    // extract data inside the function adapter...
-
-export const WC_ATTRNAME = "data-wc";
+export const WC_ATTRNAME   = "config";
 function extractData<D extends Record<string,any>>(
                                                 target: HTMLElement,
-                                                override: D
+                                                override: Partial<D>
                                             ) {
 
     if( override !== NULL_OBJ )
         return override;
 
-    const attrValue = target.getAttribute(WC_ATTRNAME);
-    if( attrValue === null)
-        return override;
+    let props: Partial<D> = {};
 
-    return JSON.parse( attrValue );
+    const attrValue = target.dataset[WC_ATTRNAME];
+    if( attrValue !== undefined)
+        props = JSON.parse( attrValue );
+
+    for( const name in target.dataset ) {
+
+        if( name === WC_ATTRNAME) continue;
+
+        // @ts-ignore
+        props[name] = target.dataset[name]!;
+    }
+
+    return props;
 }
 
 type ControllerCstr<C extends object|null,
@@ -73,13 +80,11 @@ export default function defineWebComponent<
         constructor(data: Partial<D> = NULL_OBJ) {
             super();
 
-            //data = extractData(this, data);
-
             this.view       = createView(this, data);
             this.controller = this.view.controller;
         }
 
-        // currently the most effecient way to proceed.
+        // currently the most efficient way to proceed.
         // IntersectionObserver has a frame of latency...
         connectedCallback   () { this.view.renderer.resume(); }
         disconnectedCallback() { this.view.renderer.suspend(); }

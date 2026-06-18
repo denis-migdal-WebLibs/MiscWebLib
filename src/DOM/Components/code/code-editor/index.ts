@@ -6,15 +6,107 @@ import REDO from "@/DOM/UiEvents/redo";
 import NEWLINE from "@/DOM/UiEvents/newline";
 import TAB from "@/DOM/UiEvents/tab";
 import on from "@/DOM/UiEvents/core/on";
+import createPropertiesFactory from "@/Properties/createPropertiesFactory";
+import { Value } from "@/Properties/PropertyTypes";
+import { observe, updateProperties } from "@/Properties/helpers";
+import StateHistory from "@/StateHistory";
 
-/*
-getCursorPos, setCursorPos
-*/
+type InputState = {
+    text: string,
+    pos : number,
+}
+
+class Input implements InputState {
+
+    readonly target: HTMLElement;
+    text = "";
+    pos  = 0;
+
+    readonly format: (text: string) => string
+
+    constructor(target: HTMLElement, format: (text: string) => string) {
+        this.target = target;
+        this.format = format;
+    }
+
+    insert(str: string) {
+        this.pull();
+
+        let beg = getCursorBegPos(this.target);
+        let end = getCursorEndPos(this.target);
+
+        if( beg === null) beg = this.text.length;
+        if( end === null) end = beg;
+
+        this.pos = beg + str.length;
+        this.text = this.text.slice(0, beg) + str + this.text.slice(end);
+    }
+
+    pull() {
+        let text = this.target.textContent;
+        if( text.at(-1) === "\n")
+            text = text.slice(0,-1);
+        this.text = text;
+
+        let cursor = getCursorPos(this.target);
+        if( cursor === null)
+            cursor = text.length;
+        this.pos = cursor;
+    }
+    push() {
+        this.target.innerHTML = this.format(this.text + "\n");
+        
+        setCursorPos(this.target, this.pos);
+    }
+}
+
+const EditorProperties = createPropertiesFactory({
+    lang: Value(null as null|string),
+    text: Value(""),
+    pos : Value(0),
+});
+
 
 defineWebComponent(
+
     class CodeEditor{
+
+        readonly history    = new StateHistory<InputState>();
+        readonly properties: ReturnType<typeof EditorProperties>;
+
+        constructor({text = "", lang = null}: {text?: string, lang?: string|null} = {}) {
+        
+            this.properties = EditorProperties({
+                text,
+                lang
+            });
+
+            observe(this.properties, () => {
+
+                if( this.history.hasState) {
+                    // do not push a state identical to the current one.
+                    // also avoid possible re-entries.
+                    const state = this.history.currentState;
+                    if(    state.text === this.properties.text
+                        && state.pos  === this.properties.pos
+                    )
+                        return;
+                }
+
+                this.history.push({
+                    text: this.properties.text,
+                    pos : this.properties.pos
+                });
+            });
+        }
+
         undo() {
-            console.warn("undo");
+            this.history.prev();
+            updateProperties(this.properties, this.history.currentState);
+        }
+        redo() {
+            this.history.next();
+            updateProperties(this.properties, this.history.currentState);
         }
     },
     {
@@ -27,61 +119,49 @@ defineWebComponent(
         elements: {
             output: HTMLElement
         },
-        initialize: (ctx, controller) => {
+        initialize: (ctx, controller, renderer) => {
 
             const output = ctx.elements.output;
+            const input  = new Input(output, (text: string) => {
+                return hl(text, controller.properties.lang);
+            });
 
-            //TODO: move outside...
+            renderer.add( () => {
+                input.text = controller.properties.text;
+                input.pos  = controller.properties.pos;
+                input.push();
+            });     
+
             function insert(char: string) {
-                let text = read();
-
-                const beg = getCursorBegPos(output);
-                const end = getCursorEndPos(output);
-
-                if( beg === null || end === null)
-                    throw new Error("?");
-
-                text = text.slice(0, beg) + char + text.slice(end);
-
-                commit(text, beg + char.length);
+                input.insert(char);
+                commitState();
             }
 
-            function commit(text: string, pos: number) {
-                //TODO: add historique.
-                write(text, "ts", pos);
+            function commitState() {
+                // atomic operation.
+                updateProperties(controller.properties, {
+                    text: input.text,
+                    pos : input.pos
+                })
             }
 
-            // we need to add an extra \n for the last line.
-            function write(text: string, lang: string, pos: number) {
-                output.innerHTML = hl(text + "\n", lang);
-                setCursorPos(output, pos);
-            }
-
-            function read() {
-                let text = output.textContent;
-                if( text.at(-1) === "\n")
-                    text = text.slice(0,-1);
-                return text;
-            }
-
-            commit("a = 1 + 1;\nb = 2;\n", 5);
+            observe(controller.properties, () => renderer.schedule() );
 
             connectEvents(output, [UNDO, REDO], controller);
 
             on(output, NEWLINE, () => insert("\n") );
-            on(output, TAB    , () => insert("[\t]") );
+            on(output, TAB    , () => insert("\t") );
 
             output.addEventListener("input", (ev) => {
 
                 // for composing events, e.g. ^+e
                 if( ev.isComposing ) return;
 
-                const cursor = getCursorPos(output);
-                if( cursor === null)
-                    throw new Error("?");
-
-                commit( read(), cursor);
+                input.pull();
+                commitState();
             });
+
+            //insert("a = 1 + 1;\nb = 2;\n");
         }
     }
 )
