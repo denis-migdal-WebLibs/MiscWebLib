@@ -1,3 +1,4 @@
+import { PROXY_TARGET } from "./Properties/ValuesProxy";
 import CallbackRegistry, { Callback, Event, TypeHint } from "./CallbackRegistry";
 
 export function createEvent<
@@ -11,9 +12,11 @@ export function createEvent<
     return new CallbackRegistry(target, args);
 }
 
-//TODO: and proxy...
+type Observable<E extends Event<any,any>> = {readonly change: E};
+
 type EventSource<E extends Event<any,any>> = E
-                                    | {readonly change: E};
+                                    | Observable<E>
+                                    | {readonly [PROXY_TARGET]: Observable<E>};
 
 function isEvent<E extends Event<any, any>>(e: E|unknown): e is E {
     return e instanceof CallbackRegistry
@@ -25,6 +28,9 @@ export function getCallbackRegistry<
                             >(
                                 target: EventSource<Event<T, ARGS>>
                             ): CallbackRegistry<T, ARGS> {
+
+    if( PROXY_TARGET in target)
+        target = target[PROXY_TARGET];
 
     if( ! isEvent<Event<T, ARGS>>(target) )
         target = target.change;
@@ -49,7 +55,7 @@ export function observeChanges<
                         ARGS extends any[] = []
                     >(
                         target: EventSource<Event<T, ARGS>>,
-                        callback: Callback<T, ARGS>
+                        callback: NoInfer<Callback<T, ARGS>>
                     ) {
     const registry = getCallbackRegistry(target);
     registry.add(callback);
@@ -60,8 +66,8 @@ export function observe<
                         ARGS extends any[] = []
                     >(
                         target  : EventSource<Event<T, ARGS>>,
-                        callback: Callback<T, ARGS>,
-                        ...args : ARGS
+                        callback: NoInfer<Callback<T, ARGS>>,
+                        ...args : NoInfer<ARGS>
                     ) {
 
     const registry = getCallbackRegistry(target);

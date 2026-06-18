@@ -6,10 +6,11 @@ import REDO from "@/DOM/UiEvents/redo";
 import NEWLINE from "@/DOM/UiEvents/newline";
 import TAB from "@/DOM/UiEvents/tab";
 import on from "@/DOM/UiEvents/core/on";
-import createPropertiesFactory from "@/Properties/createPropertiesFactory";
-import { Value } from "@/Properties/PropertyTypes";
-import { observe, updateProperties } from "@/Properties/helpers";
 import StateHistory from "@/StateHistory";
+import { observe } from "@/Reactive/Event";
+import createPropertiesFactory from "@/Reactive/Properties/createPropertiesFactory";
+import { Value } from "@/Reactive/Properties/PropertyTypes";
+import { updateProperties } from "@/Reactive/Properties/PropertiesStore";
 
 type InputState = {
     text: string,
@@ -97,7 +98,7 @@ defineWebComponent(
                     text: this.properties.text,
                     pos : this.properties.pos
                 });
-            });
+            }, null);
         }
 
         undo() {
@@ -145,7 +146,7 @@ defineWebComponent(
                 })
             }
 
-            observe(controller.properties, () => renderer.schedule() );
+            observe(controller.properties, () => renderer.schedule(), null );
 
             connectEvents(output, [UNDO, REDO], controller);
 

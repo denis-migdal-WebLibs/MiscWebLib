@@ -1,8 +1,8 @@
-import { createEvent, trigger } from "@/Events/Event";
+import { createEvent, trigger } from "@/Reactive/Event";
 import { Descriptors, Properties } from "./Property";
-import { ProxyTarget, ValuesProxy } from "./ValuesProxy";
+import { getProxyTarget, ProxyTarget, ValuesProxy } from "./ValuesProxy";
 
-import { typeHint } from "@/Events/CallbackRegistry";
+import { typeHint } from "@/Reactive/CallbackRegistry";
 
 export type PropertiesProxy<T extends Record<string, any>>
         = ValuesProxy<T, PropertiesStore<T>>;
@@ -77,4 +77,14 @@ export class PropertiesStore<T extends Record<string, any>>
 
         trigger(this.change, source);
     }
+}
+
+export function updateProperties<T extends Record<string, any>>(
+                                        target    : PropertiesProxy<T>,
+                                        properties: Partial<NoInfer<T>>,
+                                        source   ?: unknown
+                                    ) {
+
+    const origin = getProxyTarget(target);
+    origin.updateProperties(properties, source);
 }
