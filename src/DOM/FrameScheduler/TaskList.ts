@@ -7,7 +7,7 @@ type Public<T> = { [K in keyof T]: T[K]; };
 export default class TaskList implements Public<Task> {
 
     private readonly globalTask: Task;
-    private readonly tasks = new CallbackRegistry();
+    private readonly tasks = new CallbackRegistry(this);
 
     constructor() {
         this.globalTask = new Task( () => this.tasks.trigger() );
