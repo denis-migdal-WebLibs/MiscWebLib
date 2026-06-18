@@ -5,18 +5,28 @@ type Callback<ARGS extends any[] = []> = (...args: ARGS) => void;
 export default class CallbackRegistry<ARGS extends any[] = []> {
 
     private readonly callbacks = new Array<Callback<ARGS>>();
+    private readonly clearAfterTrigger: boolean;
 
-    // avoid using it directly
-    // use compactAndTrigger or triggerAndClear
-    protected trigger(...args: ARGS) {
+    constructor(clearAfterTrigger = false) {
+        this.clearAfterTrigger = clearAfterTrigger;
+    }
+
+    trigger(...args: ARGS) {
+
+        // need to compact to avoid growing callback list.
+        if( ! this.clearAfterTrigger )
+            this.compactCallbacks();
+
         for(let i = 0; i < this.callbacks.length; ++i)
             this.callbacks[i](...args);
+
+        if( this.clearAfterTrigger )
+            this.clear();
     }
 
     add(callback: Callback<ARGS>) {
         this.callbacks.push(callback);
     }
-
 
     remove(callback: Callback<ARGS>): void {
 
@@ -36,17 +46,7 @@ export default class CallbackRegistry<ARGS extends any[] = []> {
         this.removalPending = false;
     }
 
-    compactAndTrigger(...args: ARGS) {
-        this.compactListeners();
-        this.trigger(...args);
-    }
-
-    triggerAndClear(...args: ARGS) {
-        this.trigger(...args);
-        this.clear();
-    }
-
-    compactListeners() {
+    compactCallbacks() {
 
         if( ! this.removalPending ) // compact only if necessary.
             return;

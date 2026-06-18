@@ -10,9 +10,7 @@ export default class TaskList implements Public<Task> {
     private readonly tasks = new CallbackRegistry();
 
     constructor() {
-        this.globalTask = new Task( () => {
-            this.tasks.compactAndTrigger();
-        });
+        this.globalTask = new Task( () => this.tasks.trigger() );
     }
     schedule  (): void { this.globalTask.schedule(); }
     cancel    (): void { this.globalTask.cancel(); }
