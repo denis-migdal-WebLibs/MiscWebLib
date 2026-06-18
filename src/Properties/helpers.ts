@@ -1,4 +1,4 @@
-import { PropertiesProxy, PropertiesStore } from "./PropertiesStore";
+import { PropertiesProxy } from "./PropertiesStore";
 import { getProxyTarget } from "./ValuesProxy";
 
 export function updateProperties<T extends Record<string, any>>(
@@ -7,8 +7,7 @@ export function updateProperties<T extends Record<string, any>>(
                                         source   ?: unknown
                                     ) {
 
-    // dunno why the type ins't properly inferred.
-    const origin = getProxyTarget(target) as PropertiesStore<T>;
+    const origin = getProxyTarget(target);
     origin.updateProperties(properties, source);
 }
 
@@ -18,8 +17,8 @@ export function observeChanges<T extends Record<string, any>>(
                                             callback: () => void
                                         ) {
 
-    const origin = getProxyTarget(target) as PropertiesStore<T>;
-    origin.event.addListener(callback);
+    const origin = getProxyTarget(target);
+    origin.change.addListener(callback);
 }
 
 export function observe<T extends Record<string, any>>(

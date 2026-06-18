@@ -1,13 +1,11 @@
+import { createEvent, trigger } from "@/Events/Event";
 import { Descriptors, Properties } from "./Property";
 import { ProxyTarget, ValuesProxy } from "./ValuesProxy";
 
-import { createEventFactory, trigger } from "@/Event";
+import { typeHint } from "@/Events/CallbackRegistry";
 
 export type PropertiesProxy<T extends Record<string, any>>
         = ValuesProxy<T, PropertiesStore<T>>;
-
-// source can be arbitrary.
-const createEvent = createEventFactory<[source: unknown]>();
 
 export class PropertiesStore<T extends Record<string, any>>
                                                 implements ProxyTarget<T> {
@@ -70,13 +68,13 @@ export class PropertiesStore<T extends Record<string, any>>
     }
 
     // we hide internals.
-    readonly event = createEvent<unknown>(this);
+    readonly change = createEvent(this as object, typeHint<[unknown]>());
 
     protected onChange(source: unknown) {
 
         for(let name in this.properties)
             this.properties[name].markStale();
 
-        trigger(this.event, source);
+        trigger(this.change, source);
     }
 }

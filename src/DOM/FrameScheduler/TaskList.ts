@@ -1,4 +1,4 @@
-import CallbackRegistry from "@/CallbackRegistry";
+import CallbackRegistry from "@/Events/CallbackRegistry";
 import Task from "./Task";
 
 //TODO: move to types ?

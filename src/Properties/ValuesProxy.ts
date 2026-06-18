@@ -3,7 +3,7 @@ import { KeysOf } from "@/types/misc";
 export const PROXY_TARGET = Symbol();
 
 // dunno why, but sometimes returned type is "any"...
-export function getProxyTarget<P extends ValuesProxy<Record<string,any>,any>>(proxy: P): P[typeof PROXY_TARGET] {
+export function getProxyTarget<T extends any>(proxy: {readonly [PROXY_TARGET]: T}): T {
     return proxy[PROXY_TARGET];
 }
 

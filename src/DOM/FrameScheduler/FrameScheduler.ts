@@ -1,4 +1,4 @@
-import CallbackRegistry from "@/CallbackRegistry";
+import CallbackRegistry from "@/Events/CallbackRegistry";
 import GuardedState from "@/GuardedState";
 
 type FrameTask = () => void;

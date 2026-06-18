@@ -1,13 +1,21 @@
-import { NULL_OP } from "./types";
+import { NULL_OP } from "@/types";
 
-type Callback<
+export type Callback<
                 T extends object|null,
                 ARGS extends any[] = []
             > = (this: CallbackRegistry<T, ARGS>, ...args: ARGS) => void;
 
+export type Event<
+            T extends object|null,
+            ARGS extends any[] = []
+        > = {
+    addListener(callback: Callback<T, ARGS>): void;
+    removeListener(callback: Callback<T, ARGS>): void;
+}
+
 //TODO: move...
 const TypeHint = Symbol();
-type TypeHint<T> = {
+export type TypeHint<T> = {
     [TypeHint]: T
 };
 
@@ -61,6 +69,14 @@ export default class CallbackRegistry<
         this.removalPending = true;
     }
 
+    // aliases for Event.
+    addListener(callback: Callback<T, ARGS>) {
+        return this.add(callback);
+    }
+    removeListener(callback: Callback<T, ARGS>) {
+        return this.remove(callback);
+    }
+
     private removalPending = false;
 
     // do NOT call it during a trigger.
@@ -85,26 +101,4 @@ export default class CallbackRegistry<
     }
 }
 
-// -> pas idéal...
-
-new CallbackRegistry(null, typeHint<[number, string]>())
-
-/*
-const factory = {
-    create: <T extends object|null>(target: T) => {
-        return new CallbackRegistry<T, any>(target)
-    }
-}
-
-function callbackRegistryFactory<ARGS extends any[]>() {
-    return factory as {
-        create: <T extends object|null>(target: T) => CallbackRegistry<T, ARGS>
-    };
-}
-
-class A {
-    foo() {}
-};
-
-const x = callbackRegistryFactory<[number, string]>().create( new A() );
-*/
+// new CallbackRegistry(null, typeHint<[number, string]>())
