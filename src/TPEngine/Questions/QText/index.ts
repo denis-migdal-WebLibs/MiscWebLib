@@ -2,6 +2,7 @@ import CodeEditor from "@/DOM/Components/code/code-editor";
 import defineWebComponent from "@/DOM/WebComponent/defineWebComponent";
 import { Value } from "@/Reactive/Properties/PropertyTypes";
 import WithProperties from "@/Reactive/Properties/WithProperties";
+import { syncProperties } from "@/Reactive/Properties/linkProperties";
 
 const QTextProperties = {
     answer: Value(""),
@@ -9,7 +10,8 @@ const QTextProperties = {
 }
 
 const QText = defineWebComponent(
-    WithProperties(QTextProperties), {
+    WithProperties(QTextProperties),
+    {
         name   : "q-text",
         content: __LOAD_FILE__("./index.html"),
         style  : __LOAD_FILE__("./index.css"),
@@ -18,9 +20,13 @@ const QText = defineWebComponent(
         },
         initialize: (ctx, ctrler) => {
 
-            ctx.elements.editor.properties.lang=  ctrler.properties.lang;
-            ctx.elements.editor.properties.text = ctrler.properties.answer; 
+            syncProperties( ctrler, ctx.elements.editor,
+                            {
+                                lang  : "lang",
+                                answer: "text"
+                            });
 
+            console.warn("end");
             //TODO: RefreshRules...
         }
     });
@@ -28,58 +34,9 @@ const QText = defineWebComponent(
 export default QText;
 
 /*
-import computedLink from "@MWL/events/links/computedLink";
-import link from "@MWL/events/links/link";
-
-       const html = require('!!raw-loader!./index.html').default as string;
-export const css  = require('!!raw-loader!./index.css' ).default as string;
-
-const DEFAULTS = {
-    answer: null as null|string,
-    meta  : null as null|AnswerMeta
-}
-
-class QText extends LISSBase.WithContent( template(html) )
-                            .WithStyle  ( style(css) )
-                            .WithInput (DEFAULTS)
-                            .WithOutput(DEFAULTS) {
-
     // === HTML Elements ===
     readonly pts       = +this.host.getAttribute("pts")!;
-    readonly el_answer = this.content.querySelector<CodeEditor>(".answer")!;
     readonly el_grade  = this.content.querySelector<HTMLElement>(".grade" )!;
-
-    constructor() {
-        super();
-
-        // init...
-        const codeLang   = this.host.getAttribute('code-lang');
-        if( codeLang !== null )
-            this.el_answer.setAttribute('code-lang', codeLang);
-
-        // link input
-        this.parsedInput.addListener( () => this.updateGUI() );
-        computedLink(this.parsedInput, this.el_answer.inputSignal,
-                    () => {
-                        return {
-                            value: this.parsedInput.value.answer ?? ""
-                        }
-                    });
-
-        // link output
-        computedLink(this.el_answer.outputSignal,
-                     this.outputSignal,
-                        () => {
-                            return {
-                                answer: this.el_answer.output.value,
-                                meta  : this.input.meta
-                            }
-                        }
-                    );
-
-        // editor link
-        link(this.parsedInput, this.outputSignal);
-    }
 
     updateGUI(): void {
 
@@ -91,12 +48,6 @@ class QText extends LISSBase.WithContent( template(html) )
         setComment    (this.el_answer, meta);
     }
 }
-
-define(QText);
-
-// ========================================
-// ============== helpers =================
-// ========================================
 
 export function setComment(target: HTMLElement, meta: AnswerMeta|null) {
 
