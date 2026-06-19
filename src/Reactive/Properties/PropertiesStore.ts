@@ -41,8 +41,6 @@ export class PropertiesStore<T extends Record<string, any>>
 
     updateProperties(values: Partial<T>, source: unknown = null) {
 
-        console.warn(values);
-
         let changed = false;
 
         for(const name in values) {

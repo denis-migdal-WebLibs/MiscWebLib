@@ -1,24 +1,15 @@
 import CodeEditor from "@/DOM/Components/code/code-editor";
 import defineWebComponent from "@/DOM/WebComponent/defineWebComponent";
-import createPropertiesFactory from "@/Reactive/Properties/createPropertiesFactory";
 import { Value } from "@/Reactive/Properties/PropertyTypes";
+import WithProperties from "@/Reactive/Properties/WithProperties";
 
-//TODO: extract...
-const QTextProperties = createPropertiesFactory({
+const QTextProperties = {
     answer: Value(""),
     lang  : Value(null as null|string),
-});
+}
 
-const QText = defineWebComponent(class QText {
-
-        //TODO: WithProperties...
-        readonly properties: ReturnType<typeof QTextProperties>;
-
-        constructor(opts: {answer?: string, lang?: string|null}) {
-            this.properties = QTextProperties(opts);
-        }
-
-    }, {
+const QText = defineWebComponent(
+    WithProperties(QTextProperties), {
         name   : "q-text",
         content: __LOAD_FILE__("./index.html"),
         style  : __LOAD_FILE__("./index.css"),
