@@ -27,9 +27,8 @@ const QText = defineWebComponent(class QText {
         },
         initialize: (ctx, ctrler) => {
 
-            //TODO: properties direct access...
-            ctx.elements.editor.controller.properties.lang = ctrler.properties.lang;
-            ctx.elements.editor.controller.properties.text = ctrler.properties.answer;
+            ctx.elements.editor.properties.lang=  ctrler.properties.lang;
+            ctx.elements.editor.properties.text = ctrler.properties.answer; 
 
             //TODO: RefreshRules...
         }

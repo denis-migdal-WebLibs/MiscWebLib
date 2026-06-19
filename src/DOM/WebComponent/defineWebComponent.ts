@@ -29,6 +29,19 @@ function extractData<D extends Record<string,any>>(
     return props;
 }
 
+type GetProperties<C extends object|null>
+    = C extends null ? null
+                     : C extends {readonly properties: any}
+                        ? C["properties"]
+                        : null;
+
+function getProperties<C extends object|null>(c: C): GetProperties<C> {
+    if( c === null || ! ("properties" in c) )
+        return null as any;
+
+    return c.properties as any;
+}
+
 type ControllerCstr<C extends object|null,
                     D extends Record<string, any>
                 > = C extends null ? null : Cstr<Exclude<C,null>, [Partial<D>]>;
@@ -76,6 +89,8 @@ export default function defineWebComponent<
         readonly view;
         readonly controller: C;
 
+        readonly properties: GetProperties<C>;
+
         //readonly _id = genId();
 
         constructor(data: Partial<D> = NULL_OBJ) {
@@ -83,6 +98,7 @@ export default function defineWebComponent<
 
             this.view       = createView(this, data);
             this.controller = this.view.controller;
+            this.properties = getProperties(this.controller);
         }
 
         // currently the most efficient way to proceed.
