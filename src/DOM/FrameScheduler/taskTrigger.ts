@@ -1,0 +1,14 @@
+import TaskList from "./TaskList";
+
+export default function taskTrigger(taskList: TaskList, callback: () => void) {
+
+    // avoid inserting/removing tasks...
+    let scheduled = false;
+
+    taskList.add( () => { if(scheduled ) callback() });
+
+    return () => {
+        scheduled = true;
+        taskList.schedule();
+    }
+}

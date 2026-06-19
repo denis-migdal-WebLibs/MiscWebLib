@@ -27,6 +27,9 @@ const QText = defineWebComponent(
                             });
 
             console.warn("end");
+
+            // observeProperty/ies[Change] => () => [?].
+            // schedule...
             //TODO: RefreshRules...
         }
     });

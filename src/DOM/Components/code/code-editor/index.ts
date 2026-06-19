@@ -11,6 +11,7 @@ import { observe } from "@/Reactive/Event";
 import createPropertiesFactory from "@/Reactive/Properties/createPropertiesFactory";
 import { Value } from "@/Reactive/Properties/PropertyTypes";
 import { updateProperties } from "@/Reactive/Properties/PropertiesStore";
+import taskTrigger from "@/DOM/FrameScheduler/taskTrigger";
 
 type InputState = {
     text: string,
@@ -123,26 +124,13 @@ const CodeEditor = defineWebComponent(
                 return hl(text, controller.properties.lang);
             });
 
-            renderer.add( () => {
-                input.text = controller.properties.text;
-                input.pos  = controller.properties.pos;
-                input.push();
-            });     
-
-            function insert(char: string) {
-                input.insert(char);
-                commitState();
-            }
-
-            function commitState() {
-                // atomic operation.
-                updateProperties(controller.properties, {
-                    text: input.text,
-                    pos : input.pos
-                })
-            }
-
-            observe(controller.properties, () => renderer.schedule(), null );
+            observe(controller.properties,
+                    taskTrigger(renderer, () => {
+                        input.text = controller.properties.text;
+                        input.pos  = controller.properties.pos;
+                        input.push();
+                    }),
+                    null);
 
             connectEvents(output, [UNDO, REDO], controller);
 
@@ -158,7 +146,18 @@ const CodeEditor = defineWebComponent(
                 commitState();
             });
 
-            //insert("a = 1 + 1;\nb = 2;\n");
+            function insert(char: string) {
+                input.insert(char);
+                commitState();
+            }
+
+            function commitState() {
+                // atomic operation.
+                updateProperties(controller.properties, {
+                    text: input.text,
+                    pos : input.pos
+                })
+            }
         }
     }
 )
