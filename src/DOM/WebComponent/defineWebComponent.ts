@@ -1,6 +1,7 @@
 import { Cstr, FCT_NULL, isClass, NULL_OBJ } from "@/types";
 import { Elements } from "../ElementsResolver/core/types";
 import createViewFactory, { ViewFactoryArgs } from "./createViewFactory";
+import { WCID_DATANAME } from "../ElementsResolver/getElements";
 
 export const WC_ATTRNAME   = "config";
 function extractData<D extends Record<string,any>>(
@@ -19,7 +20,7 @@ function extractData<D extends Record<string,any>>(
 
     for( const name in target.dataset ) {
 
-        if( name === WC_ATTRNAME) continue;
+        if( name === WC_ATTRNAME || name === WCID_DATANAME) continue;
 
         // @ts-ignore
         props[name] = target.dataset[name]!;

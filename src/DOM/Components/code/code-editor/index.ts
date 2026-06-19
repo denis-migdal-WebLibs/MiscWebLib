@@ -67,20 +67,16 @@ const EditorProperties = createPropertiesFactory({
     pos : Value(0),
 });
 
-
-defineWebComponent(
+const CodeEditor = defineWebComponent(
 
     class CodeEditor{
 
         readonly history    = new StateHistory<InputState>();
         readonly properties: ReturnType<typeof EditorProperties>;
 
-        constructor({text = "", lang = null}: {text?: string, lang?: string|null} = {}) {
+        constructor(opts: {text?: string, lang?: string|null} = {}) {
         
-            this.properties = EditorProperties({
-                text,
-                lang
-            });
+            this.properties = EditorProperties(opts);
 
             observe(this.properties, () => {
 
@@ -166,3 +162,5 @@ defineWebComponent(
         }
     }
 )
+
+export default CodeEditor;

@@ -58,11 +58,11 @@ export default class ShadowTemplate {
             root.adoptedStyleSheets.push(...this.styles);
 
         if( this.generateContent !== null) {
+            
             const content = this.generateContent();
-
-            customElements.upgrade(content); //TODO: vérifier.
-
             root.replaceChildren(content);
+
+            customElements.upgrade(root);
         }
 
         return root;

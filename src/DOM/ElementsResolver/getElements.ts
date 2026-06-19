@@ -1,6 +1,7 @@
 import { Elements, ExtractionTarget } from "./core/types";
 
-const WCID_ATTRNAME = "data-wcid";
+export const WCID_DATANAME = "wcid";
+const WCID_ATTRNAME = `data-${WCID_DATANAME}`;
 const WCID_SELECTOR = `[${WCID_ATTRNAME}]`;
 
 export default function getElements(target: ExtractionTarget) {
