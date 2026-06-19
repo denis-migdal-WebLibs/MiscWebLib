@@ -74,6 +74,10 @@ export function setCursorPos(target: HTMLElement, cursor: CursorPos) {
     if( cursor === null)
         return;
 
+    const root = target.getRootNode() as Document | ShadowRoot;
+    if( root.activeElement !== target)
+        return;
+
     let cur: Node = target;
 
     while(cur.nodeType !== Node.TEXT_NODE) {
