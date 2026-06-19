@@ -13,10 +13,12 @@ export function createEvent<
 }
 
 type Observable<E extends Event<any,any>> = {readonly change: E};
+type ProxyObservable<E extends Event<any,any>> = {readonly [PROXY_TARGET]: Observable<E>};
 
 type EventSource<E extends Event<any,any>> = E
                                     | Observable<E>
-                                    | {readonly [PROXY_TARGET]: Observable<E>};
+                                    | ProxyObservable<E>
+                                    | {readonly properties: ProxyObservable<E>};
 
 function isEvent<E extends Event<any, any>>(e: E|unknown): e is E {
     return e instanceof CallbackRegistry
@@ -28,6 +30,9 @@ export function getCallbackRegistry<
                             >(
                                 target: EventSource<Event<T, ARGS>>
                             ): CallbackRegistry<T, ARGS> {
+
+    if( "properties" in target)
+        target = target.properties;
 
     if( PROXY_TARGET in target)
         target = target[PROXY_TARGET];

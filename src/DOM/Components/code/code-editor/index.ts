@@ -124,7 +124,7 @@ const CodeEditor = defineWebComponent(
                 return hl(text, controller.properties.lang);
             });
 
-            observe(controller.properties,
+            observe(controller,
                     taskTrigger(renderer, () => {
                         input.text = controller.properties.text;
                         input.pos  = controller.properties.pos;
