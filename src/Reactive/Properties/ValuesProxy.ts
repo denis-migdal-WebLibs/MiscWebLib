@@ -35,9 +35,26 @@ export default function createProxyClass<
 
         constructor(target: ProxyTarget<T>) {
             this[PROXY_TARGET] = target;
+
+            // JS stupid as always, properties needs to be
+            // own properties, so on the instance, not on the prototype.
+            for(let i = 0; i < keys.length; ++i ) {
+                const name = keys[i];
+                
+                Object.defineProperty(this, name, {
+                    enumerable: true,
+                    get: function (this: ValuesProxy) {
+                        return this[PROXY_TARGET].get(name);
+                    },
+                    set: function(this: ValuesProxy, value: any) {
+                        return this[PROXY_TARGET].set(name, value, this);
+                    }
+                })
+            }
         }
     }
 
+    /*
     for(let i = 0; i < keys.length; ++i ) {
         const name = keys[i];
         Object.defineProperty(ValuesProxy.prototype, name, {
@@ -50,6 +67,7 @@ export default function createProxyClass<
             }
         })
     }
+    */
 
     return ValuesProxy as any;
 }

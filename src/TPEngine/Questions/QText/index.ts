@@ -69,4 +69,6 @@ const QText = defineWebComponent(
         }
     });
 
+// not ideal...
 export default QText;
+export type QText = InstanceType<typeof QText>;

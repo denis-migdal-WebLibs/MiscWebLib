@@ -1,6 +1,16 @@
 import { createEvent } from "@/Reactive/Event";
 import JSZip from "jszip";
 import { Serializable } from "./DataStore/core/interfaces";
+import { Properties } from "@/Reactive/Properties/Property";
+
+// 'cause we can listen to it.
+export type Question<T extends unknown> = Properties<{
+    QID    : string,
+    comment: string,
+    score  : number|null,
+    coeff  : number|null,
+    answer : T,
+}>;
 
 export default class StudentWork implements Serializable {
 

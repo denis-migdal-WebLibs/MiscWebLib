@@ -1,27 +1,21 @@
 import BrowserFile from "@/TPEngine/DataStore/BrowserFile";
 import LocalStorage from "@/TPEngine/DataStore/LocalStorage";
-import StudentWork from "@/TPEngine/StudentWork";
+import StudentWork, { Question } from "@/TPEngine/StudentWork";
 
+import "@/TPEngine/Questions/QText";
 
-//import "@/TPEngine/Questions/QText";
-import QText from "@/TPEngine/Questions/QText";
+function getQuestions() {
+    type QuestionElement = HTMLElement & {
+        readonly properties: Question<unknown>
+    };
 
-try {
-    const x = 
-        new QText({
-            answer: "console.warn('ok');",
-            lang  : "ts",
-            score : 0.5,
-            coeff : 2,
-            comment: "[HERE]",
-        });
-
-    x.textContent = "Question";
-
-    document.body.append(x);
-} catch(e) {
-    console.warn(e);
+    return [...document.querySelectorAll<QuestionElement>("q-text")].map( e => {
+        console.warn(JSON.stringify({...e.properties}));
+        return e.properties
+    });
 }
+
+const questions = getQuestions();
 
 const s = new StudentWork();
 

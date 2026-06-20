@@ -20,7 +20,8 @@
     }
 
     & .answer {
-
+        
+        border-radius: 4px;
         outline: 4px solid var(--grade-color);
 
         &::after {
