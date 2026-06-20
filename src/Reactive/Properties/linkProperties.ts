@@ -17,8 +17,8 @@ export default function linkProperties<
 
     const data = {} as Partial<U>;
     
-    observeChanges(src, (origin) => {
-        if( origin === dst) return; // prevents re-entry.
+    observeChanges(src, function () {
+        if( this.origin === dst) return; // prevents re-entry.
 
         for(const key in map)
             // @ts-ignore

@@ -48,11 +48,12 @@ export function trigger<
                         ARGS extends any[] = []
                     >(
                         target : EventSource<Event<T, ARGS>>,
+                        origin : unknown = null,
                         ...args: ARGS
                     ) {
 
     const registry = getCallbackRegistry(target);
-    registry.trigger(...args);
+    registry.trigger(origin, ...args);
 }
 
 export function observeChanges<
@@ -78,7 +79,10 @@ export function observe<
     const registry = getCallbackRegistry(target);
     registry.add(callback);
 
-    callback.apply(registry, args);
+    // on the initial callback : no origin.
+    const ctx = registry.createTriggerContext(null);
+
+    callback.apply(ctx, args);
 }
 
 // => is this really useful ?

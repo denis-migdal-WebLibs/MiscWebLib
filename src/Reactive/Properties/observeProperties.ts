@@ -1,6 +1,7 @@
 import { PropertiesProxy } from "./PropertiesStore";
 import { getProperties, WithProps } from "./WithProperties";
-import { observeChanges } from "../Event";
+import { getCallbackRegistry, observeChanges } from "../Event";
+import { Callback } from "../CallbackRegistry";
 
 
 function createCache<T extends Record<string, any>>(
@@ -32,29 +33,33 @@ function updateCache<T extends Record<string, any>>(
     return change;
 }
 
+type PropertiesCallback<T extends Record<string, any>>
+                                    = Callback<PropertiesProxy<T>>;
+
 export function observePropertiesChanges<T extends Record<string, any>>(
                                     target: WithProps<T>|PropertiesProxy<T>,
                                     keys  : readonly (Extract<keyof NoInfer<T>, string>)[],
-                                    callback: (origin: unknown) => void
+                                    callback: PropertiesCallback<T>
                                 ) {
 
     target = getProperties(target);
 
     const cache = createCache(target, keys);
 
-    observeChanges(target, (origin: unknown) => {
+    observeChanges(target, function () {
 
         if( ! updateCache(target, keys, cache) )
             return;
 
-        callback(origin);
+        // @ts-ignore: bad TS type inference
+        callback.call(this);
     });
 }
 
 export function observePropertyChanges<T extends Record<string, any>>(
                                     target: WithProps<T>|PropertiesProxy<T>,
                                     key   : Extract<keyof NoInfer<T>, string>,
-                                    callback: (origin: unknown) => void
+                                    callback: PropertiesCallback<T>
                                 ) {
     observePropertiesChanges(target, [key], callback);
 }
@@ -62,20 +67,22 @@ export function observePropertyChanges<T extends Record<string, any>>(
 export function observeProperties<T extends Record<string, any>>(
                                     target: WithProps<T>|PropertiesProxy<T>,
                                     keys  : readonly (Extract<keyof NoInfer<T>, string>)[],
-                                    callback: (origin: unknown) => void,
-                                    origin  : unknown = null
+                                    callback: PropertiesCallback<T>
                                 ) {
 
     observePropertiesChanges(target, keys, callback);
-    callback(origin);
+
+    const registry = getCallbackRegistry(target);
+    const ctx = registry.createTriggerContext(null);
+    // @ts-ignore: bad TS type inference
+    callback.call(ctx);
 }
 
 
 export function observeProperty<T extends Record<string, any>>(
                                     target: WithProps<T>|PropertiesProxy<T>,
                                     key   : Extract<keyof NoInfer<T>, string>,
-                                    callback: (origin: unknown) => void,
-                                    origin  : unknown = null
+                                    callback: PropertiesCallback<T>,
                                 ) {
-    observeProperties(target, [key], callback, origin);
+    observeProperties(target, [key], callback);
 }

@@ -2,8 +2,6 @@ import { createEvent, trigger } from "@/Reactive/Event";
 import { Descriptors, Properties } from "./Property";
 import { getProxyTarget, ProxyTarget, ValuesProxy } from "./ValuesProxy";
 
-import { typeHint } from "@/Reactive/CallbackRegistry";
-
 export type PropertiesProxy<T extends Record<string, any>>
         = ValuesProxy<T, PropertiesStore<T>>;
 
@@ -68,7 +66,7 @@ export class PropertiesStore<T extends Record<string, any>>
     }
 
     // we hide internals.
-    readonly change = createEvent(this as object, typeHint<[unknown]>());
+    readonly change = createEvent(this as object);
 
     protected onChange(source: unknown) {
 

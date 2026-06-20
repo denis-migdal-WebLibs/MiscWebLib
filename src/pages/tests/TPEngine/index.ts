@@ -3,6 +3,7 @@ import LocalStorage from "@/TPEngine/DataStore/LocalStorage";
 import StudentWork, { Question } from "@/TPEngine/StudentWork";
 
 import "@/TPEngine/Questions/QText";
+import { observe } from "@/Reactive/Event";
 
 function getQuestions() {
     type QuestionElement = HTMLElement & {
@@ -10,14 +11,32 @@ function getQuestions() {
     };
 
     return [...document.querySelectorAll<QuestionElement>("q-text")].map( e => {
-        console.warn(JSON.stringify({...e.properties}));
+        console.warn(JSON.stringify(e.properties));
         return e.properties
     });
 }
 
-const questions = getQuestions();
-
 const s = new StudentWork();
+
+function syncQuestions(
+                        work     : StudentWork,
+                        questions: readonly Question<unknown>[]
+                    ) {
+    
+    const q = {} as Record<string, Question<unknown>>;
+    for(let i = 0; i < questions.length; ++i)
+        // @ts-ignore: TODO
+        q[questions[i].QID] = questions[i];
+    
+    observe(work, () => {
+        //TODO: merge info...
+    });
+}
+
+const questions = getQuestions();
+syncQuestions(s, questions);
+
+//TODO: sync (?)...
 
 
 const buffer = await s.export();

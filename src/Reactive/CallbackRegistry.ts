@@ -1,15 +1,21 @@
 import { NULL_OP } from "@/types";
 
+export type CallbackContext<T extends object|null> = {
+    readonly target: T,
+    readonly event : unknown, /* we hide implementation */
+    readonly origin: unknown  /* this is an arbitrary data */
+}
+
 export type Callback<
                 T extends object|null,
                 ARGS extends any[] = []
-            > = (this: CallbackRegistry<T, ARGS>, ...args: ARGS) => void;
+            > = (this: CallbackContext<T>, ...args: ARGS) => void;
 
 export type Event<
             T extends object|null,
             ARGS extends any[] = []
         > = {
-    addListener(callback: Callback<T, ARGS>): void;
+    addListener   (callback: Callback<T, ARGS>): void;
     removeListener(callback: Callback<T, ARGS>): void;
 }
 
@@ -42,14 +48,27 @@ export default class CallbackRegistry<
         this.target = target;
     }
 
-    trigger(...args: ARGS) {
+    createTriggerContext(origin: unknown) {
+        return {
+            event : this,
+            target: this.target,
+            origin,
+        }
+    }
+
+    trigger(origin: unknown = null, ...args: ARGS) {
 
         // need to compact to avoid growing callback list.
         if( ! this.clearAfterTrigger )
             this.compactCallbacks();
 
+        if( this.callbacks.length === 0) // opti.
+            return;
+
+        const ctx = this.createTriggerContext(origin);
+
         for(let i = 0; i < this.callbacks.length; ++i)
-            this.callbacks[i].apply(this, args);
+            this.callbacks[i].apply(ctx, args);
 
         if( this.clearAfterTrigger )
             this.clear();
@@ -91,10 +110,9 @@ export default class CallbackRegistry<
             return;
 
         let offset = 0;
-        for(let i = 0; i < this.callbacks.length; ++i) {
+        for(let i = 0; i < this.callbacks.length; ++i)
             if( this.callbacks[i] !== NULL_OP)
                 this.callbacks[offset++] = this.callbacks[i];
-        }
 
         this.callbacks.length = offset;
         this.removalPending = false;

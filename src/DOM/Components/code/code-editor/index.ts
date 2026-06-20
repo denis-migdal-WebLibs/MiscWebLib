@@ -95,7 +95,7 @@ const CodeEditor = defineWebComponent(
                     text: this.properties.text,
                     pos : this.properties.pos
                 });
-            }, null);
+            });
         }
 
         undo() {
@@ -129,8 +129,7 @@ const CodeEditor = defineWebComponent(
                         input.text = controller.properties.text;
                         input.pos  = controller.properties.pos;
                         input.push();
-                    }),
-                    null);
+                    }));
 
             connectEvents(output, [UNDO, REDO], controller);
 
