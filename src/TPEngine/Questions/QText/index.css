@@ -1,3 +1,4 @@
+/* everything here can be shared with other Questions */
 :host(.answer_highlight) {
     & .answer {
         outline: 2px solid gold;
@@ -5,33 +6,28 @@
 }
 
 :host {
-    & .grade {
+
+    --grade-color: transparent;
+    --comment    : "";
+
+    & [data-wcid="grade"] {
         font-weight: bold;
         float:right;
     }
 
     & code-editor {
-
         border-radius: 4px;
-        
-        &[grade="0"] {
-            border: 4px solid red;
-        }
-        &[grade="<=.5"] {
-            border: 4px solid orange;
-        }
-        &[grade=">.5"] {
-            border: 4px solid yellow;
-        }
-        &[grade="1"] {
-            border: 4px solid green;
-        }
     }
 
-    & [comment]::after {
-        content: attr(comment); /* todo */
-        color: orange;
-        font-style: italic;
-        display: block;
+    & .answer {
+
+        outline: 4px solid var(--grade-color);
+
+        &::after {
+            content: var(--comment); /* attr(comment); /* todo */
+            color: orange;
+            font-style: italic;
+            display: block;
+        }
     }
 }

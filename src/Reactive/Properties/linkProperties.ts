@@ -8,7 +8,7 @@ export default function linkProperties<
                     >(
                         src: PropertiesProxy<T>|WithProps<T>,
                         dst: PropertiesProxy<U>|WithProps<U>,
-                        map: Record<keyof NoInfer<T>, keyof NoInfer<U>>,
+                        map: Partial<Record<keyof NoInfer<T>, keyof NoInfer<U>>>,
                         initial = false
                     ) {
 
@@ -42,7 +42,7 @@ export function syncProperties<
                     >(
                         src: PropertiesProxy<T>|WithProps<T>,
                         dst: PropertiesProxy<U>|WithProps<U>,
-                        map: Record<keyof NoInfer<T>, keyof NoInfer<U>>
+                        map: Partial<Record<keyof NoInfer<T>, keyof NoInfer<U>>>
                     ) {
 
     const reverseMap = {} as Record<keyof U, keyof T>;

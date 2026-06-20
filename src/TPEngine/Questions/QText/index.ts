@@ -3,10 +3,16 @@ import defineWebComponent from "@/DOM/WebComponent/defineWebComponent";
 import { Value } from "@/Reactive/Properties/PropertyTypes";
 import WithProperties from "@/Reactive/Properties/WithProperties";
 import { syncProperties } from "@/Reactive/Properties/linkProperties";
+import { observeProperties, observeProperty } from "@/Reactive/Properties/observeProperties";
 
+// we assume empty string = null, avoid handling this special case.
 const QTextProperties = {
-    answer: Value(""),
-    lang  : Value(null as null|string),
+    //TODO: QID
+    answer : Value(""),
+    comment: Value(""),
+    lang   : Value<string|null>(null),
+    coeff  : Value<number|null>(null),
+    score  : Value<number|null>(null),
 }
 
 const QText = defineWebComponent(
@@ -16,73 +22,51 @@ const QText = defineWebComponent(
         content: __LOAD_FILE__("./index.html"),
         style  : __LOAD_FILE__("./index.css"),
         elements: {
-            editor: CodeEditor
+            editor: CodeEditor,
+            grade : HTMLElement,
         },
         initialize: (ctx, ctrler) => {
 
-            syncProperties( ctrler, ctx.elements.editor,
+            const editor = ctx.elements.editor;
+
+            syncProperties( ctrler, editor,
                             {
                                 lang  : "lang",
                                 answer: "text"
                             });
 
-            console.warn("end");
+            observeProperty(ctrler, "comment", () => {
+                ctx.target.style.setProperty(
+                                                '--comment',
+                                                `"${ctrler.properties.comment}"`
+                                            );
+            });
 
-            // observeProperty/ies[Change] => () => [?].
-            // schedule...
-            //TODO: RefreshRules...
+            observeProperties(ctrler, ["score", "coeff"], () => {
+
+                const grade = ctx.elements.grade;
+                const coeff = ctrler.properties.coeff;
+
+                let gradeColor = "transparent"
+
+                if( coeff === null) { // not graded.
+
+                    ctx.target.style.setProperty("--grade-color", gradeColor);
+                    grade.textContent = "";
+                    return;
+                }
+
+                const score = ctrler.properties.score;
+
+                if( score !== null)
+                    gradeColor = `hsl(${score * 120}, 100%, 50%)`
+
+                ctx.target.style.setProperty("--grade-color", gradeColor);
+
+                const points = score === null ? "" : `${score*coeff}`;
+                ctx.elements.grade.textContent = `[${points}/${coeff}]`;
+            });
         }
     });
 
 export default QText;
-
-/*
-    // === HTML Elements ===
-    readonly pts       = +this.host.getAttribute("pts")!;
-    readonly el_grade  = this.content.querySelector<HTMLElement>(".grade" )!;
-
-    updateGUI(): void {
-
-        const meta = this.input.meta;
-
-        setGlobalGrade(this.el_grade, meta, this.pts,
-                            (grade) => grade*this.pts);
-        setAnswerColor(this.el_answer, meta?.grade);
-        setComment    (this.el_answer, meta);
-    }
-}
-
-export function setComment(target: HTMLElement, meta: AnswerMeta|null) {
-
-    const comment = meta === null ? "" : meta.comment;
-
-    if(comment === "")
-        target.removeAttribute("comment");
-    else
-        target.setAttribute("comment", comment);
-}
-
-export function setGlobalGrade(target: HTMLElement, meta: AnswerMeta|null, max: number, pts: (grade: number) => number) {
-
-    if( max === 0)
-        return;
-
-    const score = meta === null ? "" : `${pts(meta.grade)}`;
-    target.textContent = `[${score}/${max}]`;
-}
-
-export function setAnswerColor(target: HTMLElement, grade: number|undefined) {
-
-    if( grade == undefined) {
-        target.removeAttribute('grade');
-    } else if(grade === 0) {
-        target.setAttribute('grade', "0");
-    } else if(grade === 1) {
-        target.setAttribute('grade', "1");
-    } else if(grade <= 0.5) {
-        target.setAttribute('grade', "<=.5");
-    } else if(grade >  0.5) {
-        target.setAttribute('grade', ">.5");
-    }
-}
-*/

@@ -10,8 +10,13 @@ try {
     const x = 
         new QText({
             answer: "console.warn('ok');",
-            lang  : "ts"
-        })
+            lang  : "ts",
+            score : 0.5,
+            coeff : 2,
+            comment: "[HERE]",
+        });
+
+    x.textContent = "Question";
 
     document.body.append(x);
 } catch(e) {
