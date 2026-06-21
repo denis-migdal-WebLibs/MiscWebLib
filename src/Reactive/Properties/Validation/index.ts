@@ -1,7 +1,7 @@
-import { PropertyBuilder } from "../Property";
+import { PropertyDescriptor } from "../Property";
 
 export function Validated<CTX extends Record<string, any>, T>(
-                                    property: PropertyBuilder<CTX, T>,
+                                    property: PropertyDescriptor<CTX, T>,
                                     ...validations: NoInfer<readonly ((x: T) => boolean)[]>
                                 ) {
     if( __DEBUG__ ) {

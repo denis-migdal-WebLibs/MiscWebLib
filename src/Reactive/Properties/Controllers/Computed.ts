@@ -1,8 +1,8 @@
 import { NO_VALUE } from "@/types";
-import { Property } from "../Property";
+import { PropertyController } from "../Property";
 
 class ComputedInstance<CTX extends Record<string, any>, T>
-                                                implements Property<T>{
+                                                implements PropertyController<T>{
 
     protected ctx  : Readonly<CTX>;
     protected calc : (ctx: Readonly<CTX>) => T;

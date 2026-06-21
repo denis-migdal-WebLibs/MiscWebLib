@@ -1,13 +1,12 @@
-import { observeChanges } from "../Event";
-import { PropertiesProxy, updateProperties } from "./PropertiesStore";
-import { getProperties, WithProps } from "./WithProperties";
+import { observeChanges } from "../Observers/observe";
+import { getProperties, PropertiesProvider, updateProperties } from "./createProperties";
 
 export default function linkProperties<
                         T extends Record<string, any>,
                         U extends Record<string, any>
                     >(
-                        src: PropertiesProxy<T>|WithProps<T>,
-                        dst: PropertiesProxy<U>|WithProps<U>,
+                        src: PropertiesProvider<T>,
+                        dst: PropertiesProvider<U>,
                         map: Partial<Record<keyof NoInfer<T>, keyof NoInfer<U>>>,
                         initial = false
                     ) {
@@ -40,8 +39,8 @@ export function syncProperties<
                         T extends Record<string, any>,
                         U extends Record<string, any>
                     >(
-                        src: PropertiesProxy<T>|WithProps<T>,
-                        dst: PropertiesProxy<U>|WithProps<U>,
+                        src: PropertiesProvider<T>,
+                        dst: PropertiesProvider<U>,
                         map: Partial<Record<keyof NoInfer<T>, keyof NoInfer<U>>>
                     ) {
 

@@ -1,6 +1,7 @@
 import { resolve } from "@/DOM/ElementsResolver";
-import { observeChanges, ObserverRegistry } from "@/Reactive/Event";
-import { updateProperties } from "@/Reactive/Properties/PropertiesStore";
+import { observeChanges } from "@/Reactive/Observers/observe";
+import ObserverRegistry from "@/Reactive/Observers/ObserverRegistry";
+import { updateProperties } from "@/Reactive/Properties/createProperties";
 import BrowserFile from "@/TPEngine/DataStore/BrowserFile";
 import LocalStorage from "@/TPEngine/DataStore/LocalStorage";
 import Pager from "@/TPEngine/Pager";

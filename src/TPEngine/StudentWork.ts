@@ -1,7 +1,8 @@
-import { createEvent, trigger } from "@/Reactive/Event";
+import { createEvent } from "@/Reactive/Event";
 import JSZip from "jszip";
 import { Serializable } from "./DataStore/core/interfaces";
-import { PropertiesProxy } from "@/Reactive/Properties/PropertiesStore";
+import { Properties } from "@/Reactive/Properties/createProperties";
+import { MAIN_EVENT, trigger } from "@/Reactive/Observers/EventSource";
 
 type QuestionData<T extends unknown> = {
     QID    : string,
@@ -12,7 +13,7 @@ type QuestionData<T extends unknown> = {
 }
 
 // 'cause we can listen to it.
-export type Question<T extends unknown> = PropertiesProxy<QuestionData<T>>;
+export type Question<T extends unknown> = Properties<QuestionData<T>>;
 
 
 export default class StudentWork implements Serializable {
@@ -36,7 +37,7 @@ export default class StudentWork implements Serializable {
         for(let i = 0; i < data.length; ++i)
             this.data[data[i].QID] = data[i];
 
-        trigger(this.change, origin);
+        trigger(this, origin);
     }
 
     setQuestionData(data: QuestionData<unknown>, origin: unknown) {
@@ -44,7 +45,7 @@ export default class StudentWork implements Serializable {
         console.warn("R", this.resourceName);
 
         this.data[data.QID] = data;
-        trigger(this.change, origin);
+        trigger(this, origin);
     }
 
     getQuestionData(qid: string): QuestionData<unknown>|null {
@@ -59,7 +60,7 @@ export default class StudentWork implements Serializable {
         const file = zip.file("answers")!;
         this.data = JSON.parse( await file.async("string") ); // as X
 
-        trigger(this.change, origin);
+        trigger(this, origin);
     }
     async export() {
         const zip = new JSZip();
@@ -68,5 +69,5 @@ export default class StudentWork implements Serializable {
         return await zip.generateAsync({type:"arraybuffer"}) as ArrayBuffer;
     }
 
-    readonly change = createEvent(this);
+    readonly [MAIN_EVENT] = createEvent(this);
 }

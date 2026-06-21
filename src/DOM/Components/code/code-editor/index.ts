@@ -7,22 +7,22 @@ import NEWLINE from "@/DOM/UiEvents/newline";
 import TAB from "@/DOM/UiEvents/tab";
 import on from "@/DOM/UiEvents/core/on";
 import StateHistory from "@/StateHistory";
-import { observe } from "@/Reactive/Event";
-import createPropertiesFactory from "@/Reactive/Properties/createPropertiesFactory";
-import { Value } from "@/Reactive/Properties/PropertyTypes";
-import { updateProperties } from "@/Reactive/Properties/PropertiesStore";
 import taskTrigger from "@/DOM/FrameScheduler/taskTrigger";
+import { Value } from "@/Reactive/Properties/Controllers";
+import { updateProperties, WithProperties } from "@/Reactive/Properties/createProperties";
+import { GetPropertiesType } from "@/Reactive/Properties/Property";
+import { observe } from "@/Reactive/Observers/observe";
 
 type InputState = {
     text: string,
-    pos : number,
+    pos : number|null,
 }
 
 class Input implements InputState {
 
     readonly target: HTMLElement;
     text = "";
-    pos  = 0;
+    pos: number|null = null;
 
     readonly format: (text: string) => string
 
@@ -58,43 +58,44 @@ class Input implements InputState {
     push() {
         this.target.innerHTML = this.format(this.text + "\n");
         
-        setCursorPos(this.target, this.pos);
+        let pos = this.pos;
+        if( pos === null)
+            pos = this.text.length;
+
+        setCursorPos(this.target, pos);
     }
 }
 
-const EditorProperties = createPropertiesFactory({
-    lang: Value(null as null|string),
+const EditorProperties = {
+    lang: Value<string|null>(null),
     text: Value(""),
-    pos : Value(0),
-});
+    pos : Value<number|null>(null),
+};
 
 const CodeEditor = defineWebComponent(
 
-    class CodeEditor{
+    class CodeEditor extends WithProperties(EditorProperties) {
 
         readonly history    = new StateHistory<InputState>();
-        readonly properties: ReturnType<typeof EditorProperties>;
 
-        constructor(opts: {text?: string, lang?: string|null} = {}) {
-        
-            this.properties = EditorProperties(opts);
+        constructor(opts: Partial<GetPropertiesType<typeof EditorProperties>> = {}) {
+
+            super(opts);
 
             observe(this.properties, () => {
+
+                const text = this.properties.text;
+                const pos = this.properties.pos;
 
                 if( this.history.hasState) {
                     // do not push a state identical to the current one.
                     // also avoid possible re-entries.
                     const state = this.history.currentState;
-                    if(    state.text === this.properties.text
-                        && state.pos  === this.properties.pos
-                    )
+                    if( state.text === text  && state.pos  === pos)
                         return;
                 }
 
-                this.history.push({
-                    text: this.properties.text,
-                    pos : this.properties.pos
-                });
+                this.history.push({ text, pos });
             });
         }
 

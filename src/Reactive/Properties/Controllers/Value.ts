@@ -1,6 +1,6 @@
-import { Property } from "../Property";
+import { PropertyController } from "../Property";
 
-class ValueInstance<T> implements Property<T>{
+class ValueInstance<T> implements PropertyController<T>{
 
     // keep it if we want to "reset" somehow.
     protected initial: T;

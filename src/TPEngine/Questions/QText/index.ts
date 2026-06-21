@@ -1,7 +1,7 @@
 import CodeEditor from "@/DOM/Components/code/code-editor";
 import defineWebComponent from "@/DOM/WebComponent/defineWebComponent";
-import { Value } from "@/Reactive/Properties/PropertyTypes";
-import WithProperties from "@/Reactive/Properties/WithProperties";
+import { Value } from "@/Reactive/Properties/Controllers";
+import { WithProperties } from "@/Reactive/Properties/createProperties";
 import { syncProperties } from "@/Reactive/Properties/linkProperties";
 import { observeProperties, observeProperty } from "@/Reactive/Properties/observeProperties";
 
@@ -32,7 +32,7 @@ const QText = defineWebComponent(
             if( ctrler.properties.QID === null )
                 throw new Error("Question needs a QID !");
 
-            syncProperties( ctrler, editor,
+            syncProperties( ctrler, editor.controller,
                             {
                                 lang  : "lang",
                                 answer: "text"

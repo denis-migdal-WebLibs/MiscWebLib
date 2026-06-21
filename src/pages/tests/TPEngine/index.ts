@@ -4,9 +4,9 @@ import BrowserFile from "@/TPEngine/DataStore/BrowserFile";
 import LocalStorage from "@/TPEngine/DataStore/LocalStorage";
 import StudentWork, { Question } from "@/TPEngine/StudentWork";
 
-import { observe, observeChanges } from "@/Reactive/Event";
-import { updateProperties } from "@/Reactive/Properties/PropertiesStore";
 import { resolve } from "@/DOM/ElementsResolver";
+import { observe, observeChanges } from "@/Reactive/Observers/observe";
+import { updateProperties } from "@/Reactive/Properties/createProperties";
 
 const elems = resolve(document.body, {
                             "importBtn": HTMLElement,

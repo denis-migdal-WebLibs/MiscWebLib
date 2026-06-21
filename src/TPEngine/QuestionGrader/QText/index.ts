@@ -1,7 +1,6 @@
 import CodeEditor from "@/DOM/Components/code/code-editor";
 import defineWebComponent from "@/DOM/WebComponent/defineWebComponent";
-import { updateProperties } from "@/Reactive/Properties/PropertiesStore";
-import WithProperties from "@/Reactive/Properties/WithProperties";
+import { updateProperties, WithProperties } from "@/Reactive/Properties/createProperties";
 import { QTextProperties, updateGradeColor } from "@/TPEngine/Questions/QText";
 
 const QGText = defineWebComponent(

@@ -1,7 +1,9 @@
 import JSZip from "jszip";
 import { Serializable } from "./DataStore/core/interfaces";
 import StudentWork from "./StudentWork";
-import { Observer, createEvent, trigger } from "@/Reactive/Event";
+import { createEvent } from "@/Reactive/Event";
+import { Observer } from "@/Reactive/Observers/Observer";
+import { MAIN_EVENT, trigger } from "@/Reactive/Observers/EventSource";
 
 export default class SessionData implements Serializable {
 
@@ -13,7 +15,7 @@ export default class SessionData implements Serializable {
     rendus: Record<string, StudentWork> = {};
 
     private readonly observer = new Observer( () => {
-        trigger(this.change, this.observer);
+        trigger(this, this.observer);
     });
 
     clear() {
@@ -55,7 +57,7 @@ export default class SessionData implements Serializable {
             this.rendus[studentID] = answers;
         }
     
-        trigger(this.change, origin);
+        trigger(this, origin);
     }
     async export(): Promise<ArrayBuffer> {
 
@@ -78,6 +80,6 @@ export default class SessionData implements Serializable {
         return await zip.generateAsync({type:"arraybuffer"}) as ArrayBuffer;
     }
 
-    readonly change = createEvent(this);
+    readonly [MAIN_EVENT] = createEvent(this);
 }
 

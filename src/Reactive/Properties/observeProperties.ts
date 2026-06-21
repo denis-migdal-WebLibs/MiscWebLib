@@ -1,11 +1,10 @@
-import { PropertiesProxy } from "./PropertiesStore";
-import { getProperties, WithProps } from "./WithProperties";
-import { getCallbackRegistry, observeChanges } from "../Event";
+import { observeChanges } from "../Observers/observe";
+import { getCallbackRegistry } from "../Observers/EventSource";
 import { Callback } from "../CallbackRegistry";
-
+import { getProperties, Properties, PropertiesProvider } from "./createProperties";
 
 function createCache<T extends Record<string, any>>(
-                                    target: PropertiesProxy<T>,
+                                    target: Properties<T>,
                                     keys  : readonly (Extract<keyof NoInfer<T>, string>)[]
                                 ) {
 
@@ -17,7 +16,7 @@ function createCache<T extends Record<string, any>>(
 }
 
 function updateCache<T extends Record<string, any>>(
-                                    target: PropertiesProxy<T>,
+                                    target: Properties<T>,
                                     keys  : readonly (Extract<keyof NoInfer<T>, string>)[],
                                     cache : any[]
                                 ) {
@@ -34,10 +33,10 @@ function updateCache<T extends Record<string, any>>(
 }
 
 type PropertiesCallback<T extends Record<string, any>>
-                                    = Callback<PropertiesProxy<T>>;
+                                    = Callback<Properties<T>>;
 
 export function observePropertiesChanges<T extends Record<string, any>>(
-                                    target: WithProps<T>|PropertiesProxy<T>,
+                                    target: PropertiesProvider<T>,
                                     keys  : readonly (Extract<keyof NoInfer<T>, string>)[],
                                     callback: PropertiesCallback<T>
                                 ) {
@@ -51,13 +50,12 @@ export function observePropertiesChanges<T extends Record<string, any>>(
         if( ! updateCache(target, keys, cache) )
             return;
 
-        // @ts-ignore: bad TS type inference
         callback.call(this);
     });
 }
 
 export function observePropertyChanges<T extends Record<string, any>>(
-                                    target: WithProps<T>|PropertiesProxy<T>,
+                                    target: PropertiesProvider<T>,
                                     key   : Extract<keyof NoInfer<T>, string>,
                                     callback: PropertiesCallback<T>
                                 ) {
@@ -65,22 +63,23 @@ export function observePropertyChanges<T extends Record<string, any>>(
 }
 
 export function observeProperties<T extends Record<string, any>>(
-                                    target: WithProps<T>|PropertiesProxy<T>,
+                                    target: PropertiesProvider<T>,
                                     keys  : readonly (Extract<keyof NoInfer<T>, string>)[],
                                     callback: PropertiesCallback<T>
                                 ) {
+
+    target = getProperties(target);
 
     observePropertiesChanges(target, keys, callback);
 
     const registry = getCallbackRegistry(target);
     const ctx = registry.createTriggerContext(null);
-    // @ts-ignore: bad TS type inference
     callback.call(ctx);
 }
 
 
 export function observeProperty<T extends Record<string, any>>(
-                                    target: WithProps<T>|PropertiesProxy<T>,
+                                    target: PropertiesProvider<T>,
                                     key   : Extract<keyof NoInfer<T>, string>,
                                     callback: PropertiesCallback<T>,
                                 ) {

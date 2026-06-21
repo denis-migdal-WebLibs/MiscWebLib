@@ -1,6 +1,6 @@
-import { Property } from "../Property";
+import { PropertyController } from "../Property";
 
-class SignalInstance<T> implements Property<T>{
+class SignalInstance<T> implements PropertyController<T>{
 
     // keep it if we want to "reset" somehow.
     protected initial: T;

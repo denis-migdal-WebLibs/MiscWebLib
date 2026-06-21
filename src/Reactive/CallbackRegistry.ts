@@ -11,14 +11,6 @@ export type Callback<
                 ARGS extends any[] = []
             > = (this: CallbackContext<T>, ...args: ARGS) => void;
 
-export type Event<
-            T extends object|null,
-            ARGS extends any[] = []
-        > = {
-    addListener   (callback: Callback<T, ARGS>): void;
-    removeListener(callback: Callback<T, ARGS>): void;
-}
-
 //TODO: move...
 const TypeHint = Symbol();
 export type TypeHint<T> = {
