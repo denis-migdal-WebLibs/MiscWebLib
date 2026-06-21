@@ -24,5 +24,5 @@ class SignalInstance<T> implements PropertyController<T>{
 
 // Like Value() but always trigger a change.
 export default function Signal<T>(defVal: T) {
-    return () => new SignalInstance(defVal);
+    return (_: any, initialVal = defVal) => new SignalInstance(initialVal);
 }

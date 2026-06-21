@@ -27,5 +27,5 @@ class ValueInstance<T> implements PropertyController<T>{
 }
 
 export default function Value<T>(defVal: T) {
-    return () => new ValueInstance(defVal);
+    return (_:any, initialVal = defVal) => new ValueInstance(initialVal);
 }

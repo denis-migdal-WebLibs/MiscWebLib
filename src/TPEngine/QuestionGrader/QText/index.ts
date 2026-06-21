@@ -20,7 +20,6 @@ const QGText = defineWebComponent(
         const comment = ctx.elements.comment;
         comment.value = ctrler.properties.comment;
         comment.addEventListener("input", () => {
-            console.warn("update", comment.value);
             ctrler.properties.comment = comment.value;
         });
 

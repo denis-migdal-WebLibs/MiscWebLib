@@ -57,14 +57,8 @@ function syncQuestions(
             if( data === null )
                 continue;
 
-            //TODO: update fonction or something ?
-            const update = {...data};
-            // @ts-ignore
-            delete update.QID;
-            // @ts-ignore
-            delete update.coeff;
-
-            updateProperties(questions[i], update, work);
+            // QID & coeff are fixed, won't be updated.
+            updateProperties(questions[i], data, work);
         }
     });
 }

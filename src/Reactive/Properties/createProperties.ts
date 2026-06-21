@@ -1,3 +1,4 @@
+import { NULL_OBJ } from "@/types";
 import { createEvent, Event } from "../Event";
 import { MAIN_EVENT, trigger } from "../Observers/EventSource";
 import { PropertiesControllers, PropertiesDescriptors } from "./Property";
@@ -14,7 +15,7 @@ export type Properties<T extends Record<string, any>> = {
 // ignored when "ownKeys" is used.
 export default function createProperties<T extends Record<string,any>>(
                         descriptors  : PropertiesDescriptors<T>,
-                        initialValues: null|Partial<T> = null
+                        initialValues: Partial<T> = NULL_OBJ
                     ): Properties<T> {
 
     const result = {} as Properties<T>;
@@ -26,8 +27,9 @@ export default function createProperties<T extends Record<string,any>>(
 
     for(const name in descriptors) {
 
-        //TODO: initial value here + validate...
-        controller[name] = descriptors[name](result);
+        controller[name] = descriptors[name](result, initialValues[name]);
+
+        if( __DEBUG__ ) validate(result, name);
 
         Object.defineProperty(result, name, {
             enumerable: true,
@@ -46,10 +48,6 @@ export default function createProperties<T extends Record<string,any>>(
             }
         });
     }
-
-    //TODO: move as initial values...
-    if( initialValues !== null)
-        updateProperties(result, initialValues);
 
     return result;
 }

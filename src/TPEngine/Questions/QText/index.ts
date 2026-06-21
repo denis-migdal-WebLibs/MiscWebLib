@@ -1,17 +1,17 @@
 import CodeEditor from "@/DOM/Components/code/code-editor";
 import defineWebComponent from "@/DOM/WebComponent/defineWebComponent";
-import { Value } from "@/Reactive/Properties/Controllers";
+import { Fixed, Value } from "@/Reactive/Properties/Controllers";
 import { WithProperties } from "@/Reactive/Properties/createProperties";
 import { syncProperties } from "@/Reactive/Properties/linkProperties";
 import { observeProperties, observeProperty } from "@/Reactive/Properties/observeProperties";
 
 // we assume empty string = null, avoid handling this special case.
 export const QTextProperties = {
-    QID    : Value<string|null>(null),
+    QID    : Fixed<string|null>(null),
+    coeff  : Fixed<number|null>(null),
     answer : Value(""),
     comment: Value(""),
     lang   : Value<string|null>(null),
-    coeff  : Value<number|null>(null),
     score  : Value<number|null>(null),
 }
 

@@ -1,12 +1,23 @@
 import { FCT_FALSE, NULL_OP } from "@/types";
 
-export default function Fixed<T>(value: T) {
+import { PropertyController } from "../Property";
 
-    const property = {
-        get       : () => value,
-        set       : FCT_FALSE,
-        markStale : NULL_OP
-    };
+class FixedInstance<T> implements PropertyController<T>{
 
-    return () => property;
+    // keep it if we want to "reset" somehow.
+    protected initial: T;
+    protected value  : T;
+
+    constructor(initial: T) {
+        this.value = this.initial = initial;
+    }
+
+    get() { return this.value; }
+
+    readonly set       = FCT_FALSE;
+    readonly markStale = NULL_OP;
+}
+
+export default function Fixed<T>(defVal: T) {
+    return (_:any, initialVal = defVal) => new FixedInstance(initialVal);
 }

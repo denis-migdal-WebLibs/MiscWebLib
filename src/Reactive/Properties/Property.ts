@@ -10,7 +10,7 @@ export type PropertiesControllers<T extends Record<string, any>> = {
 }
 
 export type PropertyDescriptor<CTX extends Record<string, any>, T>
-        = (ctx: Readonly<CTX>) => PropertyController<T>
+        = (ctx: Readonly<CTX>, initialValue?: T) => PropertyController<T>
 
 export type PropertiesDescriptors<T extends Record<string, any>> = {
     [K in keyof T]: PropertyDescriptor<T, T[K]>
