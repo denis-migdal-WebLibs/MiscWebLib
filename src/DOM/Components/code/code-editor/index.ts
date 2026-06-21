@@ -82,7 +82,7 @@ const CodeEditor = defineWebComponent(
 
             super(opts);
 
-            observe(this.properties, () => {
+            observe(this, () => {
 
                 const text = this.properties.text;
                 const pos = this.properties.pos;
@@ -101,11 +101,11 @@ const CodeEditor = defineWebComponent(
 
         undo() {
             this.history.prev();
-            updateProperties(this.properties, this.history.currentState);
+            updateProperties(this, this.history.currentState);
         }
         redo() {
             this.history.next();
-            updateProperties(this.properties, this.history.currentState);
+            updateProperties(this, this.history.currentState);
         }
     },
     {
@@ -153,7 +153,7 @@ const CodeEditor = defineWebComponent(
 
             function commitState() {
                 // atomic operation.
-                updateProperties(controller.properties, {
+                updateProperties(controller, {
                     text: input.text,
                     pos : input.pos
                 })

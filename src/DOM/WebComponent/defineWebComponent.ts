@@ -2,6 +2,7 @@ import { Cstr, FCT_NULL, isClass, NULL_OBJ } from "@/types";
 import { Elements } from "../ElementsResolver/core/types";
 import createViewFactory, { ViewFactoryArgs } from "./createViewFactory";
 import { WCID_DATANAME } from "../ElementsResolver/getElements";
+import { MAIN_EVENT } from "@/Reactive/Observers/EventSource";
 
 export const WC_ATTRNAME   = "config";
 function extractData<D extends Record<string,any>>(
@@ -29,11 +30,25 @@ function extractData<D extends Record<string,any>>(
     return props;
 }
 
+//TODO: redirect more...
+type GetMainEvent<C extends object|null>
+    = C extends null ? null
+                     : C extends {readonly [MAIN_EVENT]: any}
+                        ? C[typeof MAIN_EVENT]
+                        : never;
+
+function getMainEvent<C extends object|null>(c: C): GetMainEvent<C> {
+    if( c === null || ! (MAIN_EVENT in c) )
+        return null as any;
+
+    return c[MAIN_EVENT] as any;
+}
+
 type GetProperties<C extends object|null>
     = C extends null ? null
                      : C extends {readonly properties: any}
                         ? C["properties"]
-                        : null;
+                        : never;
 
 function getProperties<C extends object|null>(c: C): GetProperties<C> {
     if( c === null || ! ("properties" in c) )
@@ -89,7 +104,8 @@ export default function defineWebComponent<
         readonly view;
         readonly controller: C;
 
-        readonly properties: GetProperties<C>;
+        readonly properties  : GetProperties<C>;
+        readonly [MAIN_EVENT]: GetMainEvent<C>;
 
         //readonly _id = genId();
 
@@ -99,6 +115,7 @@ export default function defineWebComponent<
             this.view       = createView(this, data);
             this.controller = this.view.controller;
             this.properties = getProperties(this.controller);
+            this[MAIN_EVENT] = getMainEvent(this.controller);
         }
 
         // currently the most efficient way to proceed.

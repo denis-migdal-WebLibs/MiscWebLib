@@ -40,7 +40,7 @@ observeChanges(session, async function() {
     // update subject
     updateSubjectPage(session.subjectURL!, await session.corrige!.export())
 
-    updateProperties(elems.pager.properties, {
+    updateProperties(elems.pager, {
         cur: 0,
         max: session.corrige!.nbQuestions,
     });
@@ -66,7 +66,7 @@ elems.exportBtn.addEventListener("click", () => file.save() );
 
 const observers = new ObserverRegistry();
 
-observeChanges(elems.pager.properties, () => {
+observeChanges(elems.pager, () => {
 
     const QID = session.corrige!.getQuestionID( elems.pager.properties.cur );
     
@@ -87,7 +87,7 @@ observeChanges(elems.pager.properties, () => {
 
         const qg = new QGText(answer as any);
 
-        observers.observeChanges(qg.properties, () => {
+        observers.observeChanges(qg, () => {
             // @ts-ignore
             rendu.setQuestionData(qg.properties, observers)
         });
