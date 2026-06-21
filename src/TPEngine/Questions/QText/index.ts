@@ -6,8 +6,8 @@ import { syncProperties } from "@/Reactive/Properties/linkProperties";
 import { observeProperties, observeProperty } from "@/Reactive/Properties/observeProperties";
 
 // we assume empty string = null, avoid handling this special case.
-const QTextProperties = {
-    //TODO: QID
+export const QTextProperties = {
+    QID    : Value<string|null>(null),
     answer : Value(""),
     comment: Value(""),
     lang   : Value<string|null>(null),
@@ -29,6 +29,9 @@ const QText = defineWebComponent(
 
             const editor = ctx.elements.editor;
 
+            if( ctrler.properties.QID === null )
+                throw new Error("Question needs a QID !");
+
             syncProperties( ctrler, editor,
                             {
                                 lang  : "lang",
@@ -47,27 +50,32 @@ const QText = defineWebComponent(
                 const grade = ctx.elements.grade;
                 const coeff = ctrler.properties.coeff;
 
-                let gradeColor = "transparent"
-
                 if( coeff === null) { // not graded.
 
-                    ctx.target.style.setProperty("--grade-color", gradeColor);
+                    ctx.target.style.setProperty("--grade-color", 
+                                                 "transparent");
                     grade.textContent = "";
                     return;
                 }
 
                 const score = ctrler.properties.score;
 
-                if( score !== null)
-                    gradeColor = `hsl(${score * 120}, 100%, 50%)`
-
-                ctx.target.style.setProperty("--grade-color", gradeColor);
+                updateGradeColor(ctx.target, score);
 
                 const points = score === null ? "" : `${score*coeff}`;
                 ctx.elements.grade.textContent = `[${points}/${coeff}]`;
             });
         }
     });
+
+export function updateGradeColor(target: HTMLElement, score: number|null) {
+    
+    let gradeColor = "transparent";
+    if( score !== null)
+        gradeColor = `hsl(${score * 120}, 100%, 50%)`
+
+    target.style.setProperty("--grade-color", gradeColor);
+}
 
 // not ideal...
 export default QText;

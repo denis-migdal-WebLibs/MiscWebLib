@@ -1,5 +1,5 @@
 export interface Serializable {
-    import(buffer: ArrayBuffer): Promise<void>;
+    import(buffer: ArrayBuffer, origin: unknown): Promise<void>;
     export(): Promise<ArrayBuffer>;
 
     resourceName: string;
@@ -20,7 +20,7 @@ export abstract class DataStore {
         const buffer = await this.read();
         if( buffer === null) return false;
 
-        await this.target.import( buffer );
+        await this.target.import( buffer, this );
     }
     async save() {
         await this.write( await this.target.export() );

@@ -2,24 +2,31 @@
 <html>
     <head>
         <script type="module" src="./index.js"></script>
+        <style>
+            :not(:defined) {
+                display: block;
+            }
+        </style>
     </head>
     <body>
-        <q-text data-config='{"lang": "ts", "coeff": 1}'>
-            OK
-        </q-text>
-        <q-text data-config='{"lang": "ts", "coeff": 1}'>
-            OK
-        </q-text>
-        <q-text data-config='{"lang": "ts", "coeff": 1}'>
-            OK
-        </q-text>
-        <q-text data-config='{"lang": "ts", "coeff": 1}'>
-            OK
-        </q-text>
-        <q-text data-config='{"lang": "ts", "coeff": 1}'>
-            OK
-        </q-text>
-        <div class="export">[export]</div>
-        <div class="import">[import]</div>
+        <main>
+            <q-text data-config='{"QID": "12345678", "lang": "ts", "coeff": 1}'>
+                OK
+            </q-text>
+            <q-text data-config='{"QID": "22345678", "lang": "ts", "coeff": 1}'>
+                OK
+            </q-text>
+            <q-text data-config='{"QID": "32345678", "lang": "ts", "coeff": 1}'>
+                OK
+            </q-text>
+            <q-text data-config='{"QID": "42345678", "lang": "ts", "coeff": 1}'>
+                OK
+            </q-text>
+            <q-text data-config='{"QID": "52345678", "lang": "ts", "coeff": 1}'>
+                OK
+            </q-text>
+            <div data-wcid="exportBtn">[export]</div>
+            <div data-wcid="importBtn">[import]</div>
+        </main>
     </body>
 </html>
