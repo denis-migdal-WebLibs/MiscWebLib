@@ -85,6 +85,110 @@ export function observe<
     callback.apply(ctx, args);
 }
 
+export function unobserve<
+                        T    extends object|null,
+                        ARGS extends any[] = []
+                    >(
+                        target  : EventSource<Event<T, ARGS>>,
+                        callback: NoInfer<Callback<T, ARGS>>
+                    ) {
+
+    const registry = getCallbackRegistry(target);
+    registry.remove(callback);
+}
+
+//TODO move
+function inPlaceRemove(target: any[], idx: number) {
+
+    if( idx === -1 ) return;
+
+    if(idx === target.length - 1) {
+        --target.length;
+        return;
+    }
+
+    target[idx] = target[target.length-1];
+    --target.length;
+}
+
+// Register observer for easier cleanup.
+export class ObserverRegistry {
+
+    private readonly targets   = new Array<any>();
+    private readonly callbacks = new Array<any>();
+
+    observeChanges<
+                        T    extends object|null = any,
+                        ARGS extends any[] = []
+                    >(
+                        target: EventSource<Event<T, ARGS>>,
+                        callback: Callback<T, ARGS>
+                    ) {
+
+        this.targets  .push(target  );
+        this.callbacks.push(callback);
+
+        observeChanges(target, callback);
+    }
+    
+    clear() {
+        for(let i = 0; i < this.targets.length ; ++i)
+            unobserve(this.targets[i], this.callbacks[i]);
+
+        this.targets  .length = 0;
+        this.callbacks.length = 0;
+    }
+
+}
+
+// Listen to several sources at once (with the same callback).
+// Not appropriate when additional context is required.
+export class Observer<
+                        T    extends object|null = any,
+                        ARGS extends any[] = []
+                    > {
+
+    readonly callback: Callback<T, ARGS>;
+
+    readonly targets = new Array<EventSource<Event<T, ARGS>>>();
+
+    constructor(callback: Callback<T, ARGS>) {
+        this.callback = callback;
+    }
+
+    observe(target: EventSource<Event<T, ARGS>>, ...args: ARGS) {
+
+        this.observeChanges(target);
+
+        const registry = getCallbackRegistry(target);
+        const ctx = registry.createTriggerContext(this);
+        this.callback.apply(ctx, args);
+    }
+
+    observeChanges(target: EventSource<Event<T, ARGS>>) {
+        this.targets.push(target);
+        observeChanges(target, this.callback);
+    }
+
+    unobserve(target: EventSource<Event<T, ARGS>>) {
+        const idx = this.targets.lastIndexOf(target);
+        if( idx === -1 )
+            return;
+
+        // we don't care about order.
+        inPlaceRemove(this.targets, idx);
+
+        unobserve(target, this.callback);
+    }
+
+    clear() {
+        for(let i = 0; i < this.targets.length; ++i)
+            unobserve(this.targets[i], this.callback);
+
+        this.targets.length = 0
+    }
+}
+
 // => is this really useful ?
 type FilterEvents<T extends Record<string, any>> = {
     [K in keyof T as T[K] extends Event<any, any> ? K : never]: T[K]

@@ -1,5 +1,5 @@
 import { resolve } from "@/DOM/ElementsResolver";
-import { observeChanges } from "@/Reactive/Event";
+import { observeChanges, ObserverRegistry } from "@/Reactive/Event";
 import { updateProperties } from "@/Reactive/Properties/PropertiesStore";
 import BrowserFile from "@/TPEngine/DataStore/BrowserFile";
 import LocalStorage from "@/TPEngine/DataStore/LocalStorage";
@@ -62,6 +62,9 @@ const file = new BrowserFile(session, ".zip");
 elems.importBtn.addEventListener("click", () => file.load() );
 elems.exportBtn.addEventListener("click", () => file.save() );
 
+
+const observers = new ObserverRegistry();
+
 observeChanges(elems.pager.properties, () => {
 
     const QID = session.corrige!.getQuestionID( elems.pager.properties.cur );
@@ -73,14 +76,22 @@ observeChanges(elems.pager.properties, () => {
 
     const fields = new Array<HTMLElement>();
 
+    observers.clear();
+
     //TODO: merge...
     for(const student in session.rendus) {
         const rendu = session.rendus[student];
         
         const answer = rendu.getQuestionData(QID);
 
-        //TODO...
-        fields.push( new QGText(answer as any) );
+        const qg = new QGText(answer as any);
+
+        observers.observeChanges(qg.properties, () => {
+            // @ts-ignore
+            rendu.setQuestionData(qg.properties, observers)
+        });
+
+        fields.push( qg );
     }
     elems.answersArea.replaceChildren(...fields);
 });

@@ -11,7 +11,7 @@ const QGText = defineWebComponent(
     style  : __LOAD_FILE__("./index.css"),
     elements: {
         editor : CodeEditor,
-        comment: HTMLElement,
+        comment: HTMLInputElement,
         score  : HTMLInputElement,
     },
     initialize: (ctx, ctrler) => {
@@ -19,9 +19,10 @@ const QGText = defineWebComponent(
         // no sync: WE are the one pushing changes.
 
         const comment = ctx.elements.comment;
-        comment.textContent = ctrler.properties.comment;
+        comment.value = ctrler.properties.comment;
         comment.addEventListener("input", () => {
-            ctrler.properties.comment = comment.textContent;
+            console.warn("update", comment.value);
+            ctrler.properties.comment = comment.value;
         });
 
         const scoreInput = ctx.elements.score;

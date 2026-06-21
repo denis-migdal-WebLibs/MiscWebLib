@@ -40,6 +40,9 @@ export default class StudentWork implements Serializable {
     }
 
     setQuestionData(data: QuestionData<unknown>, origin: unknown) {
+
+        console.warn("R", this.resourceName);
+
         this.data[data.QID] = data;
         trigger(this.change, origin);
     }
@@ -49,8 +52,6 @@ export default class StudentWork implements Serializable {
     }
 
     async import(buffer: ArrayBuffer, origin: unknown) {
-        
-        console.warn("importing subject...", origin);
 
         const zip = new JSZip();
         await zip.loadAsync(buffer);
@@ -58,7 +59,6 @@ export default class StudentWork implements Serializable {
         const file = zip.file("answers")!;
         this.data = JSON.parse( await file.async("string") ); // as X
 
-        console.warn("end of importing subject...")
         trigger(this.change, origin);
     }
     async export() {

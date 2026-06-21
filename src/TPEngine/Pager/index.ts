@@ -1,13 +1,13 @@
 import taskTrigger from "@/DOM/FrameScheduler/taskTrigger";
 import defineWebComponent from "@/DOM/WebComponent/defineWebComponent";
 import { observe } from "@/Reactive/Event";
-import { Value } from "@/Reactive/Properties/PropertyTypes";
+import { Signal, Value } from "@/Reactive/Properties/PropertyTypes";
 import WithProperties from "@/Reactive/Properties/WithProperties";
 
 const Pager = defineWebComponent(
     WithProperties({
         cur: Value(0),
-        max: Value(0)
+        max: Signal(0) // each affection triggers a change.
     }),
     {
         name   : "wc-pager",
