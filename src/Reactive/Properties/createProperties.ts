@@ -52,7 +52,7 @@ export default function createProperties<T extends Record<string,any>>(
     return result;
 }
 
-type WithProperties<T extends Record<string, any>> = {
+export type WithProperties<T extends Record<string, any>> = {
     readonly properties  : Properties<T>;
     readonly [MAIN_EVENT]: Event<Properties<T>>;
 }
@@ -108,6 +108,24 @@ export function getProperties<T extends Record<string, any>>(
         return target.properties;
 
     return target;
+}
+
+export function setProperty<
+                                T extends Record<string, any>,
+                                K extends Extract<keyof T, string>
+                            >(
+                                        target: PropertiesProvider<T>,
+                                        name  : NoInfer<K>,
+                                        value : NoInfer<T[K]>,
+                                        origin: unknown = null
+                                    ) {
+    target = getProperties(target);
+
+    if( ! target[CONTROLLERS][name].set(value) )
+        return;
+
+    if( __DEBUG__ ) validate(target, name);
+    notifyChange(target, origin);
 }
 
 export function updateProperties<T extends Record<string, any>>(

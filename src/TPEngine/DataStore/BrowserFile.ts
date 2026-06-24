@@ -6,10 +6,14 @@ import { upload } from "./core/upload";
 export default class BrowserFile extends DataStore {
 
     readonly extension: string;
+    readonly defaultName: string|null = null;
 
-    constructor(target: Serializable, extension: string) {
+    constructor(target       : Serializable,
+                extension    : string,
+                defaultName  : string|null = null) {
         super(target);
         this.extension = extension;
+        this.defaultName = defaultName;
     }
 
     override async read(): Promise<ArrayBuffer|null> {
@@ -24,6 +28,7 @@ export default class BrowserFile extends DataStore {
 
     override async write(buffer: ArrayBuffer) {
         
-        download( buffer, this.target.resourceName, this.extension);
+        download( buffer, this.defaultName ?? this.target.resourceName,
+                    this.extension);
     }
 }

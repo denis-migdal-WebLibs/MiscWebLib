@@ -8,7 +8,6 @@ import Pager from "@/TPEngine/Pager";
 import QGText from "@/TPEngine/QuestionGrader/QText";
 import SessionData from "@/TPEngine/SessionData";
 
-
 const elems = resolve(document.body, {
                         importBtn  : HTMLElement,
                         exportBtn  : HTMLElement,
@@ -50,7 +49,7 @@ observeChanges(session, async function() {
 })
 
 //TODO...
-const localStore = new LocalStorage(session, "y");
+const localStore = new LocalStorage(session, "corrector.sav");
 await localStore.load();
 
 observeChanges(session, async function() {
