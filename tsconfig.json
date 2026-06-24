@@ -10,7 +10,8 @@
         "outDir": "./build/TS",
 
         "paths": {
-            "@/*": ["./src/*"]
+            "MWL@2026:*"     : ["./src/*"],
+            "TPEngine@2026:*": ["./src/TPEngine/*"],
         }
     }
 }

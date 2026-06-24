@@ -1,5 +1,5 @@
-import CallbackRegistry from "@/Reactive/CallbackRegistry";
-import GuardedState from "@/GuardedState";
+import CallbackRegistry from "MWL@2026:Reactive/CallbackRegistry";
+import GuardedState from "MWL@2026:GuardedState";
 
 type FrameTask = () => void;
 

@@ -1,7 +1,7 @@
 import CallbackRegistry from "../CallbackRegistry";
 import type { Event } from "../Event";
 
-export const MAIN_EVENT = Symbol();
+export const MAIN_EVENT: unique symbol = Symbol();
 
 export type Observable<E extends Event<any,any>> = E
                                                 | {readonly [MAIN_EVENT]: E};

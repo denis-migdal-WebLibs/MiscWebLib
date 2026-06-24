@@ -1,4 +1,4 @@
-import { FCT_FALSE, NULL_OP } from "@/types";
+import { FCT_FALSE, NULL_OP } from "MWL@2026:types";
 
 export default function Constant<T>(value: T) {
 

@@ -1,9 +1,10 @@
+import { createEvent } from "MWL@2026:Reactive/Event";
+import { Observer } from "MWL@2026:Reactive/Observers/Observer";
+import { MAIN_EVENT, trigger } from "MWL@2026:Reactive/Observers/EventSource";
+
 import JSZip from "jszip";
 import { Serializable } from "./DataStore/core/interfaces";
 import StudentWork from "./StudentWork";
-import { createEvent } from "@/Reactive/Event";
-import { Observer } from "@/Reactive/Observers/Observer";
-import { MAIN_EVENT, trigger } from "@/Reactive/Observers/EventSource";
 
 export default class SessionData implements Serializable {
 

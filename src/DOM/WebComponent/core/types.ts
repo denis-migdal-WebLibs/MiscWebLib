@@ -1,5 +1,5 @@
-import { Elements } from "@/DOM/ElementsResolver";
-import { ExtractionTarget } from "@/DOM/ElementsResolver/core/types";
+import { Elements } from "MWL@2026:DOM/ElementsResolver";
+import { ExtractionTarget } from "MWL@2026:DOM/ElementsResolver/core/types";
 
 export type Root = ExtractionTarget;
 

@@ -1,4 +1,4 @@
-import defineWebComponent from "@/DOM/WebComponent/defineWebComponent";
+import defineWebComponent from "MWL@2026:DOM/WebComponent/defineWebComponent";
 
 const Klass = defineWebComponent(
     class X {

@@ -1,10 +1,11 @@
-import { Cstr, isClass } from "@/types";
+import { Cstr, isClass } from "MWL@2026:types";
+import { FCT_NULL_OBJ } from "MWL@2026:types/NullObjects";
+
 import { Elements, ExtractionTarget } from "./core/types";
 import getElements from "./getElements";
 import resolveElements, { Resolver, Resolvers } from "./resolveElements";
 import classResolver from "./resolvers/classResolver";
 import instanceResolver from "./resolvers/instanceResolver";
-import { FCT_NULL_OBJ } from "@/types/NullObjects";
 
 type Descriptors<E extends Elements> = {
     [K in keyof E]: Resolver<E[K]>|Cstr<E[K]>|E[K]

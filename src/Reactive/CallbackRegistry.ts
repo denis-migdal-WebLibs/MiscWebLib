@@ -1,4 +1,4 @@
-import { NULL_OP } from "@/types";
+import { NULL_OP } from "MWL@2026:types";
 
 export type CallbackContext<T extends object|null> = {
     readonly target: T,

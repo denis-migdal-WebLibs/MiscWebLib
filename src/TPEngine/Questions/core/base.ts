@@ -1,6 +1,6 @@
-import { Fixed, Value } from "@/Reactive/Properties/Controllers";
-import {type WithProperties} from "@/Reactive/Properties/createProperties";
-import { observeProperties, observeProperty } from "@/Reactive/Properties/observeProperties";
+import { Fixed, Value } from "MWL@2026:Reactive/Properties/Controllers";
+import {type WithProperties} from "MWL@2026:Reactive/Properties/createProperties";
+import { observeProperties, observeProperty } from "MWL@2026:Reactive/Properties/observeProperties";
 
 export function QProperties<T>(initialAnswer: T) {
     return {

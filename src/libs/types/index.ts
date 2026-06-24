@@ -1,1 +1,1 @@
-export * from "@/types";
+export * from "MWL@2026:types";

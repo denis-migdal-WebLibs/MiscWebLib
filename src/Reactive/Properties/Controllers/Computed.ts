@@ -1,4 +1,4 @@
-import { NO_VALUE } from "@/types";
+import { NO_VALUE } from "MWL@2026:types";
 import { PropertyController } from "../Property";
 
 class ComputedInstance<CTX extends Record<string, any>, T>

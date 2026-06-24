@@ -1,7 +1,7 @@
-import html from "@/DOM/ShadowTemplate/parsers/html";
-import { observeChanges } from "@/Reactive/Observers/observe";
-import BrowserFile from "@/TPEngine/DataStore/BrowserFile";
-import { QuestionElement, SubjectPage } from "@/TPEngine/SubjectPage";
+import html from "MWL@2026:DOM/ShadowTemplate/parsers/html";
+import { observeChanges } from "MWL@2026:Reactive/Observers/observe";
+import BrowserFile from "TPEngine@2026:DataStore/BrowserFile";
+import { QuestionElement, SubjectPage } from "TPEngine@2026:SubjectPage";
 
 /////
 // DS mode

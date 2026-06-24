@@ -1,8 +1,8 @@
-import taskTrigger from "@/DOM/FrameScheduler/taskTrigger";
-import defineWebComponent from "@/DOM/WebComponent/defineWebComponent";
-import { Signal, Value } from "@/Reactive/Properties/Controllers";
-import { WithProperties } from "@/Reactive/Properties/createProperties";
-import { observe } from "@/Reactive/Observers/observe";
+import taskTrigger from "MWL@2026:DOM/FrameScheduler/taskTrigger";
+import defineWebComponent from "MWL@2026:DOM/WebComponent/defineWebComponent";
+import { Signal, Value } from "MWL@2026:Reactive/Properties/Controllers";
+import { WithProperties } from "MWL@2026:Reactive/Properties/createProperties";
+import { observe } from "MWL@2026:Reactive/Observers/observe";
 
 const Pager = defineWebComponent(
     WithProperties({

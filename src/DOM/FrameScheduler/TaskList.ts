@@ -1,5 +1,5 @@
-import CallbackRegistry from "@/Reactive/CallbackRegistry";
 import Task from "./Task";
+import CallbackRegistry from "MWL@2026:Reactive/CallbackRegistry";
 
 //TODO: move to types ?
 type Public<T> = { [K in keyof T]: T[K]; };

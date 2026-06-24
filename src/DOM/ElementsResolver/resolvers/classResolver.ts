@@ -1,4 +1,4 @@
-import { Cstr } from "@/types";
+import { Cstr } from "MWL@2026:types";
 
 export default function classResolver<K extends Cstr<HTMLElement>>(klass: K) {
     return (target: HTMLElement) => {

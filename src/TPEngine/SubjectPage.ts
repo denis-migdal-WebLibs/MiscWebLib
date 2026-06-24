@@ -1,9 +1,10 @@
-import { observe, observeChanges } from "@/Reactive/Observers/observe";
+import { observe, observeChanges } from "MWL@2026:Reactive/Observers/observe";
+import { updateProperties, WithProperties } from "MWL@2026:Reactive/Properties/createProperties";
+
 import LocalStorage from "./DataStore/LocalStorage";
 import StudentWork, { Question } from "./StudentWork";
-import { updateProperties, WithProperties } from "@/Reactive/Properties/createProperties";
 
-import "@/TPEngine/Questions/";
+import "TPEngine@2026:Questions/";
 
 export type QuestionElement = HTMLElement & WithProperties<Question<unknown>>;
 

@@ -1,17 +1,17 @@
-import defineWebComponent from "@/DOM/WebComponent/defineWebComponent";
+import defineWebComponent from "MWL@2026:DOM/WebComponent/defineWebComponent";
 import { getCursorBegPos, getCursorEndPos, getCursorPos, hl, setCursorPos } from "../hl";
-import UNDO from "@/DOM/UiEvents/undo";
-import { connectEvents } from "@/DOM/UiEvents/core/connectEvent";
-import REDO from "@/DOM/UiEvents/redo";
-import NEWLINE from "@/DOM/UiEvents/newline";
-import TAB from "@/DOM/UiEvents/tab";
-import on from "@/DOM/UiEvents/core/on";
-import StateHistory from "@/StateHistory";
-import taskTrigger from "@/DOM/FrameScheduler/taskTrigger";
-import { Value } from "@/Reactive/Properties/Controllers";
-import { updateProperties, WithProperties } from "@/Reactive/Properties/createProperties";
-import { GetPropertiesType } from "@/Reactive/Properties/Property";
-import { observe } from "@/Reactive/Observers/observe";
+import UNDO from "MWL@2026:DOM/UiEvents/undo";
+import { connectEvents } from "MWL@2026:DOM/UiEvents/core/connectEvent";
+import REDO from "MWL@2026:DOM/UiEvents/redo";
+import NEWLINE from "MWL@2026:DOM/UiEvents/newline";
+import TAB from "MWL@2026:DOM/UiEvents/tab";
+import on from "MWL@2026:DOM/UiEvents/core/on";
+import StateHistory from "MWL@2026:StateHistory";
+import taskTrigger from "MWL@2026:DOM/FrameScheduler/taskTrigger";
+import { Value } from "MWL@2026:Reactive/Properties/Controllers";
+import { updateProperties, WithProperties } from "MWL@2026:Reactive/Properties/createProperties";
+import { GetPropertiesType } from "MWL@2026:Reactive/Properties/Property";
+import { observe } from "MWL@2026:Reactive/Observers/observe";
 
 type InputState = {
     text: string,

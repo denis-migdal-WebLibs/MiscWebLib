@@ -1,8 +1,9 @@
-import { createEvent } from "@/Reactive/Event";
+import { createEvent } from "MWL@2026:Reactive/Event";
+import { Properties } from "MWL@2026:Reactive/Properties/createProperties";
+import { MAIN_EVENT, trigger } from "MWL@2026:Reactive/Observers/EventSource";
+
 import JSZip from "jszip";
 import { Serializable } from "./DataStore/core/interfaces";
-import { Properties } from "@/Reactive/Properties/createProperties";
-import { MAIN_EVENT, trigger } from "@/Reactive/Observers/EventSource";
 
 type QuestionData<T extends unknown> = {
     QID    : string,

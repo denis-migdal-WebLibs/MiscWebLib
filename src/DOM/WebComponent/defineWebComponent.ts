@@ -1,8 +1,9 @@
-import { Cstr, FCT_NULL, isClass, NULL_OBJ } from "@/types";
+import { Cstr, FCT_NULL, isClass, NULL_OBJ } from "MWL@2026:types";
+import { MAIN_EVENT } from "MWL@2026:Reactive/Observers/EventSource";
+
 import { Elements } from "../ElementsResolver/core/types";
 import createViewFactory, { ViewFactoryArgs } from "./createViewFactory";
 import { WCID_DATANAME } from "../ElementsResolver/getElements";
-import { MAIN_EVENT } from "@/Reactive/Observers/EventSource";
 
 export const WC_ATTRNAME   = "config";
 function extractData<D extends Record<string,any>>(

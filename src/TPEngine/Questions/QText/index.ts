@@ -1,8 +1,9 @@
-import CodeEditor from "@/DOM/Components/code/code-editor";
-import defineWebComponent from "@/DOM/WebComponent/defineWebComponent";
-import { Value } from "@/Reactive/Properties/Controllers";
-import { WithProperties } from "@/Reactive/Properties/createProperties";
-import { syncProperties } from "@/Reactive/Properties/linkProperties";
+import CodeEditor from "MWL@2026:DOM/Components/code/code-editor";
+import defineWebComponent from "MWL@2026:DOM/WebComponent/defineWebComponent";
+import { Value } from "MWL@2026:Reactive/Properties/Controllers";
+import { WithProperties } from "MWL@2026:Reactive/Properties/createProperties";
+import { syncProperties } from "MWL@2026:Reactive/Properties/linkProperties";
+
 import { baseStyle, observeMeta, QProperties } from "../core/base";
 
 // we assume empty string = null, avoid handling this special case.

@@ -1,4 +1,4 @@
-import { NULL_OBJ } from "@/types";
+import { NULL_OBJ } from "MWL@2026:types";
 import { createEvent, Event } from "../Event";
 import { MAIN_EVENT, trigger } from "../Observers/EventSource";
 import { PropertiesControllers, PropertiesDescriptors } from "./Property";

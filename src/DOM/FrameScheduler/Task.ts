@@ -1,6 +1,7 @@
-import GuardedState from "@/GuardedState";
+import GuardedState from "MWL@2026:GuardedState";
+import { NULL_OP } from "MWL@2026:types";
+
 import scheduler from "./FrameScheduler";
-import { NULL_OP } from "@/types";
 
 export default class Task {
 

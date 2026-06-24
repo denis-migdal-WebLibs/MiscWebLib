@@ -1,11 +1,11 @@
-import defineWebComponent from "@/DOM/WebComponent/defineWebComponent";
-import { WithProperties } from "@/Reactive/Properties/createProperties";
+import defineWebComponent from "MWL@2026:DOM/WebComponent/defineWebComponent";
+import { WithProperties } from "MWL@2026:Reactive/Properties/createProperties";
 import { baseStyle, observeMeta, QProperties, updateGradeColor } from "../core/base";
-import { Computed, Fixed, Value } from "@/Reactive/Properties/Controllers";
-import CodeEditor from "@/DOM/Components/code/code-editor";
-import html from "@/DOM/ShadowTemplate/parsers/html";
-import { observeProperty, observePropertyChanges } from "@/Reactive/Properties/observeProperties";
-import { setProperty } from "@/Reactive/Properties/createProperties";
+import { Computed, Fixed, Value } from "MWL@2026:Reactive/Properties/Controllers";
+import CodeEditor from "MWL@2026:DOM/Components/code/code-editor";
+import html from "MWL@2026:DOM/ShadowTemplate/parsers/html";
+import { observeProperty, observePropertyChanges } from "MWL@2026:Reactive/Properties/observeProperties";
+import { setProperty } from "MWL@2026:Reactive/Properties/createProperties";
 
 export const QMultiTextProperties = {
     ...QProperties<null|readonly string[]>(null),
