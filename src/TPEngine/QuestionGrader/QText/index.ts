@@ -1,4 +1,4 @@
-import CodeEditor from "MWL@2026:DOM/Components/code/code-editor";
+import CodeEditor from "MWL@2026:Components/code/code-editor";
 import defineWebComponent from "MWL@2026:DOM/WebComponent/defineWebComponent";
 import { updateProperties, WithProperties } from "MWL@2026:Reactive/Properties/createProperties";
 import { updateGradeColor } from "MWL@2026:TPEngine/Questions/core/base";

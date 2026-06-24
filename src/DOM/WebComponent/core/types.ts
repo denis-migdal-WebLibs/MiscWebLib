@@ -1,7 +1,6 @@
 import { Elements } from "MWL@2026:DOM/ElementsResolver";
-import { ExtractionTarget } from "MWL@2026:DOM/ElementsResolver/core/types";
 
-export type Root = ExtractionTarget;
+export type Root = HTMLElement|ShadowRoot;
 
 export type ViewCtx<E extends Elements = Elements> = {
     target  : HTMLElement,
