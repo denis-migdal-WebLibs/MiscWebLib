@@ -8,6 +8,13 @@ import "TPEngine@2026:Questions/";
 
 export type QuestionElement = HTMLElement & WithProperties<Question<unknown>>;
 
+function genQID() {
+    return Math.random().toString(16).slice(2,10)
+}
+
+// @ts-ignore
+globalThis["genQID"] = genQID;
+
 export class SubjectPage {
 
     readonly studentWork = new StudentWork();
@@ -47,7 +54,7 @@ export class SubjectPage {
 
             if( questions[i].QID === null) {
                
-                console.warn("Question needs a QID !\n", Math.random().toString(16).slice(2,10));
+                console.warn("Question needs a QID !\n", genQID());
 
                 continue;
             }
