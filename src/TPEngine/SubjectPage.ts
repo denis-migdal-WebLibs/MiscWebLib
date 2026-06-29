@@ -8,8 +8,6 @@ import "TPEngine@2026:Questions/";
 
 export type QuestionElement = HTMLElement & WithProperties<Question<unknown>>;
 
-//TODO: localstorage name...
-
 export class SubjectPage {
 
     readonly studentWork = new StudentWork();
@@ -46,6 +44,14 @@ export class SubjectPage {
         const questions = this.questions.map( q => q.properties);
 
         for(let i = 0; i < questions.length; ++i) {
+
+            if( questions[i].QID === null) {
+               
+                console.warn("Question needs a QID !\n", Math.random().toString(16).slice(2,10));
+
+                continue;
+            }
+
             observeChanges(questions[i], function() {
                 if( this.origin === work) return;
     

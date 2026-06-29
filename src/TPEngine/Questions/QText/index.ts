@@ -26,9 +26,6 @@ export default defineWebComponent(
 
             const editor = ctx.elements.editor;
 
-            if( ctrler.properties.QID === null )
-                throw new Error("Question needs a QID !");
-
             syncProperties( ctrler, editor.controller,
                             {
                                 lang  : "lang",

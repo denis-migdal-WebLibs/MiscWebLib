@@ -90,31 +90,3 @@ export default defineWebComponent(
             });
         }
     });
-
-/*
-
-    constructor() {
-        super();
-
-        // link input
-        this.parsedInput.addListener( () => this.updateGUI() );
-        toManyLink(this.parsedInput,
-                   this.fields.map(f => f.inputSignal),
-                   (idx) => {
-                        return {
-                            value: this.input.answer?.[idx] ?? ""
-                        }
-                   });
-
-        // link output
-        fromManyLink(this.fields.map(f => f.outputSignal),
-                     this.outputSignal,
-                     () => {
-                        return {
-                            answer: this.fields.map( f => f.output.value ),
-                            meta  : this.parsedInput.value.meta
-                        }
-                    });
-    }
-}
-*/
