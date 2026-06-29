@@ -18,9 +18,8 @@ if( isDS && student === null ) {
 }
 
 const FILE_EXT = ".answers";
-//TODO: override default export filename ?
-const EXPORT_FILENAME = isDS ? `${location.pathname.slice(1,-1).replaceAll("/", "_")}${FILE_EXT}`
-                             : `${location.hostname}_${student}${FILE_EXT}`;
+const EXPORT_FILENAME = isDS ? `${location.hostname}_${student}${FILE_EXT}`
+                             : `${location.pathname.slice(1,-1).replaceAll("/", "_")}${FILE_EXT}`;
 
 //////
 
