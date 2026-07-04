@@ -2,7 +2,6 @@
     "extends": "./build/WebpackFramework/files/tsconfig.json",
 
     "include": ["./src"],
-    "exclude": ["./src/signals", "./src/ui", "./src/debug.ts", "./src/History.ts", "./src/Proxy.ts" ],
 
     "compilerOptions": {
 
@@ -11,7 +10,6 @@
 
         "paths": {
             "MWL@2026:*"     : ["./src/*"],
-            "TPEngine@2026:*": ["./src/TPEngine/*"],
         }
     }
 }
