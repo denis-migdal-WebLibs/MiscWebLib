@@ -4,7 +4,7 @@ import { WithProperties } from "MWL@2026:Reactive/Properties/createProperties";
 import { Fixed } from "MWL@2026:Reactive/Properties/Controllers";
 
 const css   = __LOAD_FILE__("./index.css");
-const theme = __LOAD_FILE__("@LISS/components/code/Tomorrow.css");
+const theme = __LOAD_FILE__("../Tomorrow.css");
 
 const Script = defineWebComponent(WithProperties({
         // we assume that the script content should not be modified.
