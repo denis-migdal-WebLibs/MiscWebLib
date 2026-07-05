@@ -7,7 +7,7 @@ import NEWLINE from "MWL@2026:DOM/UiEvents/newline";
 import TAB from "MWL@2026:DOM/UiEvents/tab";
 import on from "MWL@2026:DOM/UiEvents/core/on";
 import StateHistory from "MWL@2026:StateHistory";
-import taskTrigger from "MWL@2026:DOM/FrameScheduler/taskTrigger";
+import deferredCallback from "MWL@2026:DOM/FrameScheduler/deferredCallback";
 import { Value } from "MWL@2026:Reactive/Properties/Controllers";
 import { updateProperties, WithProperties } from "MWL@2026:Reactive/Properties/createProperties";
 import { GetPropertiesType } from "MWL@2026:Reactive/Properties/Property";
@@ -126,7 +126,7 @@ const CodeEditor = defineWebComponent(
             });
 
             observe(controller,
-                    taskTrigger(renderer, () => {
+                    deferredCallback(renderer, () => {
                         input.text = controller.properties.text;
                         input.pos  = controller.properties.pos;
                         input.push();

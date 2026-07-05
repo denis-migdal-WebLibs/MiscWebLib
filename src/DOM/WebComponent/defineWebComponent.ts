@@ -105,6 +105,7 @@ export default function defineWebComponent<
         readonly view;
         readonly controller: C;
 
+        // ...
         readonly properties  : GetProperties<C>;
         readonly [MAIN_EVENT]: GetMainEvent<C>;
 
@@ -115,8 +116,10 @@ export default function defineWebComponent<
 
             this.view       = createView(this, data);
             this.controller = this.view.controller;
-            this.properties = getProperties(this.controller);
-            this[MAIN_EVENT] = getMainEvent(this.controller);
+
+            // ...
+            this.properties  = getProperties(this.controller);
+            this[MAIN_EVENT] = getMainEvent (this.controller);
         }
 
         // currently the most efficient way to proceed.
