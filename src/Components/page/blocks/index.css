@@ -1,4 +1,3 @@
-
 todo {
     display: block;
 
@@ -12,56 +11,56 @@ todo {
     }
 }
 
-.danger {
+.danger, .hint, .info, .exo, div.custom {
+
     margin-top: 1px;
     margin-bottom: 1px;
 
-    border-left: 2px solid red;
-    padding-left: 4px;
-/*
     border-radius: 5px;
-    background-color: color-mix(in srgb, red 25%, black);
-*/
+    border-left: 2px solid var(--block-color);
+    padding-left: 4px;
+
+    background-color: color-mix(in srgb, var(--block-color) 40%, light-dark(white, black));
 
     &::before {
-        color: red;
-        content: "⚠ "
+        color: var(--block-color);
+        content: var(--block-symbol) " ";
     }
+}
+
+.danger {
+    --block-color: red;
+    --block-symbol: "⚠";
 }
 
 .hint {
-    border-left: 2px solid yellow;
-    padding-left: 4px;
-
-    &::before {
-        content: "💡 "
-    }
+    --block-color: yellow;
+    --block-symbol: "💡";
 }
 
 .info {
-    border-left: 2px solid orange;
-    padding-left: 4px;
-
-    &::before {
-        content: "📚 "
-    }
+    --block-color: orange;
+    --block-symbol: "📚";
 }
 
 .exo {
-
-    border-left: 2px solid green;
-    padding-left: 4px;
+    --block-color: green;
+    --block-symbol: "🧩";
 
     font-style: italic;
 
     &::before {
-        content: "🧩 ";
         font-style: normal;
     }
 
     & summary {
         margin-top: 5px;
     }
+}
+
+div.custom {
+    --block-color: gray;
+    --block-symbol: "Ⓟ";
 }
 
 code-script.custom::before {
