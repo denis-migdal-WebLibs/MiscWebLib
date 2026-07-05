@@ -1,3 +1,20 @@
+
+img {
+    break-inside: avoid;
+
+    max-width: 100%;
+
+    &[src$=".svg"] {
+
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+
+        width:60%;
+        border-radius:5px;
+    }
+}
+
 todo {
     display: block;
 
