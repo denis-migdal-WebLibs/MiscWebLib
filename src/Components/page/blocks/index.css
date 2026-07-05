@@ -15,6 +15,15 @@ img {
     }
 }
 
+quote {
+    &::before {
+        content: "«"
+    }
+    &::after {
+        content: "»"
+    }
+}
+
 todo {
     display: block;
 
