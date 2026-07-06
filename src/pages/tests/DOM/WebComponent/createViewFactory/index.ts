@@ -4,22 +4,19 @@ class X {
     foo() {}
 }
 
-const factory = createViewFactory( (_a: number) => new X(),
-    {
+const factory = createViewFactory({
         content : "<div data-wcid='ok'>ok</div>",
         style   : ":host{ background-color: blue }",
         elements: {
             ok: HTMLDivElement
         },
-        initialize: (ctx, ctrler, renderer) => {
-            console.warn("init", ctx, ctrler, renderer);
+        initialize(ctrler: X) {
+            console.warn("init", this, ctrler);
         }
     });
 
 const target = document.querySelector("div")!;
 
-const obj = factory(target, 34);
-
-obj.ctx.elements;
+const obj = factory(target, new X() );
 
 console.warn(obj);

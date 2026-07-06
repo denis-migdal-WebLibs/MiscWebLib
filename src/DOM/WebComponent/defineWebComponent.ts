@@ -1,134 +1,55 @@
-import { Cstr, FCT_NULL, isClass, NULL_OBJ } from "MWL@2026:types";
 import { MAIN_EVENT } from "MWL@2026:Reactive/Observers/EventSource";
 
 import { Elements } from "../ElementsResolver/core/types";
 import createViewFactory, { ViewFactoryArgs } from "./createViewFactory";
-import { WCID_DATANAME } from "../ElementsResolver/getElements";
-
-export const WC_ATTRNAME   = "config";
-function extractData<D extends Record<string,any>>(
-                                                target: HTMLElement,
-                                                override: Partial<D>
-                                            ) {
-
-    if( override !== NULL_OBJ )
-        return override;
-
-    let props: Partial<D> = {};
-
-    const attrValue = target.dataset[WC_ATTRNAME];
-    if( attrValue !== undefined)
-        props = JSON.parse( attrValue );
-
-    for( const name in target.dataset ) {
-
-        if( name === WC_ATTRNAME || name === WCID_DATANAME) continue;
-
-        // @ts-ignore
-        props[name] = target.dataset[name]!;
-    }
-
-    return props;
-}
-
-//TODO: redirect more...
-type GetMainEvent<C extends object|null>
-    = C extends null ? null
-                     : C extends {readonly [MAIN_EVENT]: any}
-                        ? C[typeof MAIN_EVENT]
-                        : never;
-
-function getMainEvent<C extends object|null>(c: C): GetMainEvent<C> {
-    if( c === null || ! (MAIN_EVENT in c) )
-        return null as any;
-
-    return c[MAIN_EVENT] as any;
-}
-
-type GetProperties<C extends object|null>
-    = C extends null ? null
-                     : C extends {readonly properties: any}
-                        ? C["properties"]
-                        : never;
-
-function getProperties<C extends object|null>(c: C): GetProperties<C> {
-    if( c === null || ! ("properties" in c) )
-        return null as any;
-
-    return c.properties as any;
-}
-
-type ControllerCstr<C extends object|null,
-                    D extends Record<string, any>
-                > = C extends null ? null : Cstr<Exclude<C,null>, [Partial<D>]>;
-
-function toFactory<C extends object,
-                    D extends Record<string, any>
-                >(Klass: ControllerCstr<C, D>) {
-
-    return function(this: HTMLElement, data: Partial<D> = NULL_OBJ): C {
-        data = extractData(this, data);
-        return new Klass(data) as C;
-    }
-}
-
-type ControllerFactory<
-                    C extends object|null,
-                    D extends Record<string, any>
-                > = (this: HTMLElement, data: Partial<D>) => C;
+import { asControllerFactory, ControllerProvider } from "./core/controller";
+import { getMember, MemberType } from "./core/memberResolver";
+import { NULL_OBJ } from "MWL@2026:types";
 
 export default function defineWebComponent<
-                        C extends object|null         = null,
-                        E extends Elements            = {},
-                        D extends Record<string, any> = {}
+                        E         extends Elements    = {},
+                        API       extends object|void = void,
+                        CTRLER    extends object|void = void,
+                        D         extends Record<string, any> = {},
                 >(
-                    Controller:
-                          ControllerFactory<C,D>
-                        | ControllerCstr   <C,D>,
-                    args      : ViewFactoryArgs<NoInfer<C>, E>
-                              & {name: Lowercase<`${string}-${string}`>}
+                    args: {
+                            name: Lowercase<`${string}-${string}`>,
+                            Controller?: ControllerProvider<CTRLER, D>
+                        }
+                        & ViewFactoryArgs<E, API, [CTRLER]>
                 ) {
 
-    let factory: ControllerFactory<C,D>;
-
-    if( Controller === null )
-        factory = FCT_NULL as any as ControllerFactory<C,D>;
-    else if( isClass( Controller) )
-        factory = toFactory(Controller) as ControllerFactory<C,D>;
-    else
-        factory = Controller;
-
-    const createView = createViewFactory( factory, args );
+    const ctrlerFactory = asControllerFactory(args.Controller);
+    const createView    = createViewFactory( args );
 
     class WebComponent extends HTMLElement {
 
-        readonly view;
-        readonly controller: C;
+        readonly renderer;
 
-        // ...
-        readonly properties  : GetProperties<C>;
-        readonly [MAIN_EVENT]: GetMainEvent<C>;
+        readonly api: API;
+        readonly properties  : MemberType<API, "properties">;
+        readonly [MAIN_EVENT]: MemberType<API, typeof MAIN_EVENT>;
 
         //readonly _id = genId();
 
         constructor(data: Partial<D> = NULL_OBJ) {
             super();
 
-            this.view       = createView(this, data);
-            this.controller = this.view.controller;
+            const controller = ctrlerFactory.call(this, data);
 
-            // ...
-            this.properties  = getProperties(this.controller);
-            this[MAIN_EVENT] = getMainEvent (this.controller);
+            const view    = createView(this, controller);
+            this.renderer = view.renderer;
+
+            this.api = view.api;
+
+            this.properties  = getMember(this.api, "properties");
+            this[MAIN_EVENT] = getMember(this.api, MAIN_EVENT);
         }
 
         // currently the most efficient way to proceed.
         // IntersectionObserver has a frame of latency...
-        connectedCallback   () { this.view.renderer.resume(); }
-        disconnectedCallback() { this.view.renderer.suspend(); }
-
-        forceUiRefresh  () { return this.view.renderer.executeNow(); }
-        requestUiRefresh() { return this.view.renderer.schedule(); }
+        connectedCallback   () { this.renderer.resume(); }
+        disconnectedCallback() { this.renderer.suspend(); }
     }
 
     customElements.define(args.name, WebComponent);

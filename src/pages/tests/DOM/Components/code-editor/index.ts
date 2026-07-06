@@ -1,1 +1,1 @@
-import "MWL@2026:DOM/Components/code/code-editor";
+import "MWL@2026:Components/code/code-editor";

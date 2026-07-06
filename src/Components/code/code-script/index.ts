@@ -6,20 +6,21 @@ import { Fixed } from "MWL@2026:Reactive/Properties/Controllers";
 const css   = __LOAD_FILE__("./index.css");
 const theme = __LOAD_FILE__("../Tomorrow.css");
 
-const Script = defineWebComponent(WithProperties({
-        // we assume that the script content should not be modified.
-        text: Fixed<string>(""),
-        lang: Fixed<string>("text"),
-    }), {
+const Script = defineWebComponent({
         name: "code-script",
+        Controller: WithProperties({
+            // we assume that the script content should not be modified.
+            text: Fixed<string>(""),
+            lang: Fixed<string>("text"),
+        }),
         style: [theme, css],
-        initialize: (ctx, ctrler) => {
+        initialize(ctrler) {
 
-            let text = ctrler.properties.text;
+            let text   = ctrler.properties.text;
             const lang = ctrler.properties.lang;
 
             if(text[0] === '\n') {
-                ctx.target.classList.toggle("block", true);
+                this.target.classList.toggle("block", true);
                 text = unindent(text);
             }
 
@@ -29,7 +30,9 @@ const Script = defineWebComponent(WithProperties({
                 text = text.replace("<xscript>", "</script>");
             }
             
-            ctx.root.innerHTML = raw2html(text, lang);
+            this.root.innerHTML = raw2html(text, lang);
+
+            return ctrler;
         }
     });
 

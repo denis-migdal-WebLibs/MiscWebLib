@@ -2,69 +2,58 @@ import { NULL_OP } from "MWL@2026:types";
 import { createResolver, Elements, ElementsDescriptors } from "../ElementsResolver";
 import TaskList from "../FrameScheduler/TaskList";
 import ShadowTemplate, { ShadowTemplateArgs } from "../ShadowTemplate"
-import { ViewCallback, ViewCtx } from "./core/types";
+import { ViewCtx } from "./core/types";
 
-//For Hooks
-// - use Properties or Events as much as possible.
-// - only necessary when needing a response (= requesting for a value).
-//  -> event + properties update (?).
-// (could be called in Controller constructor):
-// 1/ Build context first
-// 2/ Build hooks
-// 3/ Build Controller, then initialize it.
+type Ctx<E extends Elements> = ViewCtx<E> & {renderer: TaskList};
 
-type InitializeCallback<E extends Elements, C> = ViewCallback<ViewCtx<E>, [
-                        controller: C,
-                        renderer  : TaskList
-                    ], void>;
+type InitializeCallback<
+                        E    extends Elements,
+                        API  extends object|void,
+                        ARGS extends any[],
+                > = (this: Ctx<NoInfer<E>>, ...args: ARGS) => API;
 
 export type ViewFactoryArgs<
-                        C extends object|null,
-                        E extends Elements
+                        E    extends Elements,
+                        API  extends object|void,
+                        ARGS extends any[],
                 > = ShadowTemplateArgs
                     & {
                         elements  ?: ElementsDescriptors<E>,
-                        initialize?: NoInfer<InitializeCallback<E, C>>
+                        initialize?: InitializeCallback<NoInfer<E>, API, ARGS>
                     }
 
-// Only handle the WebComponent "inside".
+// Only handle the WebComponent "insides".
 // Controller construction and data extraction is not its responsibility.
-// Controller needs to be its own parameter, cf:
+// Sometimes, Controller needs to be its own parameter, cf:
 // - https://github.com/microsoft/TypeScript/issues/63378
 // - https://github.com/microsoft/TypeScript/issues/63377
 export default function createViewFactory<
-                        C extends object|null = null,
-                        E extends Elements    = {},
-                        A extends any[]       = []
+                        E    extends Elements,
+                        API  extends object|void = void,
+                        ARGS extends any[]       = [],
                 >(
-                    Controller: (this: HTMLElement, ...args: A) => C,
-                    // ViewFactoryControllerProvider<C, D>,
-                    args      : ViewFactoryArgs<NoInfer<C>, E>
+                    args : ViewFactoryArgs<E, API, ARGS>
                 ) {
 
     const template         = new ShadowTemplate(args);
     const elementsResolver = createResolver(args.elements);
 
-    const initialize = args.initialize ?? NULL_OP;
+    const initialize = args.initialize ?? NULL_OP as () => API;
 
     return (
             target : HTMLElement,
-            ...args: A
+            ...args: ARGS
         ) => {
-
-        const controller = Controller.apply(target, args);
 
         const root     = template.createShadowRoot(target);
         const elements = elementsResolver(root);
-        const ctx = { target, root, elements, };
-
         const renderer = new TaskList();
-        initialize(ctx, controller, renderer);
+
+        const ctx = { target, root, elements, renderer };
 
         return {
-            ctx,
-            controller,
             renderer,
-        } 
+            api: initialize.apply(ctx, args)
+        }
     }
 }

@@ -1,24 +1,74 @@
 import defineWebComponent from "MWL@2026:DOM/WebComponent/defineWebComponent";
 
-const Klass = defineWebComponent(
-    class X {
-        constructor(_data: {foo?: string}) {
+class Controller {
+    readonly i: number;
+    constructor(args: {i?: number} = {}) {
+        this.i = args.i ?? 2;
+    }
+    foo() {}
+}
 
-        }
-        foo() {}
-    },
+const Klass = defineWebComponent(
     {
-        name    : "my-webcomp",
+        name        : "my-webcomp",
+        Controller,
+        //argsResolver: (i: number) => [new X(i)] as const, // first form...
         content : "<div data-wcid='ok'>ok</div>",
         style   : ":host { display: block; background-color: blue }",
         elements: {
             ok: HTMLDivElement
         },
-        initialize: (ctx, ctrler, renderer) => {
-            console.warn("init", ctx, ctrler, renderer);
+        initialize(ctrler) {
+            console.warn("init", this);
+
+            return ctrler;
         }
     });
 
-
-const elem = new Klass({foo:"34"});
+const elem = new Klass();
 document.body.append( elem );
+
+elem.api;
+
+{
+    const Klass = defineWebComponent(
+    {
+        name        : "my-webcomp1",
+        Controller(args: any) { return new Controller(args) },
+        content : "<div data-wcid='ok'>ok</div>",
+        style   : ":host { display: block; background-color: blue }",
+        elements: {
+            ok: HTMLDivElement
+        },
+        initialize(ctrler) {
+            console.warn("init", this);
+
+            return ctrler;
+        }
+    });
+
+    const elem = new Klass();
+    elem.api;
+}
+{
+    console.warn("start");
+
+    const Klass = defineWebComponent(
+    {
+        name        : "my-webcomp2",
+        //argsResolver: (i: number) => [new X(i)] as const, // first form...
+        content : "<div data-wcid='ok'>ok</div>",
+        style   : ":host { display: block; background-color: blue }",
+        elements: {
+            ok: HTMLDivElement
+        },
+        initialize(ctrler) {
+            console.warn("init", this);
+
+            return ctrler;
+        }
+    });
+
+    const elem = new Klass();
+    elem.api; // should be never...
+}

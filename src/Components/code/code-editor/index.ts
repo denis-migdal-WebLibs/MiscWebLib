@@ -72,44 +72,42 @@ const EditorProperties = {
     pos : Value<number|null>(null),
 };
 
-const CodeEditor = defineWebComponent(
-
-    class CodeEditor extends WithProperties(EditorProperties) {
-
-        readonly history    = new StateHistory<InputState>();
-
-        constructor(opts: Partial<GetPropertiesType<typeof EditorProperties>> = {}) {
-
-            super(opts);
-
-            observe(this, () => {
-
-                const text = this.properties.text;
-                const pos = this.properties.pos;
-
-                if( this.history.hasState) {
-                    // do not push a state identical to the current one.
-                    // also avoid possible re-entries.
-                    const state = this.history.currentState;
-                    if( state.text === text  && state.pos  === pos)
-                        return;
-                }
-
-                this.history.push({ text, pos });
-            });
-        }
-
-        undo() {
-            this.history.prev();
-            updateProperties(this, this.history.currentState);
-        }
-        redo() {
-            this.history.next();
-            updateProperties(this, this.history.currentState);
-        }
-    },
-    {
+const CodeEditor = defineWebComponent({
         name: "code-editor",
+        Controller: class CodeEditor extends WithProperties(EditorProperties) {
+
+            readonly history    = new StateHistory<InputState>();
+
+            constructor(opts: Partial<GetPropertiesType<typeof EditorProperties>> = {}) {
+
+                super(opts);
+
+                observe(this, () => {
+
+                    const text = this.properties.text;
+                    const pos = this.properties.pos;
+
+                    if( this.history.hasState) {
+                        // do not push a state identical to the current one.
+                        // also avoid possible re-entries.
+                        const state = this.history.currentState;
+                        if( state.text === text  && state.pos  === pos)
+                            return;
+                    }
+
+                    this.history.push({ text, pos });
+                });
+            }
+
+            undo() {
+                this.history.prev();
+                updateProperties(this, this.history.currentState);
+            }
+            redo() {
+                this.history.next();
+                updateProperties(this, this.history.currentState);
+            }
+        },
         content : __LOAD_FILE__("./index.html"),
         style   : [
             __LOAD_FILE__("./index.css"),
@@ -118,15 +116,15 @@ const CodeEditor = defineWebComponent(
         elements: {
             output: HTMLElement
         },
-        initialize: (ctx, controller, renderer) => {
+        initialize(controller) {
 
-            const output = ctx.elements.output;
+            const output = this.elements.output;
             const input  = new Input(output, (text: string) => {
                 return hl(text, controller.properties.lang);
             });
 
             observe(controller,
-                    deferredCallback(renderer, () => {
+                    deferredCallback(this.renderer, () => {
                         input.text = controller.properties.text;
                         input.pos  = controller.properties.pos;
                         input.push();
