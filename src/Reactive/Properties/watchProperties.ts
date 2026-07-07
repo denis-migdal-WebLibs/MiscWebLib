@@ -81,7 +81,7 @@ export function watchProperties<T extends Record<string, any>>(
 }
 
 
-export function observeProperty<T extends Record<string, any>>(
+export function watchProperty<T extends Record<string, any>>(
                                     target: PropertiesProvider<T>,
                                     key   : Extract<keyof NoInfer<T>, string>,
                                     callback: PropertiesCallback<T>,
