@@ -5,7 +5,7 @@ export default function deferredCallback(taskList: TaskList, callback: () => voi
     // avoid inserting/removing tasks...
     let scheduled = false;
 
-    taskList.add( () => { if(scheduled ) callback() });
+    taskList.add( () => { if(scheduled ) callback(); });
 
     return () => {
         scheduled = true;
