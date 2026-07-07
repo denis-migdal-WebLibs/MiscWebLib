@@ -4,6 +4,20 @@ import { PropertiesCallback } from "MWL@2026:Reactive/Properties/watchProperties
 import deferredCallback from "./deferredCallback";
 import { watchProperties } from "MWL@2026:Reactive/Properties/watchProperties";
 
+export function renderProperty<T extends Record<string, any>>(
+                        properties: PropertiesProvider<T>,
+                        keys: readonly Extract<keyof NoInfer<T>, string>[]
+                            | Extract<keyof NoInfer<T>, string>,
+                        taskList  : TaskList,
+                        callback: PropertiesCallback<T>
+                    ) {
+
+    if( ! Array.isArray(keys) )
+        keys = [keys] as readonly Extract<keyof T, string>[];
+    
+    watchProperties(properties, keys, deferredCallback(taskList, callback));
+}
+
 export default class PropertyRenderer<T extends Record<string, any>> {
 
     readonly properties: PropertiesProvider<T>;
@@ -23,10 +37,6 @@ export default class PropertyRenderer<T extends Record<string, any>> {
                 | Extract<keyof T, string>,
             callback: PropertiesCallback<T>
         ) {
-
-        if( ! Array.isArray(keys) )
-            keys = [keys] as readonly Extract<keyof T, string>[];
-        
-        watchProperties(this.properties, keys, deferredCallback(this.taskList, callback));
+        renderProperty(this.properties, keys, this.taskList, callback);
     }
 }
