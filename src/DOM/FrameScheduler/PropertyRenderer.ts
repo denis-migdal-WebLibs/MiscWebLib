@@ -3,6 +3,15 @@ import TaskList from "./TaskList";
 import { PropertiesCallback } from "MWL@2026:Reactive/Properties/watchProperties";
 import deferredCallback from "./deferredCallback";
 import { watchProperties } from "MWL@2026:Reactive/Properties/watchProperties";
+import { observe } from "MWL@2026:Reactive/Observers/observe";
+
+export function renderProperties<T extends Record<string, any>>(
+                        properties: PropertiesProvider<T>,
+                        taskList  : TaskList,
+                        callback: PropertiesCallback<T>
+                    ) {    
+    observe(properties, deferredCallback(taskList, callback));
+}
 
 export function renderProperty<T extends Record<string, any>>(
                         properties: PropertiesProvider<T>,
