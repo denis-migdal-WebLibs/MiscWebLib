@@ -31,8 +31,6 @@ const Script = defineWebComponent({
             }
             
             this.root.innerHTML = raw2html(text, lang);
-
-            return ctrler;
         }
     });
 

@@ -8,15 +8,16 @@ import { NULL_OBJ } from "MWL@2026:types";
 
 export default function defineWebComponent<
                         E         extends Elements    = {},
-                        API       extends object|void = void,
                         CTRLER    extends object|void = void,
+                        RetAPI    extends object|void = void,
+                        API       extends object|void = RetAPI extends void ? CTRLER : RetAPI,
                         D         extends Record<string, any> = {},
                 >(
                     args: {
                             name: Lowercase<`${string}-${string}`>,
                             Controller?: ControllerProvider<CTRLER, D>
                         }
-                        & ViewFactoryArgs<E, API, [CTRLER]>
+                        & ViewFactoryArgs<E, RetAPI, [CTRLER]>
                 ) {
 
     const ctrlerFactory = asControllerFactory(args.Controller);
@@ -40,7 +41,12 @@ export default function defineWebComponent<
             const view    = createView(this, controller);
             this.renderer = view.renderer;
 
-            this.api = view.api;
+            if( view.api !== undefined)
+                // @ts-ignore
+                this.api = view.api;
+            else
+                // @ts-ignore
+                this.api = controller;
 
             this.properties  = getMember(this.api, "properties");
             this[MAIN_EVENT] = getMember(this.api, MAIN_EVENT);
