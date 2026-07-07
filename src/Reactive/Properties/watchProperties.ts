@@ -3,6 +3,9 @@ import { getCallbackRegistry } from "../Observers/EventSource";
 import { Callback } from "../CallbackRegistry";
 import { getProperties, Properties, PropertiesProvider } from "./createProperties";
 
+// We use "watch" instead of "observe" as we check the properties value.
+// i.e. we do more than just observing...
+
 function createCache<T extends Record<string, any>>(
                                     target: Properties<T>,
                                     keys  : readonly (Extract<keyof NoInfer<T>, string>)[]
@@ -32,10 +35,10 @@ function updateCache<T extends Record<string, any>>(
     return change;
 }
 
-type PropertiesCallback<T extends Record<string, any>>
+export type PropertiesCallback<T extends Record<string, any>>
                                     = Callback<Properties<T>>;
 
-export function observePropertiesChanges<T extends Record<string, any>>(
+export function watchPropertiesChanges<T extends Record<string, any>>(
                                     target: PropertiesProvider<T>,
                                     keys  : readonly (Extract<keyof NoInfer<T>, string>)[],
                                     callback: PropertiesCallback<T>
@@ -54,15 +57,15 @@ export function observePropertiesChanges<T extends Record<string, any>>(
     });
 }
 
-export function observePropertyChanges<T extends Record<string, any>>(
+export function watchPropertyChanges<T extends Record<string, any>>(
                                     target: PropertiesProvider<T>,
                                     key   : Extract<keyof NoInfer<T>, string>,
                                     callback: PropertiesCallback<T>
                                 ) {
-    observePropertiesChanges(target, [key], callback);
+    watchPropertiesChanges(target, [key], callback);
 }
 
-export function observeProperties<T extends Record<string, any>>(
+export function watchProperties<T extends Record<string, any>>(
                                     target: PropertiesProvider<T>,
                                     keys  : readonly (Extract<keyof NoInfer<T>, string>)[],
                                     callback: PropertiesCallback<T>
@@ -70,7 +73,7 @@ export function observeProperties<T extends Record<string, any>>(
 
     target = getProperties(target);
 
-    observePropertiesChanges(target, keys, callback);
+    watchPropertiesChanges(target, keys, callback);
 
     const registry = getCallbackRegistry(target);
     const ctx = registry.createTriggerContext(null);
@@ -83,5 +86,5 @@ export function observeProperty<T extends Record<string, any>>(
                                     key   : Extract<keyof NoInfer<T>, string>,
                                     callback: PropertiesCallback<T>,
                                 ) {
-    observeProperties(target, [key], callback);
+    watchProperties(target, [key], callback);
 }

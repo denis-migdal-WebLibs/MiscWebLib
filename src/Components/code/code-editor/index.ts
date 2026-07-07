@@ -85,7 +85,7 @@ const CodeEditor = defineWebComponent({
                 observe(this, () => {
 
                     const text = this.properties.text;
-                    const pos = this.properties.pos;
+                    const pos  = this.properties.pos;
 
                     if( this.history.hasState) {
                         // do not push a state identical to the current one.
