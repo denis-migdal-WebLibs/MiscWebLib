@@ -2,6 +2,11 @@ import { NO_VALUE, NULL_OP } from "MWL@2026:types";
 
 type BindingCondition<T extends Record<string, any>> = (props: Readonly<T>, cache: Readonly<T>) => boolean;
 
+// we use it to prevent TS type issues.
+type InternalBindingCondition =
+    (props: Readonly<Record<string, any>>,
+     cache: Readonly<Record<string, any>>) => boolean;
+
 // PropertiesRenderer should not have the responsability to
 // watch the properties.
 export default class PropertiesRenderer<T extends Record<string, any>> {
@@ -36,7 +41,7 @@ export default class PropertiesRenderer<T extends Record<string, any>> {
             this.cache[key] = this.properties[key];
     }
 
-    readonly bindingConds     = new Array<BindingCondition<T>>();
+    readonly bindingConds     = new Array<InternalBindingCondition>();
     readonly bindingCallbacks = new Array<() => void>();
 
     afterChangesCallback = NULL_OP;
@@ -61,7 +66,7 @@ export default class PropertiesRenderer<T extends Record<string, any>> {
             }
         }
 
-        this.bindingConds    .push(cond);
+        this.bindingConds    .push(cond as InternalBindingCondition);
         this.bindingCallbacks.push(callback);
     }
 
