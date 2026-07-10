@@ -1,0 +1,71 @@
+import { NO_VALUE, NULL_OP } from "MWL@2026:types";
+
+type BindingCondition<T extends Record<string, any>> = (props: Readonly<T>, cache: Readonly<T>) => boolean;
+
+// PropertiesRenderer should not have the responsability to
+// watch the properties.
+export default class PropertiesRenderer<T extends Record<string, any>> {
+
+    readonly properties: Readonly<T>;
+    readonly cache = {} as T;
+
+    constructor(properties: Readonly<T>) {
+        this.properties = properties;
+
+        for(let key in this.properties)
+            this.cache[key] = NO_VALUE as any; // for the initial render.
+    }
+
+    render() {
+        let changed = false;
+
+        for(let i = 0; i < this.bindingCallbacks.length; ++i) {
+            if( this.bindingConds[i](this.properties, this.cache) ) {
+                this.bindingCallbacks[i]();
+                changed = true;
+            }
+        }
+
+        if( ! changed )
+            return;
+
+        this.afterChangesCallback();
+
+        // update cache...
+        for(let key in this.properties)
+            this.cache[key] = this.properties[key];
+    }
+
+    readonly bindingConds     = new Array<BindingCondition<T>>();
+    readonly bindingCallbacks = new Array<() => void>();
+
+    afterChangesCallback = NULL_OP;
+
+    bind(cond:  BindingCondition<T>
+              | Extract<keyof T, string>[]
+              | Extract<keyof T, string>,
+         callback: () => void) {
+
+        if( typeof cond !== "function") {
+            if( ! Array.isArray(cond) )
+                cond = [cond];
+
+            const keys = cond;
+
+            cond = (properties: Readonly<T>, cache: Readonly<T>) => {
+
+                for(let i = 0; i < keys.length; ++i)
+                    if( properties[keys[i]] !== cache[keys[i]])
+                        return true;
+                return false
+            }
+        }
+
+        this.bindingConds    .push(cond);
+        this.bindingCallbacks.push(callback);
+    }
+
+    afterChanges(callback: () => void) {
+        this.afterChangesCallback = callback;
+    }
+}

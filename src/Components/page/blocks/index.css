@@ -37,7 +37,7 @@ todo {
     }
 }
 
-.danger, .hint, .info, .exo, div.custom {
+.danger, .hint, .info, .exo, div.custom, .context {
 
     margin-top: 1px;
     margin-bottom: 1px;
@@ -45,6 +45,7 @@ todo {
     border-radius: 5px;
     border-left: 2px solid var(--block-color);
     padding-left: 4px;
+    padding-right: 4px;
 
     background-color: color-mix(in srgb, var(--block-color) 40%, light-dark(white, black));
 
@@ -54,6 +55,10 @@ todo {
     }
 }
 
+.context {
+    --block-color: #2196F3;
+    --block-symbol: "ⓘ";
+}
 .danger {
     --block-color: red;
     --block-symbol: "⚠";

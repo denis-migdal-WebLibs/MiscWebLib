@@ -7,11 +7,11 @@ import NEWLINE from "MWL@2026:DOM/UiEvents/newline";
 import TAB from "MWL@2026:DOM/UiEvents/tab";
 import on from "MWL@2026:DOM/UiEvents/core/on";
 import StateHistory from "MWL@2026:StateHistory";
-import deferredCallback from "MWL@2026:DOM/FrameScheduler/deferredCallback";
 import { Value } from "MWL@2026:Reactive/Properties/Controllers";
 import { updateProperties, WithProperties } from "MWL@2026:Reactive/Properties/createProperties";
 import { GetPropertiesType } from "MWL@2026:Reactive/Properties/Property";
 import { observe } from "MWL@2026:Reactive/Observers/observe";
+import { deferredObserve } from "MWL@2026:DOM/FrameScheduler/defer/deferredObserve";
 
 type InputState = {
     text: string,
@@ -123,12 +123,13 @@ const CodeEditor = defineWebComponent({
                 return hl(text, controller.properties.lang);
             });
 
-            observe(controller,
-                    deferredCallback(this.renderer, () => {
-                        input.text = controller.properties.text;
-                        input.pos  = controller.properties.pos;
-                        input.push();
-                    }));
+            // even if the text/pos didn't changed, we need to
+            // re-render the text to properly highlight it.
+            deferredObserve(controller, this.renderer, () => {
+                input.text = controller.properties.text;
+                input.pos  = controller.properties.pos;
+                input.push();
+            });
 
             connectEvents(output, [UNDO, REDO], controller);
 

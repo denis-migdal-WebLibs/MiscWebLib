@@ -3,6 +3,8 @@ import { getCallbackRegistry } from "../Observers/EventSource";
 import { Callback } from "../CallbackRegistry";
 import { getProperties, Properties, PropertiesProvider } from "./createProperties";
 
+// It is better to use PropertiesRenderer...
+
 // We use "watch" instead of "observe" as we check the properties value.
 // i.e. we do more than just observing...
 

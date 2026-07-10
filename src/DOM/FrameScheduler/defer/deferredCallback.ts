@@ -1,6 +1,6 @@
-import TaskList from "./TaskList";
+import TaskList from "../TaskList";
 
-export default function deferredCallback(taskList: TaskList, callback: () => void) {
+export function deferredCallback(taskList: TaskList, callback: () => void) {
 
     // avoid inserting/removing tasks...
     let scheduled = false;
