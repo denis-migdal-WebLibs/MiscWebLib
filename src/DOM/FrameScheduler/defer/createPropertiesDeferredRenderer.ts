@@ -9,7 +9,8 @@ export default function createPropertiesDeferredRenderer<T extends Record<string
 ) {
 
     const props         = getProperties(properties);
-    const propsRenderer = new PropertiesRenderer(props);
+    // I guess TS have difficulties to properly infer type here:
+    const propsRenderer = new PropertiesRenderer<T>(props);
 
     deferredObserve(properties, renderer, () => propsRenderer.render());
 
