@@ -3,6 +3,7 @@ export interface PropertyController<T> {
     set(value: T|undefined): boolean;
     markStale(): void;
     validate?: () => true|{ validation: string, value: unknown };
+    version ?: number;
 }
 
 export type PropertiesControllers<T extends Record<string, any>> = {

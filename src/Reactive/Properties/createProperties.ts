@@ -3,7 +3,7 @@ import { createEvent, Event } from "../Event";
 import { MAIN_EVENT, trigger } from "../Observers/EventSource";
 import { PropertiesControllers, PropertiesDescriptors } from "./Property";
 
-const CONTROLLERS = Symbol();
+export const CONTROLLERS = Symbol();
 
 export type Properties<T extends Record<string, any>> = {
     [CONTROLLERS]: PropertiesControllers<T>,

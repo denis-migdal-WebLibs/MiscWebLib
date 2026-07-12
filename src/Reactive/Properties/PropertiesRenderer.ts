@@ -1,6 +1,8 @@
 import { NO_VALUE, NULL_OP } from "MWL@2026:types";
+import { CONTROLLERS } from "./createProperties";
+import { PropertiesControllers } from "./Property";
 
-type BindingCondition<T extends Record<string, any>> = (props: Readonly<T>, cache: Readonly<T>) => boolean;
+type BindingCondition<T extends Record<string, any>> = (props: Readonly<T>, cache: Readonly<Record<keyof NoInfer<T>, any>>) => boolean;
 
 // we use it to prevent TS type issues.
 type InternalBindingCondition =
@@ -12,13 +14,13 @@ type InternalBindingCondition =
 export default class PropertiesRenderer<T extends Record<string, any>> {
 
     readonly properties: Readonly<T>;
-    readonly cache = {} as T;
+    readonly cache = {} as Record<keyof T, any>;
 
     constructor(properties: Readonly<T>) {
         this.properties = properties;
 
         for(let key in this.properties)
-            this.cache[key] = NO_VALUE as any; // for the initial render.
+            this.cache[key] = NO_VALUE; // for the initial render.
     }
 
     render() {
@@ -32,13 +34,15 @@ export default class PropertiesRenderer<T extends Record<string, any>> {
         }
 
         if( ! changed )
-            return;
+            return changed;
 
         this.afterChangesCallback();
 
         // update cache...
         for(let key in this.properties)
             this.cache[key] = this.properties[key];
+
+        return changed;
     }
 
     readonly bindingConds     = new Array<InternalBindingCondition>();
@@ -60,7 +64,7 @@ export default class PropertiesRenderer<T extends Record<string, any>> {
             cond = (properties: Readonly<T>, cache: Readonly<T>) => {
 
                 for(let i = 0; i < keys.length; ++i)
-                    if( properties[keys[i]] !== cache[keys[i]])
+                    if( getStamp(properties, keys[i]) !== cache[keys[i]])
                         return true;
                 return false
             }
@@ -73,4 +77,16 @@ export default class PropertiesRenderer<T extends Record<string, any>> {
     afterChanges(callback: () => void) {
         this.afterChangesCallback = callback;
     }
+}
+
+function getStamp<T extends Record<string, any>>(properties: Readonly<T>, key: keyof T) {
+
+    if( CONTROLLERS in properties ) {
+        const version = (properties[CONTROLLERS] as PropertiesControllers<T>)[key].version;
+
+        if (version !== undefined)
+            return version;
+    }
+
+    return properties[key];
 }
