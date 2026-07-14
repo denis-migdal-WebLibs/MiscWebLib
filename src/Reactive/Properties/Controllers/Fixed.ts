@@ -19,5 +19,5 @@ class FixedInstance<T> implements PropertyController<T>{
 }
 
 export default function Fixed<T>(defVal: T) {
-    return (_:any, initialVal = defVal) => new FixedInstance(initialVal);
+    return (_: object, initialVal = defVal) => new FixedInstance(initialVal);
 }
