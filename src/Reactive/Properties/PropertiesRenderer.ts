@@ -79,13 +79,13 @@ export default class PropertiesRenderer<T extends Record<string, any>> {
     }
 }
 
-function getStamp<T extends Record<string, any>>(properties: Readonly<T>, key: keyof T) {
+export function getStamp<T extends Record<string, any>>(properties: Readonly<T>, key: keyof T) {
 
     if( CONTROLLERS in properties ) {
-        const version = (properties[CONTROLLERS] as PropertiesControllers<T>)[key].version;
+        const stamp = (properties[CONTROLLERS] as PropertiesControllers<T>)[key].stamp;
 
-        if (version !== undefined)
-            return version;
+        if (stamp !== undefined)
+            return stamp;
     }
 
     return properties[key];

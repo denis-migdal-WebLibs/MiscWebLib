@@ -6,7 +6,7 @@ class SignalInstance<T> implements PropertyController<T>{
     protected initial: T;
     protected value  : T;
 
-    version = 0;
+    stamp = 0;
 
     constructor(initial: T) {
         this.value = this.initial = initial;
@@ -17,7 +17,7 @@ class SignalInstance<T> implements PropertyController<T>{
     }
 
     set(value: T) {
-        ++this.version;
+        ++this.stamp;
         this.value = value;
         return true;
     }
