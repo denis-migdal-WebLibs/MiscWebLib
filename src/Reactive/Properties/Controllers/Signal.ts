@@ -1,15 +1,14 @@
 import { PropertyController } from "../Property";
+import { NULL_OP } from "MWL@2026:types";
 
 class SignalInstance<T> implements PropertyController<T>{
 
-    // keep it if we want to "reset" somehow.
-    protected initial: T;
     protected value  : T;
 
     stamp = 0;
 
     constructor(initial: T) {
-        this.value = this.initial = initial;
+        this.value = initial;
     }
 
     get() {
@@ -22,7 +21,10 @@ class SignalInstance<T> implements PropertyController<T>{
         return true;
     }
 
-    markStale(){}
+    declare markStale: typeof NULL_OP;
+    static {
+        this.prototype.markStale = NULL_OP;
+    }
 }
 
 // Like Value() but always trigger a change.

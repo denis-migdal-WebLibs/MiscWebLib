@@ -4,18 +4,21 @@ import { PropertyController } from "../Property";
 
 class FixedInstance<T> implements PropertyController<T>{
 
-    // keep it if we want to "reset" somehow.
-    protected initial: T;
     protected value  : T;
 
     constructor(initial: T) {
-        this.value = this.initial = initial;
+        this.value = initial;
     }
 
     get() { return this.value; }
 
-    readonly set       = FCT_FALSE;
-    readonly markStale = NULL_OP;
+    declare set      : typeof FCT_FALSE;
+    declare markStale: typeof NULL_OP;
+
+    static {
+        this.prototype.set       = FCT_FALSE;
+        this.prototype.markStale = NULL_OP;
+    }
 }
 
 export default function Fixed<T>(defVal: T) {

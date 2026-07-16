@@ -1,4 +1,4 @@
-import { Cstr, NO_VALUE, NULL_OP } from "MWL@2026:types";
+import { Cstr, FCT_FALSE, NO_VALUE, NULL_OP } from "MWL@2026:types";
 import { PropertyController } from "../Property";
 import { getStamp } from "../PropertiesRenderer";
 
@@ -8,10 +8,10 @@ type ViewConverter<T, U> = {convert(value: U): T};
 class ViewInstance<K extends string, T, U>
                                                 implements PropertyController<T>{
 
-    protected ctx  : Readonly<Record<K,U>>;
-    protected key  : K;
-
-    protected converter : ViewConverter<T, U>;
+    protected readonly ctx  : Readonly<Record<K,U>>;
+    protected readonly key  : K;
+    protected readonly converter : ViewConverter<T, U>;
+    
     protected cache     : T|typeof NO_VALUE = NO_VALUE;
     protected cacheStamp: any = NO_VALUE;
 
@@ -40,9 +40,12 @@ class ViewInstance<K extends string, T, U>
         return getStamp(this.ctx, this.key);
     }
 
-    set() { return false; }
-
-    readonly markStale = NULL_OP;
+    declare set      : typeof FCT_FALSE;
+    declare markStale: typeof NULL_OP;
+    static {
+        this.prototype.set       = FCT_FALSE;
+        this.prototype.markStale = NULL_OP;
+    }
 }
 
 export default function View<K extends string, T, U>(

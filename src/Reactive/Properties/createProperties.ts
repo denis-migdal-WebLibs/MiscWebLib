@@ -44,7 +44,7 @@ export default function createProperties<T extends Record<string,any>>(
                 // no needs to test it in get().
                 if( __DEBUG__ ) validate(this, name);
                 
-                notifyChange(this)
+                notifyChange(this);
             }
         });
     }

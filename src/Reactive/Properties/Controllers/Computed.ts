@@ -1,11 +1,11 @@
-import { NO_VALUE } from "MWL@2026:types";
+import { FCT_FALSE, NO_VALUE } from "MWL@2026:types";
 import { PropertyController } from "../Property";
 
 class ComputedInstance<CTX extends Record<string, any>, T>
                                                 implements PropertyController<T>{
 
-    protected ctx  : Readonly<CTX>;
-    protected calc : (ctx: Readonly<CTX>) => T;
+    protected readonly ctx : Readonly<CTX>;
+    protected readonly calc: (ctx: Readonly<CTX>) => T;
     protected cache: T|typeof NO_VALUE = NO_VALUE;
 
     constructor(ctx: Readonly<CTX>, calc : (ctx: Readonly<CTX>) => T) {
@@ -20,9 +20,12 @@ class ComputedInstance<CTX extends Record<string, any>, T>
         return this.cache;
     }
 
-    set() { return false; }
-
     markStale(){ this.cache = NO_VALUE; }
+
+    declare set: typeof FCT_FALSE;
+    static {
+        this.prototype.set = FCT_FALSE;
+    }
 }
 
 export default function Computed<CTX extends Record<string, any>, T>(

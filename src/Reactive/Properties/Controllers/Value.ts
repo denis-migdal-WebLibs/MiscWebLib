@@ -1,18 +1,15 @@
+import { NULL_OP } from "MWL@2026:types";
 import { PropertyController } from "../Property";
 
 class ValueInstance<T> implements PropertyController<T>{
 
-    // keep it if we want to "reset" somehow.
-    protected initial: T;
-    protected value  : T;
+    protected value: T;
 
     constructor(initial: T) {
-        this.value = this.initial = initial;
+        this.value = initial;
     }
 
-    get() {
-        return this.value;
-    }
+    get() { return this.value; }
 
     set(value: T) {
 
@@ -23,7 +20,10 @@ class ValueInstance<T> implements PropertyController<T>{
         return true;
     }
 
-    markStale(){}
+    declare markStale: typeof NULL_OP;
+    static {
+        this.prototype.markStale = NULL_OP;
+    }
 }
 
 export default function Value<T>(defVal: T) {
