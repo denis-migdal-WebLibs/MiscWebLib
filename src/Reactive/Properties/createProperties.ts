@@ -10,12 +10,56 @@ export type Properties<T extends Record<string, any>> = {
     [MAIN_EVENT] : Event<Properties<T>>,
 } & T;
 
+export function createPropertiesFactory<T extends Record<string,any>>(
+                        descriptors  : PropertiesDescriptors<T>
+                    ) {
+
+    const attrDescriptors = {} as Record<keyof T, PropertyDescriptor>;
+    for(const key in descriptors)
+        attrDescriptors[key] = {
+            enumerable: true,
+            get: function (this: Properties<T>) {
+                return this[CONTROLLERS][key].get();
+            },
+            set: function(this: Properties<T>, value: any) {
+
+                // no changes...
+                if( ! this[CONTROLLERS][key].set(value) ) return;
+
+                // no needs to test it in get().
+                if( __DEBUG__ ) validate(this, key);
+                
+                notifyChange(this);
+            }
+        }
+
+    return (initialValues: Partial<NoInfer<T>> = NULL_OBJ): Properties<T> => {
+        const result = {} as Properties<T>;
+
+        result[CONTROLLERS] = {} as PropertiesControllers<T>;
+        result[MAIN_EVENT]  = createEvent(result);
+
+        const controller = result[CONTROLLERS];
+
+        for(const name in descriptors) {
+
+            controller[name] = descriptors[name](result, initialValues[name]);
+
+            if( __DEBUG__ ) validate(result, name);
+
+            Object.defineProperty(result, name, attrDescriptors[name]);
+        }
+
+        return result;
+    }
+}
+
 // We use an object instead of a class as getter/setter needs to be declared
 // on the object. With declared on the prototype, the properties would be
 // ignored when "ownKeys" is used.
 export default function createProperties<T extends Record<string,any>>(
                         descriptors  : PropertiesDescriptors<T>,
-                        initialValues: Partial<T> = NULL_OBJ
+                        initialValues: Partial<NoInfer<T>> = NULL_OBJ
                     ): Properties<T> {
 
     const result = {} as Properties<T>;
@@ -39,7 +83,7 @@ export default function createProperties<T extends Record<string,any>>(
             set: function(this: Properties<T>, value: any) {
 
                 // no changes...
-                if( ! controller[name].set(value) ) return;
+                if( ! this[CONTROLLERS][name].set(value) ) return;
 
                 // no needs to test it in get().
                 if( __DEBUG__ ) validate(this, name);
@@ -61,13 +105,15 @@ export function WithProperties<T extends Record<string, any>>(
                                     descriptors: PropertiesDescriptors<T>
                                 ) {
 
+    const propertiesFactory = createPropertiesFactory(descriptors);
+
     return class WithProperties {
 
         readonly properties  : Properties<T>;
         readonly [MAIN_EVENT]: Event<Properties<T>>;
 
         constructor(initialValues: Partial<T> = {}) {
-            this.properties = createProperties(descriptors, initialValues);
+            this.properties = propertiesFactory(initialValues);
             this[MAIN_EVENT] = this.properties[MAIN_EVENT];
         }
     }
