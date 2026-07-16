@@ -1,6 +1,6 @@
-import { Callback } from "../CallbackRegistry";
+import CallbackRegistry, { Callback } from "../CallbackRegistry";
 import type { Event } from "../Event";
-import { getCallbackRegistry, Observable } from "./EventSource";
+import { MAIN_EVENT, Observable } from "./EventSource";
 import { observeChanges, unobserve } from "./observe";
 
 //TODO move ?
@@ -36,8 +36,7 @@ export class Observer<
 
         this.observeChanges(target);
 
-        const registry = getCallbackRegistry(target);
-        const ctx = registry.createTriggerContext(this);
+        const ctx = (target[MAIN_EVENT]as CallbackRegistry<T, ARGS>).createTriggerContext(this);
         this.callback.apply(ctx, args);
     }
 

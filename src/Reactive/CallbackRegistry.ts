@@ -1,4 +1,5 @@
 import { NULL_OP } from "MWL@2026:types";
+import { MAIN_EVENT } from "./Observers/EventSource";
 
 export type CallbackContext<T extends object|null> = {
     readonly target: T,
@@ -31,6 +32,9 @@ export default class CallbackRegistry<
 
     readonly target: T;
 
+    // avoid conditions when trying to get the main Event...
+    readonly [MAIN_EVENT] = this;
+
     constructor(
                     target: T,
                     _args : TypeHint<ARGS>|null = null,
@@ -38,9 +42,18 @@ export default class CallbackRegistry<
                 ) {
         this.clearAfterTrigger = clearAfterTrigger;
         this.target = target;
+
+        this.NULL_TriggerContext = {
+            event : this,
+            target: this.target,
+            origin: null
+        };
     }
 
+    readonly NULL_TriggerContext;
     createTriggerContext(origin: unknown) {
+        if( origin === null )
+            return this.NULL_TriggerContext; // opti...
         return {
             event : this,
             target: this.target,

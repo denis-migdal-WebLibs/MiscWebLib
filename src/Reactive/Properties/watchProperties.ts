@@ -1,7 +1,7 @@
 import { observeChanges } from "../Observers/observe";
-import { getCallbackRegistry } from "../Observers/EventSource";
-import { Callback } from "../CallbackRegistry";
+import CallbackRegistry, { Callback } from "../CallbackRegistry";
 import { getProperties, Properties, PropertiesProvider } from "./createProperties";
+import { MAIN_EVENT } from "MWL@2026:Reactive/Observers/EventSource";
 
 // It is better to use PropertiesRenderer...
 
@@ -77,8 +77,7 @@ export function watchProperties<T extends Record<string, any>>(
 
     watchPropertiesChanges(target, keys, callback);
 
-    const registry = getCallbackRegistry(target);
-    const ctx = registry.createTriggerContext(null);
+    const ctx = (target[MAIN_EVENT] as CallbackRegistry<Properties<T>>).createTriggerContext(null);
     callback.call(ctx);
 }
 

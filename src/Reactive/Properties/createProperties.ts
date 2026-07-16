@@ -104,10 +104,12 @@ export type PropertiesProvider<T extends Record<string, any>>
 export function getProperties<T extends Record<string, any>>(
                                         target: PropertiesProvider<T>,
                                     ): Properties<T> {
-    if( "properties" in target )
-        return target.properties;
+                                        
+    const properties = target.properties;
+    if( properties !== undefined )
+        return properties;
 
-    return target;
+    return target as Properties<T>;
 }
 
 export function setProperty<
