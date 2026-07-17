@@ -10,11 +10,10 @@ export default class ObserverRegistry {
     private readonly callbacks = new Array<any>();
 
     observeChanges<
-                        T    extends object|null = any,
-                        ARGS extends any[] = []
+                        T    extends object|null = any
                     >(
-                        target: Observable<Event<T, ARGS>>,
-                        callback: Callback<T, ARGS>
+                        target: Observable<Event<T>>,
+                        callback: Callback<T>
                     ) {
 
         this.targets  .push(target  );

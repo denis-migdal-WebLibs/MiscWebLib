@@ -77,7 +77,7 @@ export function watchProperties<T extends Record<string, any>>(
 
     watchPropertiesChanges(target, keys, callback);
 
-    const ctx = (target[MAIN_EVENT] as CallbackRegistry<Properties<T>>).createTriggerContext(null);
+    const ctx = (target[MAIN_EVENT] as CallbackRegistry<Properties<T>>).getTriggerContext(null);
     callback.call(ctx);
 }
 

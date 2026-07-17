@@ -20,32 +20,31 @@ function inPlaceRemove(target: any[], idx: number) {
 // Listen to several sources at once (with the same callback).
 // Not appropriate when additional context is required.
 export class Observer<
-                        T    extends object|null = any,
-                        ARGS extends any[] = []
+                        T    extends object|null = any
                     > {
 
-    readonly callback: Callback<T, ARGS>;
+    readonly callback: Callback<T>;
 
-    readonly targets = new Array<Observable<Event<T, ARGS>>>();
+    readonly targets = new Array<Observable<Event<T>>>();
 
-    constructor(callback: Callback<T, ARGS>) {
+    constructor(callback: Callback<T>) {
         this.callback = callback;
     }
 
-    observe(target: Observable<Event<T, ARGS>>, ...args: ARGS) {
+    observe(target: Observable<Event<T>>) {
 
         this.observeChanges(target);
 
-        const ctx = (target[MAIN_EVENT]as CallbackRegistry<T, ARGS>).createTriggerContext(this);
-        this.callback.apply(ctx, args);
+        const ctx = (target[MAIN_EVENT]as CallbackRegistry<T>).getTriggerContext(this);
+        this.callback.apply(ctx);
     }
 
-    observeChanges(target: Observable<Event<T, ARGS>>) {
+    observeChanges(target: Observable<Event<T>>) {
         this.targets.push(target);
         observeChanges(target, this.callback);
     }
 
-    unobserve(target: Observable<Event<T, ARGS>>) {
+    unobserve(target: Observable<Event<T>>) {
         const idx = this.targets.lastIndexOf(target);
         if( idx === -1 )
             return;

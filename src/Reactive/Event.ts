@@ -1,22 +1,19 @@
-import CallbackRegistry, { Callback, TypeHint } from "./CallbackRegistry";
+import CallbackRegistry, { Callback } from "./CallbackRegistry";
 import { MAIN_EVENT } from "./Observers/EventSource";
 
 export type Event<
             T extends object|null,
-            ARGS extends any[] = []
         > = {
-    [MAIN_EVENT]: CallbackRegistry<T, ARGS>;
-    addListener   (callback: Callback<T, ARGS>): void;
-    removeListener(callback: Callback<T, ARGS>): void;
+    [MAIN_EVENT]: CallbackRegistry<T>;
+    addListener   (callback: Callback<T>): void;
+    removeListener(callback: Callback<T>): void;
 }
 
 export function createEvent<
-                                T    extends object|null,
-                                ARGS extends any[] = []
+                                T extends object|null,
                             >(
-                                target: T,
-                                args  : TypeHint<ARGS>|null = null
-                            ): Event<T, ARGS> {
+                                target: T
+                            ): Event<T> {
 
-    return new CallbackRegistry(target, args);
+    return new CallbackRegistry(target);
 }

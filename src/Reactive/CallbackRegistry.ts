@@ -9,26 +9,17 @@ export type CallbackContext<T extends object|null> = {
 
 export type Callback<
                 T extends object|null,
-                ARGS extends any[] = []
-            > = (this: CallbackContext<T>, ...args: ARGS) => void;
+            > = (this: CallbackContext<T>) => void;
 
-//TODO: move...
-const TypeHint = Symbol();
-export type TypeHint<T> = {
-    [TypeHint]: T
-};
-
-export function typeHint<T>(): TypeHint<T> {
-    return null as any as TypeHint<T>; // fake value...
-}
 
 export default class CallbackRegistry<
-                                T extends object|null,
-                                ARGS extends any[] = []
+                                T extends object|null
                             > {
 
-    private readonly callbacks = new Array<Callback<T, ARGS>>();
+    private readonly callbacks = new Array<Callback<T>>();
     private readonly clearAfterTrigger: boolean;
+
+    private readonly triggerContext;
 
     readonly target: T;
 
@@ -37,31 +28,26 @@ export default class CallbackRegistry<
 
     constructor(
                     target: T,
-                    _args : TypeHint<ARGS>|null = null,
                     clearAfterTrigger = false
                 ) {
         this.clearAfterTrigger = clearAfterTrigger;
         this.target = target;
 
-        this.NULL_TriggerContext = {
+        this.triggerContext = {
             event : this,
             target: this.target,
-            origin: null
+            origin: null as unknown
         };
     }
 
-    readonly NULL_TriggerContext;
-    createTriggerContext(origin: unknown) {
-        if( origin === null )
-            return this.NULL_TriggerContext; // opti...
-        return {
-            event : this,
-            target: this.target,
-            origin,
-        }
+    // re-entry is forbidden, therefore we can reuse the trigger context.
+    getTriggerContext(origin: unknown) {
+        this.triggerContext.origin = origin;
+        return this.triggerContext;
     }
 
-    trigger(origin: unknown = null, ...args: ARGS) {
+    // reentry is FORBIDDEN
+    trigger(origin: unknown = null) {
 
         // need to compact to avoid growing callback list.
         if( ! this.clearAfterTrigger )
@@ -70,20 +56,21 @@ export default class CallbackRegistry<
         if( this.callbacks.length === 0) // opti.
             return;
 
-        const ctx = this.createTriggerContext(origin);
+        const ctx = this.getTriggerContext(origin);
 
+        // we could bind...
         for(let i = 0; i < this.callbacks.length; ++i)
-            this.callbacks[i].apply(ctx, args);
+            this.callbacks[i].apply(ctx);
 
         if( this.clearAfterTrigger )
             this.clear();
     }
 
-    add(callback: Callback<T, ARGS>) {
+    add(callback: Callback<T>) {
         this.callbacks.push(callback);
     }
 
-    remove(callback: Callback<T, ARGS>): void {
+    remove(callback: Callback<T>): void {
 
         const idx = this.callbacks.indexOf(callback);
         if( idx === -1)
@@ -94,10 +81,10 @@ export default class CallbackRegistry<
     }
 
     // aliases for Event.
-    addListener(callback: Callback<T, ARGS>) {
+    addListener(callback: Callback<T>) {
         return this.add(callback);
     }
-    removeListener(callback: Callback<T, ARGS>) {
+    removeListener(callback: Callback<T>) {
         return this.remove(callback);
     }
 
@@ -124,4 +111,16 @@ export default class CallbackRegistry<
     }
 }
 
-// new CallbackRegistry(null, typeHint<[number, string]>())
+
+//TODO: move...
+const TypeHint = Symbol();
+export type TypeHint<T> = {
+    [TypeHint]: T
+};
+
+/*
+export function typeHint<T>(): TypeHint<T> {
+    return null as any as TypeHint<T>; // fake value...
+}
+new CallbackRegistry(null, typeHint<[number, string]>())
+*/

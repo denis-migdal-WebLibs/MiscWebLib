@@ -3,16 +3,14 @@ import type { Event } from "../Event";
 
 export const MAIN_EVENT: unique symbol = Symbol();
 
-export type Observable<E extends Event<any,any>> = E
-                                                | {readonly [MAIN_EVENT]: E};
+export type Observable<E extends Event<any>> = E
+                                            | {readonly [MAIN_EVENT]: E};
 
 export function trigger<
-                        T    extends object|null,
-                        ARGS extends any[] = []
+                        T    extends object|null
                     >(
-                        target : Observable<Event<T, ARGS>>,
+                        target : Observable<Event<T>>,
                         origin : unknown = null,
-                        ...args: ARGS
                     ) {
-    (target[MAIN_EVENT] as CallbackRegistry<T, ARGS>).trigger(origin, ...args);
+    (target[MAIN_EVENT] as CallbackRegistry<T>).trigger(origin);
 }

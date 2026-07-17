@@ -8,7 +8,7 @@ import { deferredCallback } from "./deferredCallback";
 export function deferredObserve<
                         T    extends object|null,
                     >(
-                        target  : Observable<Event<T, []>>,
+                        target  : Observable<Event<T>>,
                         taskList: TaskList,
                         callback: () => void,
                     ) {
