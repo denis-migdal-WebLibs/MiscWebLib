@@ -1,23 +1,25 @@
-Properties
-- sync = set PropertiesController
-  -> default: src -> dst
-  -> set = FCT_FALSE -> others
-  -> sync others if forbidden, except if somehow "identical" ?
-  -> trigger changes on sync...
-  - linkProperties can be deleted.
-- Properties needs to have an array of targets.
-- Transaction
-  - remove markStale (improve computed) [évite de de voir propager].
-    - enregistrer les appels [keys] + les stamps => besoin d'un proxy...
-    - sinon besoin de déclarer... (MultiView ?).
-    -> remove computed ?
-    -> MultiView version ++ if changed
-  - register targets into array (in reverse order, only if not pending).
-  - then execute listeners (parcours in reverse order).
-  -> listener executed only once even if re-entry.
-=> 1 vs N
-  - for object if multi -> merge properties into a super object (or rather array ?).
-  - can delete origin (once it works for arrays).
+Properties:
+  - delete
+    - Computed property controller (replace with a "MultiView" -think better name).
+    - watchProperties
+    - linkProperties
+  - SyncWithFormula
+    -> twin Properties (share a node).
+    -> need to notify each other
+    -> if one replaced by FCT_FALSE -> becomes View.
+    -> 1v1v1 ?
+      -> un même "réseau" + "dynamique" get.
+      => [MASTER] => set last source ?
+  - 1vsN sync
+    => Stocke valeur interne.
+      => stocke les dernières mises à jours pour le get.
+        => 1 update supprime les N updates.
+        => [MASTER] => set last source ?
+    -> 1 peut être remplacé par FCT_FALSE => N devient View.
+    -> N peut être remplacé par FCT_FALSE => force la propriété.
+  - Nv1vN: recycler/fusionner les N en commun.
+  - 1vNv1: partager le N en bonne intelligence.
+  - 1vN:1v1 / 1v1vN ? Notion de "reseau" ?
 
 ====
 

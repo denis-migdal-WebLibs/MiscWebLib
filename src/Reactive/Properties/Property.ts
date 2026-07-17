@@ -1,9 +1,20 @@
+import PropertyHolder, { PropertyHost } from "./PropertyHolder";
+
+export const PROPERTY_NODE = Symbol();
+export type PropertyNode<T> = {
+    holders     : PropertyHolder<T>[],
+    resolvedHost: PropertyHost[],
+}
+
 export interface PropertyController<T> {
+
     get(): T;
-    set(value: T|undefined): boolean;
-    markStale(): void;
-    validate?: () => true|{ validation: string, value: unknown };
-    stamp ?: any;
+    set(value: T): boolean;
+    stamp?: any;
+
+    // internal properties.
+    [PROPERTY_NODE]?: PropertyNode<T>;
+    validate?: () => (true|{ validation: string, value: unknown });
 }
 
 export type PropertiesControllers<T extends Record<string, any>> = {

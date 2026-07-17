@@ -1,7 +1,7 @@
 import { FCT_FALSE, NO_VALUE } from "MWL@2026:types";
 import { PropertyController } from "../Property";
 
-class ComputedInstance<CTX extends Record<string, any>, T>
+export class ComputedInstance<CTX extends Record<string, any>, T>
                                                 implements PropertyController<T>{
 
     protected readonly ctx : Readonly<CTX>;
@@ -20,8 +20,6 @@ class ComputedInstance<CTX extends Record<string, any>, T>
         return this.cache;
     }
 
-    markStale(){ this.cache = NO_VALUE; }
-
     declare set: typeof FCT_FALSE;
     static {
         this.prototype.set = FCT_FALSE;
@@ -32,5 +30,6 @@ export default function Computed<CTX extends Record<string, any>, T>(
             calc: (ctx: Readonly<CTX>) => T
         ) {
 
-    return (ctx: Readonly<CTX>) => new ComputedInstance( ctx, calc );
+    throw new Error("obsolete use View for now");
+    //return (ctx: Readonly<CTX>) => new ComputedInstance( ctx, calc );
 }

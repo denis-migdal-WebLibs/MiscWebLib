@@ -1,7 +1,6 @@
 import defineWebComponent from "MWL@2026:DOM/WebComponent/defineWebComponent";
 import { hl } from "../hl";
-import { WithProperties } from "MWL@2026:Reactive/Properties/createProperties";
-import { Fixed } from "MWL@2026:Reactive/Properties/Controllers";
+import { WithProperties, Fixed } from "MWL@2026:Reactive/Properties";
 
 const css   = __LOAD_FILE__("./index.css");
 const theme = __LOAD_FILE__("../Tomorrow.css");

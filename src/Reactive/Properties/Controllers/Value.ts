@@ -1,7 +1,6 @@
-import { NULL_OP } from "MWL@2026:types";
 import { PropertyController } from "../Property";
 
-class ValueInstance<T> implements PropertyController<T>{
+export class ValueInstance<T> implements PropertyController<T>{
 
     protected value: T;
 
@@ -18,11 +17,6 @@ class ValueInstance<T> implements PropertyController<T>{
 
         this.value = value;
         return true;
-    }
-
-    declare markStale: typeof NULL_OP;
-    static {
-        this.prototype.markStale = NULL_OP;
     }
 }
 

@@ -7,9 +7,7 @@ import NEWLINE from "MWL@2026:DOM/UiEvents/newline";
 import TAB from "MWL@2026:DOM/UiEvents/tab";
 import on from "MWL@2026:DOM/UiEvents/core/on";
 import StateHistory from "MWL@2026:StateHistory";
-import { Value } from "MWL@2026:Reactive/Properties/Controllers";
-import { updateProperties, WithProperties } from "MWL@2026:Reactive/Properties/createProperties";
-import { GetPropertiesType } from "MWL@2026:Reactive/Properties/Property";
+import { updateProperties, WithProperties, Value, GetPropertiesType } from "MWL@2026:Reactive/Properties";
 import { observe } from "MWL@2026:Reactive/Observers/observe";
 import { deferredObserve } from "MWL@2026:DOM/FrameScheduler/defer/deferredObserve";
 

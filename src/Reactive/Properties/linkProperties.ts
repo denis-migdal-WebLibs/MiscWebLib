@@ -1,5 +1,5 @@
 import { observeChanges } from "../Observers/observe";
-import { getProperties, PropertiesProvider, updateProperties } from "./createProperties";
+import { getProperties, PropertiesProvider, updateProperties } from "./propertiesHelpers";
 
 export default function linkProperties<
                         T extends Record<string, any>,

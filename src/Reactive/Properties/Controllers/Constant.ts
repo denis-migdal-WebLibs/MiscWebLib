@@ -1,12 +1,24 @@
-import { FCT_FALSE, NULL_OP } from "MWL@2026:types";
+import { FCT_FALSE } from "MWL@2026:types";
+import { PropertyController } from "../Property";
+
+export class ConstantInstance<T> implements PropertyController<T> {
+
+    readonly value;
+
+    constructor(value: T) {
+        this.value = value;
+    }
+
+    get() {
+        return this.value;
+    }
+
+    declare set: typeof FCT_FALSE;
+    static {
+        this.prototype.set = FCT_FALSE;
+    }
+}
 
 export default function Constant<T>(value: T) {
-
-    const property = {
-        get       : () => value,
-        set       : FCT_FALSE,
-        markStale : NULL_OP
-    };
-
-    return () => property;
+    return () => new ConstantInstance(value);
 }

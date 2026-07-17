@@ -1,7 +1,8 @@
 import { observeChanges } from "../Observers/observe";
 import CallbackRegistry, { Callback } from "../CallbackRegistry";
-import { getProperties, Properties, PropertiesProvider } from "./createProperties";
+import { Properties } from "./createProperties";
 import { MAIN_EVENT } from "MWL@2026:Reactive/Observers/EventSource";
+import { getProperties, PropertiesProvider } from "./propertiesHelpers";
 
 // It is better to use PropertiesRenderer...
 

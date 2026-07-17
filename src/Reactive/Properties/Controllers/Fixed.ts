@@ -1,8 +1,8 @@
-import { FCT_FALSE, NULL_OP } from "MWL@2026:types";
+import { FCT_FALSE } from "MWL@2026:types";
 
 import { PropertyController } from "../Property";
 
-class FixedInstance<T> implements PropertyController<T>{
+export class FixedInstance<T> implements PropertyController<T>{
 
     protected value  : T;
 
@@ -13,11 +13,9 @@ class FixedInstance<T> implements PropertyController<T>{
     get() { return this.value; }
 
     declare set      : typeof FCT_FALSE;
-    declare markStale: typeof NULL_OP;
 
     static {
         this.prototype.set       = FCT_FALSE;
-        this.prototype.markStale = NULL_OP;
     }
 }
 

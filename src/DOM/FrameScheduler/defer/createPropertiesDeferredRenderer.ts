@@ -1,6 +1,5 @@
-import { getProperties, PropertiesProvider } from "MWL@2026:Reactive/Properties/createProperties";
+import { getProperties, PropertiesProvider, PropertiesRenderer } from "MWL@2026:Reactive/Properties";
 import TaskList from "../TaskList";
-import PropertiesRenderer from "MWL@2026:Reactive/Properties/PropertiesRenderer";
 import { deferredObserve } from "./deferredObserve";
 
 export default function createPropertiesDeferredRenderer<T extends Record<string, any>>(

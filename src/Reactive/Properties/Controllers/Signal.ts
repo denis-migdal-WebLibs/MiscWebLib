@@ -1,11 +1,10 @@
 import { PropertyController } from "../Property";
-import { NULL_OP } from "MWL@2026:types";
 
-class SignalInstance<T> implements PropertyController<T>{
+export class SignalInstance<T> implements PropertyController<T>{
 
     protected value  : T;
 
-    stamp = 0;
+    stamp = Symbol();
 
     constructor(initial: T) {
         this.value = initial;
@@ -16,14 +15,9 @@ class SignalInstance<T> implements PropertyController<T>{
     }
 
     set(value: T) {
-        ++this.stamp;
+        this.stamp = Symbol(); // uniqueness guaranteed.
         this.value = value;
         return true;
-    }
-
-    declare markStale: typeof NULL_OP;
-    static {
-        this.prototype.markStale = NULL_OP;
     }
 }
 
