@@ -3,6 +3,8 @@ Properties:
     - Computed property controller (replace with a "MultiView" -think better name).
     - watchProperties
     - linkProperties
+  - View
+    -> also support function.
   - SyncWithFormula
     -> twin Properties (share a node).
     -> need to notify each other
