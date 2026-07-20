@@ -1,4 +1,4 @@
-import { observeChanges } from "../Observers/observe";
+import { listen } from "../Observers/observe";
 import { getProperties, PropertiesProvider, updateProperties } from "./propertiesHelpers";
 
 export default function linkProperties<
@@ -16,7 +16,7 @@ export default function linkProperties<
 
     const data = {} as Partial<U>;
     
-    observeChanges(src, function () {
+    listen(src, function () {
         if( this.origin === dst) return; // prevents re-entry.
 
         for(const key in map)

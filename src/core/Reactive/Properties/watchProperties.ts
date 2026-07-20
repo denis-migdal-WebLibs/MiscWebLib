@@ -1,4 +1,4 @@
-import { observeChanges } from "../Observers/observe";
+import { listen } from "../Observers/observe";
 import CallbackRegistry, { Callback, MAIN_EVENT } from "../CallbackRegistry";
 import { Properties } from "./createProperties";
 import { getProperties, PropertiesProvider } from "./propertiesHelpers";
@@ -50,7 +50,7 @@ export function watchPropertiesChanges<T extends Record<string, any>>(
 
     const cache = createCache(target, keys);
 
-    observeChanges(target, function () {
+    listen(target, function () {
 
         if( ! updateCache(target, keys, cache) )
             return;

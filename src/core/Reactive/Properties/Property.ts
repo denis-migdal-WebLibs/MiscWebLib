@@ -1,10 +1,4 @@
-import PropertyHolder, { PropertyHost } from "./PropertyHolder";
-
-export const PROPERTY_NODE = Symbol();
-export type PropertyNode<T> = {
-    holders     : PropertyHolder<T>[],
-    resolvedHost: PropertyHost[],
-}
+import PropertySlot from "./PropertySlot";
 
 export interface PropertyController<T> {
 
@@ -13,7 +7,7 @@ export interface PropertyController<T> {
     stamp?: any;
 
     // internal properties.
-    [PROPERTY_NODE]?: PropertyNode<T>;
+    slots: PropertySlot<T>[]|null;
     validate?: () => (true|{ validation: string, value: unknown });
 }
 

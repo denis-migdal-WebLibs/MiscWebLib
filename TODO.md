@@ -1,10 +1,20 @@
 Properties:
+  - intention (even if non-opti impl)
+    - syncProperties(src, dst, {key: {target, from, to}})
+    - syncArray(array, subparts, {from, to [for each elets]})
+    - PropertiesArray (get/set/has/sync/keys/resize(?))
+      - ArrayView + SubPart[bidir]View ~> bidir not necessary if ignored ?
+    - PropertiesRecord (get/set/has/sync/etc)
+      - RecordView + SubPart[bidir]View ~> bidir not necessary if ignored ?
+    - /!\ SubPart merging... (~cacheCompute field ? + cache [true/false])
+      -> requires to be notified...
+    - View
+      -> also support function.
   - delete
     - Computed property controller (replace with a "MultiView" -think better name).
     - watchProperties
     - linkProperties
-  - View
-    -> also support function.
+Considerations:
   - SyncWithFormula
     -> twin Properties (share a node).
     -> need to notify each other

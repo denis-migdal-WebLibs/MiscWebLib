@@ -1,8 +1,10 @@
 import { Cstr, FCT_FALSE, NO_VALUE } from "MWL@2026:core/types";
 import { PropertyController } from "../Property";
 import { getProperties } from "../propertiesHelpers";
-import PropertyHolder from "../PropertyHolder";
 import { CONTROLLERS, Properties } from "../createProperties";
+import PropertySlot from "../PropertySlot";
+import { listen } from "MWL@2026:core/Reactive/Observers";
+import { triggerProperty } from "../PropertiesTrigger";
 
 type ViewConverter<T, U> = {convert(value: U): T};
 //(target: U, prevVal: T|typeof NO_VALUE) => T;
@@ -11,18 +13,24 @@ export class ViewInstance<T, U> implements PropertyController<T> {
 
     protected readonly converter : ViewConverter<T, U>;
 
-    readonly source: PropertyHolder<U>;
+    readonly source: PropertySlot<U>;
     
     protected cache     : T|typeof NO_VALUE = NO_VALUE;
     protected cacheStamp: any = NO_VALUE;
 
     constructor(
-                    source   : PropertyHolder<U>,
+                    source   : PropertySlot<U>,
                     Converter: Cstr<ViewConverter<T, U>>
                 ) {
 
         this.source    = source;
         this.converter = new Converter();
+
+        const pthis = this;
+
+        listen(this.source.staleEvent, function () {
+            triggerProperty(pthis, this.origin);
+        });
     }
 
     get() {
@@ -39,6 +47,8 @@ export class ViewInstance<T, U> implements PropertyController<T> {
     get stamp() {
         return this.source.stamp;
     }
+
+    readonly slots = [];
 
     declare set: typeof FCT_FALSE;
     static {

@@ -1,7 +1,7 @@
 import CallbackRegistry, { Callback, MAIN_EVENT } from "../CallbackRegistry";
 import type { Event } from "../Event";
 import { Observable } from "./Observable";
-import { observeChanges, unobserve } from "./observe";
+import { listen, unobserve } from "./observe";
 
 //TODO move ?
 function inPlaceRemove(target: any[], idx: number) {
@@ -33,15 +33,15 @@ export class Observer<
 
     observe(target: Observable<Event<T>>) {
 
-        this.observeChanges(target);
+        this.listen(target);
 
         const ctx = (target[MAIN_EVENT]as CallbackRegistry<T>).getTriggerContext(this);
         this.callback.apply(ctx);
     }
 
-    observeChanges(target: Observable<Event<T>>) {
+    listen(target: Observable<Event<T>>) {
         this.targets.push(target);
-        observeChanges(target, this.callback);
+        listen(target, this.callback);
     }
 
     unobserve(target: Observable<Event<T>>) {

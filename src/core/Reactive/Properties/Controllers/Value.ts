@@ -18,6 +18,8 @@ export class ValueInstance<T> implements PropertyController<T>{
         this.value = value;
         return true;
     }
+
+    readonly slots = [];
 }
 
 export default function Value<T>(defVal: T) {

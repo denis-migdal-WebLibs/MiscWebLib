@@ -1,13 +1,16 @@
 import { FCT_FALSE } from "MWL@2026:core/types";
-import { PROPERTY_NODE, PropertyController } from "./Property";
 import { SignalInstance } from "./Controllers/Signal";
 import { FixedInstance } from "./Controllers/Fixed";
 import { ConstantInstance } from "./Controllers/Constant";
 import { ValueInstance } from "./Controllers/Value";
 import { triggerProperty } from "./PropertiesTrigger";
+import PropertySlot from "./PropertySlot";
 
-export function syncProperty<T>(src: PropertyController<T>,
-                                dst: PropertyController<T>) {
+export function syncProperty<T>(srcProperty: PropertySlot<T>,
+                                dstProperty: PropertySlot<T>) {
+
+    let src = srcProperty.controller;
+    let dst = dstProperty.controller;
 
     let swap = false;
     if( dst.set === FCT_FALSE ) {
@@ -24,19 +27,17 @@ export function syncProperty<T>(src: PropertyController<T>,
         dst = src ; src = tmp;
     }
 
-    const dstHolders = dst[PROPERTY_NODE]!.holders; // should be defined.
-    for(let i = 0; i < dstHolders.length; ++i)
-        dstHolders[i].property = src;
+    const dstSlots = dst.slots!; // should be defined.
+    for(let i = 0; i < dstSlots.length; ++i)
+        dstSlots[i].controller = src;
 
-    const srcNode = src[PROPERTY_NODE];
+    const srcSlots = src.slots;
 
-    // if undefined, they are fixed or constant.
-    if( srcNode !== undefined) {
-
-        const dstNode = dst[PROPERTY_NODE]!;
-
-        addUnique(srcNode.holders     , dstNode.holders);
-        addUnique(srcNode.resolvedHost, dstNode.resolvedHost);
+    if( srcSlots !== null) {
+        let offset = srcSlots.length;
+        srcSlots.length += dstSlots.length;
+        for(let i = 0; i < dstSlots.length; ++i)
+            srcSlots[offset++] = dstSlots[i];
     }
     
     let notify = true;
@@ -55,15 +56,4 @@ export function syncProperty<T>(src: PropertyController<T>,
         triggerProperty(dst, null);
 
     return true;
-}
-
-function addUnique<T>(target: T[], elements: readonly T[]) {
-
-    let offset = target.length;
-    target.length += elements.length;
-    for(let i = 0; i < elements.length; ++i)
-        if( ! target.includes(elements[i]) )
-            target[offset++] = elements[i];
-
-    target.length = offset;
 }

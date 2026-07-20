@@ -1,0 +1,42 @@
+import { MAIN_EVENT } from "../CallbackRegistry";
+import { createEvent } from "../Event";
+import { validate } from "./propertiesHelpers";
+import { triggerProperty } from "./PropertiesTrigger";
+import { PropertyController } from "./Property";
+
+export default class PropertySlot<T> {
+
+    controller: PropertyController<T>;
+
+    constructor(controller: PropertyController<T>) {
+
+        this.controller = controller;
+
+        const slots = controller.slots;
+        if( slots !== null )
+            slots.push(this);
+    }
+
+    get() {
+        return this.controller.get();
+    }
+    set(value: T, origin: unknown = null) {
+
+        if( ! this.controller.set(value) )
+            return;
+
+        if( __DEBUG__ ) validate(this.controller);
+        triggerProperty(this.controller, origin);
+    }
+    get stamp() {
+        return this.controller.stamp ?? this.controller.get();
+    }
+
+    readonly staleEvent   = createEvent(this);
+    readonly changeEvent  = createEvent(this);
+    readonly [MAIN_EVENT] = this.changeEvent;
+}
+
+export type PropertiesSlot<T extends Record<string, any>> = {
+    [K in keyof T]: PropertySlot<T[K]>
+}

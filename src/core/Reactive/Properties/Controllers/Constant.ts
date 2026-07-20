@@ -13,9 +13,11 @@ export class ConstantInstance<T> implements PropertyController<T> {
         return this.value;
     }
 
-    declare set: typeof FCT_FALSE;
+    declare set  : typeof FCT_FALSE;
+    declare slots: null;
     static {
-        this.prototype.set = FCT_FALSE;
+        this.prototype.set   = FCT_FALSE;
+        this.prototype.slots = null;
     }
 }
 

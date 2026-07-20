@@ -17,13 +17,22 @@ export function getProperties<T extends Record<string, any>>(
     return target as Properties<T>;
 }
 
+export function getProperty<T extends Record<string, any>>(
+            target: PropertiesProvider<T>,
+            name  : keyof NoInfer<T>
+        ) {
+    target = getProperties(target);
+
+    return target[CONTROLLERS][name];
+}
+
 export function getPropertyController<T extends Record<string, any>>(
             target: PropertiesProvider<T>,
             name  : keyof NoInfer<T>
         ) {
     target = getProperties(target);
 
-    return target[CONTROLLERS][name].property;
+    return target[CONTROLLERS][name].controller;
 }
 
 export function updateProperties<T extends Record<string, any>>(

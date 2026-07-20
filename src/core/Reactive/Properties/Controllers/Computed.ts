@@ -24,6 +24,8 @@ export class ComputedInstance<CTX extends Record<string, any>, T>
     static {
         this.prototype.set = FCT_FALSE;
     }
+
+    readonly slots = [];
 }
 
 export default function Computed<CTX extends Record<string, any>, T>(

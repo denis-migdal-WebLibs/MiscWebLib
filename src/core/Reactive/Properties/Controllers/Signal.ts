@@ -19,6 +19,8 @@ export class SignalInstance<T> implements PropertyController<T>{
         this.value = value;
         return true;
     }
+
+    readonly slots = [];
 }
 
 // Like Value() but always trigger a change.

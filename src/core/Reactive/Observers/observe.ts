@@ -2,7 +2,7 @@ import { Observable } from "./Observable";
 import { Event } from "MWL@2026:core/Reactive/Event";
 import CallbackRegistry, { Callback, MAIN_EVENT } from "../CallbackRegistry";
 
-export function observeChanges<
+export function listen<
                         T    extends object|null
                     >(
                         target: Observable<Event<T>>,
@@ -27,7 +27,7 @@ export function observe<
     callback.apply(ctx);
 }
 
-export function unobserve<
+export function unlisten<
                         T    extends object|null,
                     >(
                         target  : Observable<Event<T>>,
@@ -35,3 +35,5 @@ export function unobserve<
                     ) {
     (target[MAIN_EVENT]as CallbackRegistry<T>).remove(callback);
 }
+
+export const unobserve = unlisten;

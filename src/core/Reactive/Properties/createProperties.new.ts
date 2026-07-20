@@ -3,12 +3,13 @@ import { MAIN_EVENT } from "../CallbackRegistry";
 import { createEvent, Event } from "../Event";
 import { trigger } from "../Observers/Observable";
 import { PropertiesDescriptors } from "./Property";
-import PropertyHolder, { ON_PROPERTY_CHANGE, PropertiesHolder, PropertyHost } from "./PropertyHolder";
+import PropertySlot, {PropertiesSlot} from "./PropertySlot";
+import { listen } from "../Observers";
 
 export const CONTROLLERS = Symbol();
 
-export type Properties<T extends Record<string, any>> = T & PropertyHost & {
-    [CONTROLLERS]: PropertiesHolder<T>,
+export type Properties<T extends Record<string, any>> = T & {
+    [CONTROLLERS]: PropertiesSlot<T>,
     [MAIN_EVENT] : Event<Properties<T>>,
 };
 
@@ -31,24 +32,31 @@ export function createPropertiesFactory<T extends Record<string,any>>(
     return (initialValues: Partial<NoInfer<T>> = NULL_OBJ): Properties<T> => {
 
         // We use an object instead of a class as getter/setter needs to be declared on the object. With declared on the prototype, the properties would be ignored when "ownKeys" is used.
-        const result = {
-            [ON_PROPERTY_CHANGE](origin: unknown) {
-                trigger(result, origin);
-            }
-        } as Properties<T>;
+        const pthis = {} as Properties<T>;
 
-        result[CONTROLLERS] = {} as PropertiesHolder<T>;
-        result[MAIN_EVENT]  = createEvent(result);
+        pthis[CONTROLLERS] = {} as PropertiesSlot<T>;
+        pthis[MAIN_EVENT]  = createEvent(pthis);
 
-        const controller = result[CONTROLLERS];
+        let stale = false;
+        const controller = pthis[CONTROLLERS];
+
+        const onStale  = function () { stale = true; };
+        const onChange = function (this: {origin: unknown}) {
+            if( ! stale ) return;
+                stale = false;
+            trigger(pthis, this.origin);
+        };
 
         for(const name in descriptors) {
 
-            controller[name] = new PropertyHolder(result, descriptors[name](result, initialValues[name]));
+            const slot = controller[name] = new PropertySlot(descriptors[name](pthis, initialValues[name]));
 
-            Object.defineProperty(result, name, attrDescriptors[name]);
+            listen(slot.staleEvent , onStale );
+            listen(slot.changeEvent, onChange);
+
+            Object.defineProperty(pthis, name, attrDescriptors[name]);
         }
 
-        return result;
+        return pthis;
     }
 }

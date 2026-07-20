@@ -1,9 +1,10 @@
-import { PROPERTY_NODE, PropertyController } from "./Property";
-import { FIRST_PROPERTY_CHANGE_ORIGIN, ON_PROPERTY_CHANGE, PropertyHost } from "./PropertyHolder";
+import { trigger } from "../Observers/Observable";
+import { PropertyController } from "./Property";
 
 class PropertyTrigger {
 
-    readonly pending = new Array<PropertyHost>();
+    readonly pending = new Array<PropertyController<any>>();
+    readonly origin  = new Array<unknown>();
 
     nbBatch = 0;
     beginBatch() {
@@ -24,11 +25,15 @@ class PropertyTrigger {
         ++this.nbBatch; // prevents re-entry during execution.
 
         while(this.pending.length) {
-            const host = this.pending[this.pending.length - 1];
-            host[ON_PROPERTY_CHANGE](host[FIRST_PROPERTY_CHANGE_ORIGIN]);
-            // re-entry is forbidden, so this is ok.
-            host[FIRST_PROPERTY_CHANGE_ORIGIN] = undefined;
+            const idx = this.pending.length - 1
+
+            const slots  = this.pending[idx].slots!;
+            const origin = this.origin [idx];
+            for(let i = 0; i < slots!.length; ++i)
+                trigger(slots[i].changeEvent, origin);
+
             --this.pending.length;
+            --this.origin .length;
         }
 
         --this.nbBatch;
@@ -36,22 +41,18 @@ class PropertyTrigger {
 
     trigger<T>(target: PropertyController<T>, origin: unknown) {
 
-        const resolvedHost = target[PROPERTY_NODE]!.resolvedHost; // must be non-null.
+        ++this.nbBatch; // prevents re-entry during execution.
 
-        let offset = this.pending.length;
-        this.pending.length += resolvedHost.length;
-        for(let i = resolvedHost.length - 1; i >= 0; --i) {
+        const slots = target.slots!; // must be non-null.
+        for(let i = slots.length - 1; i >= 0 ; --i)
+            trigger(slots[i].staleEvent, origin);
 
-            const host = resolvedHost[i];
+        --this.nbBatch;
 
-            if( host[FIRST_PROPERTY_CHANGE_ORIGIN] !== undefined )
-                continue;
+        // push it last.
+        this.pending.push(target);
+        this.origin .push(origin);
 
-            host[FIRST_PROPERTY_CHANGE_ORIGIN] = origin;
-            this.pending[offset++] = host;
-        }
-        this.pending.length = offset;
-        
         this.executePending();
     }
 }
