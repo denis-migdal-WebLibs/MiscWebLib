@@ -1,4 +1,5 @@
 import { PropertyController } from "../Property";
+import { createPropertyNode } from "../PropertyNode";
 
 export class ValueInstance<T> implements PropertyController<T>{
 
@@ -19,7 +20,7 @@ export class ValueInstance<T> implements PropertyController<T>{
         return true;
     }
 
-    readonly slots = [];
+    readonly node = createPropertyNode<T>();
 }
 
 export default function Value<T>(defVal: T) {

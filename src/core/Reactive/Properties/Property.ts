@@ -1,13 +1,21 @@
-import PropertySlot from "./PropertySlot";
+import { PropertyNode } from "./PropertyNode";
 
 export interface PropertyController<T> {
 
     get(): T;
-    set(value: T): boolean;
+    set(value: T, forceStamp?: Symbol): boolean;
+    /**
+     * Two equal stamps indicate an equal value.
+     * - Value/Fixed/Computed : the value is returned (known).
+     * - Signal : returns a Symbol that change after each assignation.
+     * - View  : returns the target stamp.
+     * 
+     * Getting a stamp shouldn't require computations.
+     */
     stamp?: any;
 
     // internal properties.
-    slots: PropertySlot<T>[]|null;
+    readonly node: PropertyNode<T>;
     validate?: () => (true|{ validation: string, value: unknown });
 }
 

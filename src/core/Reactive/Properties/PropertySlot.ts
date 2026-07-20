@@ -7,14 +7,13 @@ import { PropertyController } from "./Property";
 export default class PropertySlot<T> {
 
     controller: PropertyController<T>;
+    readonly originalController: PropertyController<T>;
 
     constructor(controller: PropertyController<T>) {
 
-        this.controller = controller;
+        this.controller = this.originalController = controller;
 
-        const slots = controller.slots;
-        if( slots !== null )
-            slots.push(this);
+        controller.node.slots.push(this);
     }
 
     get() {

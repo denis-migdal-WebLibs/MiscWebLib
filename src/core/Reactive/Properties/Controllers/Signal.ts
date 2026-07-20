@@ -1,4 +1,5 @@
 import { PropertyController } from "../Property";
+import { createPropertyNode } from "../PropertyNode";
 
 export class SignalInstance<T> implements PropertyController<T>{
 
@@ -14,13 +15,13 @@ export class SignalInstance<T> implements PropertyController<T>{
         return this.value;
     }
 
-    set(value: T) {
-        this.stamp = Symbol(); // uniqueness guaranteed.
+    set(value: T, stamp = Symbol()) {
+        this.stamp = stamp; // uniqueness guaranteed.
         this.value = value;
         return true;
     }
 
-    readonly slots = [];
+    readonly node = createPropertyNode<T>();
 }
 
 // Like Value() but always trigger a change.

@@ -1,3 +1,3 @@
 export {getProperty} from "MWL@2026:core/Reactive/Properties/propertiesHelpers";
 
-export {syncProperty} from "MWL@2026:core/Reactive/Properties/syncProperty";
+export {syncProperty, unsyncProperty} from "MWL@2026:core/Reactive/Properties/syncProperty";

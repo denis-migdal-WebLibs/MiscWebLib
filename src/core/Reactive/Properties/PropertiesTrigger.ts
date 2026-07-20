@@ -27,7 +27,7 @@ class PropertyTrigger {
         while(this.pending.length) {
             const idx = this.pending.length - 1
 
-            const slots  = this.pending[idx].slots!;
+            const slots  = this.pending[idx].node.slots;
             const origin = this.origin [idx];
             for(let i = 0; i < slots!.length; ++i)
                 trigger(slots[i].changeEvent, origin);
@@ -43,7 +43,7 @@ class PropertyTrigger {
 
         ++this.nbBatch; // prevents re-entry during execution.
 
-        const slots = target.slots!; // must be non-null.
+        const slots = target.node.slots; // must be non-null.
         for(let i = slots.length - 1; i >= 0 ; --i)
             trigger(slots[i].staleEvent, origin);
 

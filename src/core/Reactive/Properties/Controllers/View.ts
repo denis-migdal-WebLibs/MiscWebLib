@@ -5,6 +5,7 @@ import { CONTROLLERS, Properties } from "../createProperties";
 import PropertySlot from "../PropertySlot";
 import { listen } from "MWL@2026:core/Reactive/Observers";
 import { triggerProperty } from "../PropertiesTrigger";
+import { createPropertyNode } from "../PropertyNode";
 
 type ViewConverter<T, U> = {convert(value: U): T};
 //(target: U, prevVal: T|typeof NO_VALUE) => T;
@@ -48,7 +49,7 @@ export class ViewInstance<T, U> implements PropertyController<T> {
         return this.source.stamp;
     }
 
-    readonly slots = [];
+    readonly node = createPropertyNode<T>();
 
     declare set: typeof FCT_FALSE;
     static {

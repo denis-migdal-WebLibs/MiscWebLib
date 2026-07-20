@@ -1,6 +1,7 @@
 import { FCT_FALSE } from "MWL@2026:core/types";
 
 import { PropertyController } from "../Property";
+import { createPropertyNode } from "../PropertyNode";
 
 export class FixedInstance<T> implements PropertyController<T>{
 
@@ -12,12 +13,11 @@ export class FixedInstance<T> implements PropertyController<T>{
 
     get() { return this.value; }
 
-    declare set  : typeof FCT_FALSE;
-    declare slots: null;
+    readonly node = createPropertyNode<T>();
 
+    declare set  : typeof FCT_FALSE;
     static {
         this.prototype.set   = FCT_FALSE;
-        this.prototype.slots = null;
     }
 }
 
