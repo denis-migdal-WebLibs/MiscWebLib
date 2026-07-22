@@ -1,4 +1,4 @@
-import { PropertyController } from "../Property/Property";
+import { PropertyController } from "../Property/PropertyController";
 import { createPropertyNode } from "../Property/PropertyNode";
 
 export class ValueInstance<T> implements PropertyController<T>{

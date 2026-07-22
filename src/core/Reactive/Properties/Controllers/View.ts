@@ -1,5 +1,5 @@
 import { Cstr, FCT_FALSE, NO_VALUE } from "MWL@2026:core/types";
-import { PropertyController } from "../Property/Property";
+import { PropertyController } from "../Property/PropertyController";
 import { getProperties } from "../Properties/PropertiesProvider";
 import { CONTROLLERS, Properties } from "../Properties/PropertiesImpl";
 import PropertySlot from "../Property/PropertySlot";

@@ -1,6 +1,6 @@
 import { FCT_FALSE } from "MWL@2026:core/types";
 
-import { PropertyController } from "../Property/Property";
+import { PropertyController } from "../Property/PropertyController";
 import { createPropertyNode } from "../Property/PropertyNode";
 
 export class FixedInstance<T> implements PropertyController<T>{

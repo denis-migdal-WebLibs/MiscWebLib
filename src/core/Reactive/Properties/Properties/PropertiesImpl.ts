@@ -2,8 +2,15 @@ import { MAIN_EVENT } from "MWL@2026:core/Reactive/CallbackRegistry";
 import { createEvent, trigger } from "MWL@2026:exports/Reactive/Events";
 import PropertySlot, { PropertiesSlot } from "../Property/PropertySlot";
 import { NULL_OBJ } from "MWL@2026:exports/types";
-import { PropertiesDescriptors } from "../Property/Property";
+import { PropertyDescriptor as PropDesc } from "../Property/PropertyController";
 import { NotifyGate } from "../Property/PropertyObserver";
+
+export type PropertiesDescriptors<T extends Record<string, any>> = {
+    [K in keyof T]: PropDesc<T, T[K]>
+}
+
+export type GetPropertiesType<T extends PropertiesDescriptors<any>>
+    = T extends PropertiesDescriptors<infer U> ? U : never;
 
 export const CONTROLLERS = Symbol();
 

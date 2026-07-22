@@ -1,5 +1,5 @@
 import { triggerProperty } from "./PropertiesTrigger";
-import { PropertyController, validate } from "./Property";
+import { PropertyController, validate } from "./PropertyController";
 import { PropertyObserver } from "./PropertyObserver";
 
 export default class PropertySlot<T> {

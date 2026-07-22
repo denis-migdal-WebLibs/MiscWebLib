@@ -1,5 +1,5 @@
 import { NULL_OBJ } from "MWL@2026:exports/types";
-import { PropertiesDescriptors } from "../Property/Property";
+import { PropertiesDescriptors } from "./PropertiesImpl";
 import { CONTROLLERS, Properties, PropertiesImpl } from "./PropertiesImpl";
 
 export function createPropertiesFactory<T extends Record<string,any>>(

@@ -1,4 +1,4 @@
-import { PropertyController } from "./Property";
+import { PropertyController } from "./PropertyController";
 
 class PropertyTrigger {
 
