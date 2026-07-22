@@ -1,4 +1,4 @@
-import { triggerProperty } from "./PropertiesTrigger";
+import { triggerProperty } from "./PropertyNotifyScheduler";
 import { PropertyController, validate } from "./PropertyController";
 import { PropertyObserver } from "./PropertyObserver";
 

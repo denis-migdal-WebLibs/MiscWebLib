@@ -1,4 +1,4 @@
-import { beginBatch, finishBatch } from "../Property/PropertiesTrigger";
+import { enterNotificationBatch, leaveNotificationBatch } from "../Property/PropertyNotifyScheduler";
 import { CONTROLLERS, Properties } from "./PropertiesImpl";
 import { WithProperties } from "./WithProperties";
 
@@ -43,10 +43,10 @@ export function updateProperties<T extends Record<string, any>>(
 
     target = getProperties(target);
     
-    beginBatch();
+    enterNotificationBatch();
 
     for(const name in values)
         target[CONTROLLERS][name].set(values[name]!, origin);
 
-    finishBatch();
+    leaveNotificationBatch();
 }

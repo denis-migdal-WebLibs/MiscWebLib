@@ -3,7 +3,7 @@ import { PropertyController } from "../Property/PropertyController";
 import { getProperties } from "../Properties/PropertiesProvider";
 import { CONTROLLERS, Properties } from "../Properties/PropertiesImpl";
 import PropertySlot from "../Property/PropertySlot";
-import { triggerProperty } from "../Property/PropertiesTrigger";
+import { triggerProperty } from "../Property/PropertyNotifyScheduler";
 import { createPropertyNode } from "../Property/PropertyNode";
 import { TriggerGate } from "../Property/PropertyObserver";
 

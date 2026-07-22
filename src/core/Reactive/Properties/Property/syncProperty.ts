@@ -1,7 +1,7 @@
 import { FCT_FALSE, NO_VALUE } from "MWL@2026:core/types";
 import { SignalInstance } from "../Controllers/Signal";
 import { ValueInstance } from "../Controllers/Value";
-import { triggerProperty } from "./PropertiesTrigger";
+import { triggerProperty } from "./PropertyNotifyScheduler";
 import PropertySlot from "./PropertySlot";
 import { fusePropertySlots } from "./PropertyNode";
 
