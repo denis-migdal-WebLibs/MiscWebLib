@@ -4,7 +4,6 @@ import { PropertyController } from "./Property";
 class PropertyTrigger {
 
     readonly pending = new Array<PropertyController<any>>();
-    readonly origin  = new Array<unknown>();
 
     nbBatch = 0;
     beginBatch() {
@@ -25,21 +24,30 @@ class PropertyTrigger {
         ++this.nbBatch; // prevents re-entry during execution.
 
         while(this.pending.length) {
-            const idx = this.pending.length - 1
+            const idx = this.pending.length - 1;
 
-            const slots  = this.pending[idx].node.slots;
-            const origin = this.origin [idx];
+            const node = this.pending[idx].node;
+
+            const slots  = node.slots;
+            const origin = node.notificationOrigin;
             for(let i = 0; i < slots!.length; ++i)
                 trigger(slots[i].changeEvent, origin);
 
+            node.notificationOrigin = undefined;
             --this.pending.length;
-            --this.origin .length;
         }
 
         --this.nbBatch;
     }
 
     trigger<T>(target: PropertyController<T>, origin: unknown) {
+
+        const curOrigin = target.node.notificationOrigin;
+        target.node.notificationOrigin = origin;
+
+        // already triggered.
+        if( curOrigin !== undefined)
+            return;
 
         ++this.nbBatch; // prevents re-entry during execution.
 
@@ -51,7 +59,6 @@ class PropertyTrigger {
 
         // push it last.
         this.pending.push(target);
-        this.origin .push(origin);
 
         this.executePending();
     }

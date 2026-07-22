@@ -2,6 +2,7 @@ import { NO_VALUE } from "MWL@2026:core/types";
 import PropertySlot from "./PropertySlot";
 
 export type PropertyNode<T> = {
+    notificationOrigin: unknown,
     slots: PropertySlot<T>[];
     bindings: [
         src: PropertySlot<T>,
@@ -14,6 +15,7 @@ let order = 0;
 
 export function createPropertyNode<T>(): PropertyNode<T> {
     return {
+        notificationOrigin: undefined,
         slots   : [],
         bindings: [],
     };
