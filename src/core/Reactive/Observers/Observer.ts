@@ -1,5 +1,4 @@
 import CallbackRegistry, { Callback, MAIN_EVENT } from "../CallbackRegistry";
-import type { Event } from "../Event";
 import { Observable } from "./Observable";
 import { listen, unobserve } from "./observe";
 
@@ -25,13 +24,13 @@ export class Observer<
 
     readonly callback: Callback<T>;
 
-    readonly targets = new Array<Observable<Event<T>>>();
+    readonly targets = new Array<Observable<T>>();
 
     constructor(callback: Callback<T>) {
         this.callback = callback;
     }
 
-    observe(target: Observable<Event<T>>) {
+    observe(target: Observable<T>) {
 
         this.listen(target);
 
@@ -39,12 +38,12 @@ export class Observer<
         this.callback.apply(ctx);
     }
 
-    listen(target: Observable<Event<T>>) {
+    listen(target: Observable<T>) {
         this.targets.push(target);
         listen(target, this.callback);
     }
 
-    unobserve(target: Observable<Event<T>>) {
+    unobserve(target: Observable<T>) {
         const idx = this.targets.lastIndexOf(target);
         if( idx === -1 )
             return;

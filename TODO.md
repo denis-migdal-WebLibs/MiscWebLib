@@ -1,5 +1,12 @@
 Properties:
-  - intention (even if non-opti impl)
+  * Object(Interface) controller for complex object (e.g. List, Record, KeyDB).
+    - Interface is a wrapper around the value enabling to mutate it.
+      -> mutation are more secure.
+      -> a RW proxy is too costly on complex type...
+    - ElementSignal -> RO raw value (can be synced).
+    - SubElement: created on demand.
+      /!\ a SubElement need to be able to be merged with other SubElement.
+  * intention (even if non-opti impl)
     - syncProperties(src, dst, {key: {target, from, to}})
     - syncArray(array, subparts, {from, to [for each elets]})
     - PropertiesArray (get/set/has/sync/keys/resize(?))
@@ -10,10 +17,8 @@ Properties:
       -> requires to be notified...
     - View
       -> also support function.
-  - delete
+  * delete
     - Computed property controller (replace with a "MultiView" -think better name).
-    - watchProperties
-    - linkProperties
 Considerations:
   - SyncWithFormula
     -> twin Properties (share a node).

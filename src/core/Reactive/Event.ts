@@ -3,7 +3,7 @@ import CallbackRegistry, { Callback, MAIN_EVENT } from "./CallbackRegistry";
 export type Event<
             T extends object|null,
         > = {
-    [MAIN_EVENT]: CallbackRegistry<T>;
+    readonly [MAIN_EVENT]: CallbackRegistry<T>;
     addListener   (callback: Callback<T>): void;
     removeListener(callback: Callback<T>): void;
 }
@@ -15,4 +15,10 @@ export function createEvent<
                             ): Event<T> {
 
     return new CallbackRegistry(target);
+}
+
+export function WithMainEvent() {
+    return class WithMainEvent {
+        readonly [MAIN_EVENT] = createEvent(this);
+    }
 }

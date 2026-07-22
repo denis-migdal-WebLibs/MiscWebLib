@@ -1,5 +1,4 @@
 import { Callback } from "../CallbackRegistry";
-import type { Event } from "../Event";
 import { Observable } from "./Observable";
 import { listen, unobserve } from "./observe";
 
@@ -10,7 +9,7 @@ export default class ObserverRegistry {
     private readonly callbacks = new Array<any>();
 
     listen<T extends object|null = any >(
-                        target: Observable<Event<T>>,
+                        target: Observable<T>,
                         callback: Callback<T>
                     ) {
 

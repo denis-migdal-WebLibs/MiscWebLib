@@ -1,11 +1,10 @@
 import { Observable } from "./Observable";
-import { Event } from "MWL@2026:core/Reactive/Event";
 import CallbackRegistry, { Callback, MAIN_EVENT } from "../CallbackRegistry";
 
 export function listen<
                         T    extends object|null
                     >(
-                        target: Observable<Event<T>>,
+                        target: Observable<T>,
                         callback: NoInfer<Callback<T>>
                     ) {
     (target[MAIN_EVENT]as CallbackRegistry<T>).add(callback);
@@ -14,7 +13,7 @@ export function listen<
 export function observe<
                         T    extends object|null
                     >(
-                        target  : Observable<Event<T>>,
+                        target  : Observable<T>,
                         callback: NoInfer<Callback<T>>
                     ) {
 
@@ -30,7 +29,7 @@ export function observe<
 export function unlisten<
                         T    extends object|null,
                     >(
-                        target  : Observable<Event<T>>,
+                        target  : Observable<T>,
                         callback: NoInfer<Callback<T>>
                     ) {
     (target[MAIN_EVENT]as CallbackRegistry<T>).remove(callback);

@@ -34,7 +34,8 @@ Several kind of Properties:
 
 You can synchronise properties:
 ```ts
-syncProperty( getProperty(data, "foo"), getProperty(atad, "faa") );
+syncProperty( getProperty(data, "foo"),
+              getProperty(atad, "faa") );
 ```
 
 ## WithProperties
