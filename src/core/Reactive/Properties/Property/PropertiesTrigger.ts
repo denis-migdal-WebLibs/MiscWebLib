@@ -1,4 +1,3 @@
-import { trigger } from "MWL@2026:exports/Reactive/Events";
 import { PropertyController } from "./Property";
 
 class PropertyTrigger {
@@ -26,14 +25,11 @@ class PropertyTrigger {
         while(this.pending.length) {
             const idx = this.pending.length - 1;
 
-            const node = this.pending[idx].node;
+            const slots  = this.pending[idx].node.slots;
+            for(let i = 0; i < slots.length; ++i)
+                slots[i].notify();
 
-            const slots  = node.slots;
-            const origin = node.notificationOrigin;
-            for(let i = 0; i < slots!.length; ++i)
-                trigger(slots[i].changeEvent, origin);
-
-            node.notificationOrigin = undefined;
+            this.pending[idx].node.notificationOrigin = undefined;
             --this.pending.length;
         }
 
@@ -53,7 +49,7 @@ class PropertyTrigger {
 
         const slots = target.node.slots; // must be non-null.
         for(let i = slots.length - 1; i >= 0 ; --i)
-            trigger(slots[i].staleEvent, origin);
+            slots[i].trigger();
 
         --this.nbBatch;
 

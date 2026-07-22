@@ -1,5 +1,5 @@
 import { NO_VALUE, NULL_OP } from "MWL@2026:core/types";
-import { PropertiesControllers } from "../Property/Property";
+import { CONTROLLERS, Properties } from "./PropertiesImpl";
 
 type BindingCondition<T extends Record<string, any>> = (props: Readonly<T>, cache: Readonly<Record<keyof NoInfer<T>, any>>) => boolean;
 
@@ -80,9 +80,9 @@ export default class PropertiesRenderer<T extends Record<string, any>> {
 
 function getStamp<T extends Record<string, any>>(properties: Readonly<T>, key: keyof T) {
 
-    // @ts-ignore
-    const crtler = properties[CONTROLLERS] as undefined
-                                             |PropertiesControllers<T>;
+    const crtler = (properties as  Properties<T>
+                                 | T & {readonly [CONTROLLERS]: undefined}
+                    )[CONTROLLERS];
 
     if( crtler !== undefined )
         return crtler[key].stamp;

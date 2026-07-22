@@ -1,7 +1,6 @@
-import { MAIN_EVENT } from "MWL@2026:core/Reactive/CallbackRegistry";
-import { createEvent } from "MWL@2026:exports/Reactive/Events";
 import { triggerProperty } from "./PropertiesTrigger";
 import { PropertyController, validate } from "./Property";
+import { PropertyObserver } from "./PropertyObserver";
 
 export default class PropertySlot<T> {
 
@@ -30,9 +29,22 @@ export default class PropertySlot<T> {
         return this.controller.stamp ?? this.controller.get();
     }
 
-    readonly staleEvent   = createEvent(this);
-    readonly changeEvent  = createEvent(this);
-    readonly [MAIN_EVENT] = this.changeEvent;
+    // observation
+    get notificationOrigin() {
+        return this.controller.node.notificationOrigin;
+    }
+
+    trigger() {
+        for(let i = 0; i < this.observers.length; ++i)
+            this.observers[i].onTrigger(this);
+    }
+
+    notify() {
+        for(let i = 0; i < this.observers.length; ++i)
+            this.observers[i].onNotify(this);
+    }
+
+    observers = new Array<PropertyObserver<T>>();
 }
 
 export type PropertiesSlot<T extends Record<string, any>> = {

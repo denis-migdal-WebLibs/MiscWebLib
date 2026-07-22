@@ -1,11 +1,11 @@
 import { Cstr, FCT_FALSE, NO_VALUE } from "MWL@2026:core/types";
-import { listen } from "MWL@2026:exports/Reactive/Events";
 import { PropertyController } from "../Property/Property";
 import { getProperties } from "../Properties/PropertiesProvider";
 import { CONTROLLERS, Properties } from "../Properties/PropertiesImpl";
 import PropertySlot from "../Property/PropertySlot";
 import { triggerProperty } from "../Property/PropertiesTrigger";
 import { createPropertyNode } from "../Property/PropertyNode";
+import { TriggerGate } from "../Property/PropertyObserver";
 
 type ViewConverter<T, U> = {convert(value: U): T};
 //(target: U, prevVal: T|typeof NO_VALUE) => T;
@@ -27,11 +27,12 @@ export class ViewInstance<T, U> implements PropertyController<T> {
         this.source    = source;
         this.converter = new Converter();
 
-        const pthis = this;
-
-        listen(this.source.staleEvent, function () {
-            triggerProperty(pthis, this.origin);
+        // should not be necessary as the source can only be triggered once.
+        const triggerGate = new TriggerGate<U>((slot) => {
+            triggerProperty(this, slot.notificationOrigin);
         });
+
+        this.source.observers.push(triggerGate);
     }
 
     get() {
