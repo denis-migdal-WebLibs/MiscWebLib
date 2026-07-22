@@ -1,6 +1,5 @@
-import { CONTROLLERS, Properties } from "./createProperties";
 import { beginBatch, finishBatch } from "../Property/PropertiesTrigger";
-import { PropertiesControllers, PropertyController } from "../Property/Property";
+import { CONTROLLERS, Properties } from "./PropertiesImpl";
 import { WithProperties } from "./WithProperties";
 
 export type PropertiesProvider<T extends Record<string, any>>
@@ -16,6 +15,7 @@ export function getProperties<T extends Record<string, any>>(
 
     return target as Properties<T>;
 }
+
 
 export function getProperty<T extends Record<string, any>>(
             target: PropertiesProvider<T>,
@@ -49,29 +49,4 @@ export function updateProperties<T extends Record<string, any>>(
         target[CONTROLLERS][name].set(values[name]!, origin);
 
     finishBatch();
-}
-
-export function validate<T>(property: PropertyController<T>) {
-
-    if( property.validate === undefined )
-        return;
-
-    const result = property.validate();
-    if( result === true )
-        return;
-
-    throw new Error(`Validation "${result.validation}" failed on property (?): got ${JSON.stringify(result.value)}.`);
-}
-
-
-export function getStamp<T extends Record<string, any>>(properties: Readonly<T>, key: keyof T) {
-
-    // @ts-ignore
-    const crtler = properties[CONTROLLERS] as undefined
-                                             |PropertiesControllers<T>;
-
-    if( crtler !== undefined )
-        return crtler[key].stamp;
-
-    return properties[key];
 }

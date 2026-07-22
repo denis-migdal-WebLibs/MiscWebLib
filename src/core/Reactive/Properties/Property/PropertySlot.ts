@@ -1,8 +1,7 @@
 import { MAIN_EVENT } from "MWL@2026:core/Reactive/CallbackRegistry";
 import { createEvent } from "MWL@2026:exports/Reactive/Events";
-import { validate } from "../Properties/propertiesHelpers";
 import { triggerProperty } from "./PropertiesTrigger";
-import { PropertyController } from "./Property";
+import { PropertyController, validate } from "./Property";
 
 export default class PropertySlot<T> {
 

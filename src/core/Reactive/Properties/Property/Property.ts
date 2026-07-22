@@ -32,3 +32,16 @@ export type PropertiesDescriptors<T extends Record<string, any>> = {
 
 export type GetPropertiesType<T extends PropertiesDescriptors<any>>
     = T extends PropertiesDescriptors<infer U> ? U : never;
+
+//TODO: move...
+export function validate<T>(property: PropertyController<T>) {
+
+    if( property.validate === undefined )
+        return;
+
+    const result = property.validate();
+    if( result === true )
+        return;
+
+    throw new Error(`Validation "${result.validation}" failed on property (?): got ${JSON.stringify(result.value)}.`);
+}

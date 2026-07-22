@@ -1,8 +1,8 @@
 import { Cstr, FCT_FALSE, NO_VALUE } from "MWL@2026:core/types";
 import { listen } from "MWL@2026:exports/Reactive/Events";
 import { PropertyController } from "../Property/Property";
-import { getProperties } from "../Properties/propertiesHelpers";
-import { CONTROLLERS, Properties } from "../Properties/createProperties";
+import { getProperties } from "../Properties/PropertiesProvider";
+import { CONTROLLERS, Properties } from "../Properties/PropertiesImpl";
 import PropertySlot from "../Property/PropertySlot";
 import { triggerProperty } from "../Property/PropertiesTrigger";
 import { createPropertyNode } from "../Property/PropertyNode";
