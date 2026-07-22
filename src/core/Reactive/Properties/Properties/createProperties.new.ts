@@ -1,10 +1,8 @@
-import { NULL_OBJ } from "MWL@2026:core/types";
-import { MAIN_EVENT } from "../CallbackRegistry";
-import { createEvent, Event } from "../Event";
-import { trigger } from "../Observers/Observable";
-import { PropertiesDescriptors } from "./Property";
-import PropertySlot, {PropertiesSlot} from "./PropertySlot";
-import { listen } from "../Observers";
+import { NULL_OBJ } from "MWL@2026:exports/types";
+import { createEvent, Event, trigger, listen } from "MWL@2026:exports/Reactive/Events";
+import { MAIN_EVENT } from "MWL@2026:core/Reactive/CallbackRegistry";
+import { PropertiesDescriptors } from "../Property/Property";
+import PropertySlot, {PropertiesSlot} from "../Property/PropertySlot";
 
 export const CONTROLLERS = Symbol();
 

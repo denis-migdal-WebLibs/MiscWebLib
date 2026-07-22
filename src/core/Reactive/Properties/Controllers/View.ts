@@ -1,11 +1,11 @@
 import { Cstr, FCT_FALSE, NO_VALUE } from "MWL@2026:core/types";
-import { PropertyController } from "../Property";
-import { getProperties } from "../propertiesHelpers";
-import { CONTROLLERS, Properties } from "../createProperties";
-import PropertySlot from "../PropertySlot";
-import { listen } from "MWL@2026:core/Reactive/Observers";
-import { triggerProperty } from "../PropertiesTrigger";
-import { createPropertyNode } from "../PropertyNode";
+import { listen } from "MWL@2026:exports/Reactive/Events";
+import { PropertyController } from "../Property/Property";
+import { getProperties } from "../Properties/propertiesHelpers";
+import { CONTROLLERS, Properties } from "../Properties/createProperties";
+import PropertySlot from "../Property/PropertySlot";
+import { triggerProperty } from "../Property/PropertiesTrigger";
+import { createPropertyNode } from "../Property/PropertyNode";
 
 type ViewConverter<T, U> = {convert(value: U): T};
 //(target: U, prevVal: T|typeof NO_VALUE) => T;

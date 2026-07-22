@@ -1,6 +1,6 @@
 import { MAIN_EVENT } from "MWL@2026:core/Reactive/CallbackRegistry";
 import { Event } from "MWL@2026:core/Reactive/Event";
-import { PropertiesDescriptors } from "./Property";
+import { PropertiesDescriptors } from "../Property/Property";
 import { createPropertiesFactory, Properties } from "./createProperties";
 
 export type WithProperties<T extends Record<string, any>> = {

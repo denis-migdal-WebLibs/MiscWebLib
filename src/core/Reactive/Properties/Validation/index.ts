@@ -1,4 +1,4 @@
-import { PropertyDescriptor } from "../Property";
+import { PropertyDescriptor } from "../Property/Property";
 
 export function Validated<CTX extends Record<string, any>, T>(
                                     property: PropertyDescriptor<CTX, T>,

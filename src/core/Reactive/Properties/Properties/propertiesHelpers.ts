@@ -1,6 +1,6 @@
 import { CONTROLLERS, Properties } from "./createProperties";
-import { beginBatch, finishBatch } from "./PropertiesTrigger";
-import { PropertiesControllers, PropertyController } from "./Property";
+import { beginBatch, finishBatch } from "../Property/PropertiesTrigger";
+import { PropertiesControllers, PropertyController } from "../Property/Property";
 import { WithProperties } from "./WithProperties";
 
 export type PropertiesProvider<T extends Record<string, any>>

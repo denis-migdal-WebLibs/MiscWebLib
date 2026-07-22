@@ -1,4 +1,4 @@
-import { getProperties, PropertiesProvider, PropertiesRenderer } from "MWL@2026:core/Reactive/Properties";
+import { getProperties, PropertiesProvider, PropertiesRenderer } from "MWL@2026:exports/Reactive/Properties";
 import TaskList from "../TaskList";
 import { deferredObserve } from "./deferredObserve";
 

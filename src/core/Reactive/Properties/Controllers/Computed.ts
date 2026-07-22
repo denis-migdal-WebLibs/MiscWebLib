@@ -1,6 +1,6 @@
 import { FCT_FALSE, NO_VALUE } from "MWL@2026:core/types";
-import { PropertyController } from "../Property";
-import { createPropertyNode } from "../PropertyNode";
+import { PropertyController } from "../Property/Property";
+import { createPropertyNode } from "../Property/PropertyNode";
 
 export class ComputedInstance<CTX extends Record<string, any>, T>
                                                 implements PropertyController<T>{

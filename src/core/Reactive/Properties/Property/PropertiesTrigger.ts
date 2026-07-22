@@ -1,4 +1,4 @@
-import { trigger } from "../Observers/Observable";
+import { trigger } from "MWL@2026:exports/Reactive/Events";
 import { PropertyController } from "./Property";
 
 class PropertyTrigger {
