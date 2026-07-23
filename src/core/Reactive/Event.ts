@@ -1,8 +1,10 @@
-import CallbackRegistry, { Callback, MAIN_EVENT } from "./CallbackRegistry";
+import CallbackRegistry, { Callback } from "./CallbackRegistry";
+import { MAIN_EVENT } from "./Observers/Observable";
 
 export type Event<
             T extends object|null,
         > = {
+    // we need a way to access internal methods.
     readonly [MAIN_EVENT]: CallbackRegistry<T>;
     addListener   (callback: Callback<T>): void;
     removeListener(callback: Callback<T>): void;
@@ -15,10 +17,4 @@ export function createEvent<
                             ): Event<T> {
 
     return new CallbackRegistry(target);
-}
-
-export function WithMainEvent() {
-    return class WithMainEvent {
-        readonly [MAIN_EVENT] = createEvent(this);
-    }
 }

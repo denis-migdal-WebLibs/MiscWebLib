@@ -1,12 +1,12 @@
-import { MAIN_EVENT } from "MWL@2026:core/Reactive/CallbackRegistry";
 import { Event } from "MWL@2026:core/Reactive/Event";
 import { createPropertiesFactory } from "./createProperties";
 import { Properties, PropertiesDescriptors } from "./PropertiesImpl";
+import { Observable } from "MWL@2026:exports/Reactive/Events";
+import { MAIN_EVENT } from "MWL@2026:core/Reactive/Observers/Observable";
 
 export type WithProperties<T extends Record<string, any>> = {
     readonly properties  : Properties<T>;
-    readonly [MAIN_EVENT]: Event<Properties<T>>;
-}
+} & Observable<Properties<T>>;
 
 export function WithProperties<T extends Record<string, any>>(
                                     descriptors: PropertiesDescriptors<T>

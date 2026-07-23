@@ -1,6 +1,5 @@
 import { NULL_OP } from "MWL@2026:core/types";
-
-export const MAIN_EVENT: unique symbol = Symbol();
+import { MAIN_EVENT, Observable } from "./Observers/Observable";
 
 export type CallbackContext<T extends object|null> = {
     readonly target: T,
@@ -12,10 +11,10 @@ export type Callback<
                 T extends object|null,
             > = (this: CallbackContext<T>) => void;
 
-
+// do NOT extend ObservableObject.
 export default class CallbackRegistry<
                                 T extends object|null
-                            > {
+                            > implements Observable<any> {
 
     private readonly callbacks = new Array<Callback<T>>();
     private readonly clearAfterTrigger: boolean;
@@ -111,17 +110,3 @@ export default class CallbackRegistry<
         this.removalPending = false;
     }
 }
-
-
-//TODO: move...
-const TypeHint = Symbol();
-export type TypeHint<T> = {
-    [TypeHint]: T
-};
-
-/*
-export function typeHint<T>(): TypeHint<T> {
-    return null as any as TypeHint<T>; // fake value...
-}
-new CallbackRegistry(null, typeHint<[number, string]>())
-*/

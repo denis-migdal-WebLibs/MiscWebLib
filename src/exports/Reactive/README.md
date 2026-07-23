@@ -1,5 +1,6 @@
 ```ts
-class Foo extends WithMainEvent() {
+// or extends ObservableMixin(BaseClass)
+class Foo extends ObservableObject {
     ...
 }
 const foo = new Foo();

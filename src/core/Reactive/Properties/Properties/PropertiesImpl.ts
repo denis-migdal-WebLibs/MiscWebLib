@@ -1,5 +1,4 @@
-import { MAIN_EVENT } from "MWL@2026:core/Reactive/CallbackRegistry";
-import { createEvent, trigger } from "MWL@2026:exports/Reactive/Events";
+import { ObservableObject, trigger } from "MWL@2026:exports/Reactive/Events";
 import PropertySlot, { PropertiesSlot } from "../Property/PropertySlot";
 import { NULL_OBJ } from "MWL@2026:exports/types";
 import { PropertyDescriptor as PropDesc } from "../Property/PropertyController";
@@ -14,14 +13,16 @@ export type GetPropertiesType<T extends PropertiesDescriptors<any>>
 
 export const CONTROLLERS = Symbol();
 
-export class PropertiesImpl<T extends Record<string, any>> {
+export class PropertiesImpl<T extends Record<string, any>>
+                                                    extends ObservableObject {
 
     readonly [CONTROLLERS] = {} as PropertiesSlot<T>;
-    readonly [MAIN_EVENT]  = createEvent(this);
 
     constructor(descriptors    : PropertiesDescriptors<T>,
                 attrDescriptors: Record<keyof NoInfer<T>, PropertyDescriptor>,
                 initialValues  : Partial<NoInfer<T>> = NULL_OBJ) {
+
+        super();
 
         // We use an object instead of a class as getter/setter needs to be declared on the object. With declared on the prototype, the properties would be ignored when "ownKeys" is used.
         const controller = this[CONTROLLERS];

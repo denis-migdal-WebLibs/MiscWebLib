@@ -1,5 +1,5 @@
-import CallbackRegistry, { Callback, MAIN_EVENT } from "../CallbackRegistry";
-import { Observable } from "./Observable";
+import CallbackRegistry, { Callback } from "../CallbackRegistry";
+import { MAIN_EVENT, Observable } from "./Observable";
 import { listen, unobserve } from "./observe";
 
 //TODO move ?
