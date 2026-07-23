@@ -26,3 +26,10 @@ export function ObservableMixin<K extends Cstr<object, any[]>>(klass: K) {
         readonly [MAIN_EVENT] = createEvent(this);
     }
 }
+
+export class ObservableProxy<T extends object|null> {
+    readonly [MAIN_EVENT]: Event<T>;
+    constructor(target: Observable<T>) {
+        this[MAIN_EVENT] = target[MAIN_EVENT];
+    }
+}

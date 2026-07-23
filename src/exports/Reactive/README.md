@@ -1,5 +1,4 @@
 ```ts
-// or extends ObservableMixin(BaseClass)
 class Foo extends ObservableObject {
     ...
 }
@@ -10,6 +9,28 @@ observe(foo, () => {}); // performs an initial call.
 
 // internally:
 trigger(foo, origin?);
+```
+
+## Variations
+
+```ts
+// delegate
+class Faa extends ObservableProxy<Foo> {
+    
+    readonly foo: Foo;
+
+    constructor() {
+        const foo = new Foo();
+        super( foo );
+        
+        this.foo = foo;
+    }
+}
+
+// mixin
+class Fuu extends ObservableMixin(BaseClass) {
+    ...
+}
 ```
 
 ## Context
