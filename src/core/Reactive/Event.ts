@@ -4,8 +4,9 @@ import { MAIN_EVENT } from "./Observers/Observable";
 export type Event<
             T extends object|null,
         > = {
-    // we need a way to access internal methods.
-    readonly [MAIN_EVENT]: CallbackRegistry<T>;
+    // Can't use CallbackRegistry to get access to internals.
+    // We need to prevent some type issues...
+    readonly [MAIN_EVENT]: Event<T>;
     addListener   (callback: Callback<T>): void;
     removeListener(callback: Callback<T>): void;
 }

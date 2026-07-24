@@ -1,5 +1,5 @@
 import { ObservableObject, trigger } from "MWL@2026:exports/Reactive/Events";
-import PropertySlot, { PropertiesSlot } from "../Property/PropertySlot";
+import { createEmptySlot, fillEmptySlot, PropertiesSlot } from "../Property/PropertySlot";
 import { NULL_OBJ } from "MWL@2026:exports/types";
 import { PropertyDescriptor as PropDesc } from "../Property/PropertyController";
 import { NotifyGate } from "../Property/PropertyObserver";
@@ -31,15 +31,18 @@ export class PropertiesImpl<T extends Record<string, any>>
             trigger(this, slot.notificationOrigin);
         })
 
+        // requires to avoid order-related issue.
+        for(const name in descriptors)
+            controller[name] = createEmptySlot();
+
         for(const name in descriptors) {
 
-            const slot = controller[name] = new PropertySlot(descriptors[name](this as any as T, initialValues[name]));
+            const slot = fillEmptySlot(controller[name], descriptors[name](this as any as T, initialValues[name]));
 
             slot.observers.push(notifyGate);
 
             Object.defineProperty(this, name, attrDescriptors[name]);
         }
-        
     }
 }
 

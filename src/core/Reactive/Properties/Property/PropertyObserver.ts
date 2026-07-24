@@ -13,7 +13,9 @@ export class NotifyGate<T> implements PropertyObserver<T> {
         this.callback = callback;
     }
     
-    onTrigger() { ++this.pendingCount; }
+    onTrigger() {
+        ++this.pendingCount;
+    }
     onNotify(slot: PropertySlot<T>) {
         if( --this.pendingCount === 0 )
             this.callback(slot);

@@ -8,10 +8,12 @@ export default class PropertySlot<T> {
     readonly originalController: PropertyController<T>;
 
     constructor(controller: PropertyController<T>) {
-
+        
         this.controller = this.originalController = controller;
 
-        controller.node.slots.push(this);
+        // for createEmptySlot.
+        if( controller !== null )
+            controller.node.slots.push(this);
     }
 
     get() {
@@ -49,4 +51,20 @@ export default class PropertySlot<T> {
 
 export type PropertiesSlot<T extends Record<string, any>> = {
     [K in keyof T]: PropertySlot<T[K]>
+}
+
+// internal use ONLY.
+export function createEmptySlot<T>() {
+    return new PropertySlot<T>(null as any);
+}
+export function fillEmptySlot<T>(
+                            slot      : PropertySlot<T>,
+                            controller: PropertyController<T>
+                        ) {
+    // @ts-ignore
+    slot.controller = slot.originalController = controller;
+
+    controller.node.slots.push(slot);
+
+    return slot;
 }

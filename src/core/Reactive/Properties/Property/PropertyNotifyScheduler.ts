@@ -10,7 +10,7 @@ class PropertyNotifyScheduler {
     }
     leaveBatch() {
         --this.lock;
-
+        
         if( this.lock === 0 )
             this.flush();
     }
@@ -20,14 +20,13 @@ class PropertyNotifyScheduler {
         ++this.lock; // prevents re-entry during execution.
 
         while(this.pendingNotification.length) {
-            const idx = this.pendingNotification.length - 1;
 
-            const slots  = this.pendingNotification[idx].node.slots;
+            const pending = this.pendingNotification.pop()!;
+
+            const slots  = pending.node.slots;
             for(let i = 0; i < slots.length; ++i)
                 slots[i].notify();
-            this.pendingNotification[idx].node.notificationOrigin = undefined;
-
-            --this.pendingNotification.length;
+            pending.node.notificationOrigin = undefined;
         }
 
         --this.lock;
