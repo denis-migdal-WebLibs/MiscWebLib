@@ -1,6 +1,6 @@
-import CallbackRegistry, { Callback } from "../CallbackRegistry";
-import { MAIN_EVENT, Observable } from "./Observable";
-import { listen, unobserve } from "./observe";
+import { Callback } from "../CallbackRegistry";
+import { Observable } from "./Observable";
+import { listen, triggerCallback, unlisten } from "./observe";
 
 //TODO move ?
 function inPlaceRemove(target: any[], idx: number) {
@@ -31,11 +31,8 @@ export class Observer<
     }
 
     observe(target: Observable<T>) {
-
         this.listen(target);
-
-        const ctx = (target[MAIN_EVENT]as CallbackRegistry<T>).getTriggerContext(this);
-        this.callback.apply(ctx);
+        triggerCallback(target, this.callback, this);
     }
 
     listen(target: Observable<T>) {
@@ -43,7 +40,8 @@ export class Observer<
         listen(target, this.callback);
     }
 
-    unobserve(target: Observable<T>) {
+    unlisten(target: Observable<T>) {
+
         const idx = this.targets.lastIndexOf(target);
         if( idx === -1 )
             return;
@@ -51,12 +49,15 @@ export class Observer<
         // we don't care about order.
         inPlaceRemove(this.targets, idx);
 
-        unobserve(target, this.callback);
+        unlisten(target, this.callback);
+    }
+    unobserve(target: Observable<T>) {
+        return this.unlisten(target);
     }
 
     clear() {
         for(let i = 0; i < this.targets.length; ++i)
-            unobserve(this.targets[i], this.callback);
+            unlisten(this.targets[i], this.callback);
 
         this.targets.length = 0
     }

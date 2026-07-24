@@ -5,11 +5,11 @@ import { deferredObserve } from "./deferredObserve";
 export default function createPropertiesDeferredRenderer<T extends Record<string, any>>(
     properties: PropertiesProvider<T>,
     renderer  : TaskList
-) {
+): PropertiesRenderer<T> {
 
     const props         = getProperties(properties);
     // I guess TS have difficulties to properly infer type here:
-    const propsRenderer = new PropertiesRenderer<T>(props);
+    const propsRenderer = new PropertiesRenderer<T>(props as any);
 
     deferredObserve(properties, renderer, () => propsRenderer.render());
 

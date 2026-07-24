@@ -17,13 +17,20 @@ export function observe<
                         callback: NoInfer<Callback<T>>
                     ) {
 
-    const registery = target[MAIN_EVENT]as CallbackRegistry<T>;
-    registery.add(callback);
+    (target[MAIN_EVENT] as CallbackRegistry<T>).add(callback);
 
     // on the initial callback : no origin.
-    const ctx = registery.getTriggerContext(null);
+    triggerCallback(target, callback, null);
+}
 
-    callback.apply(ctx);
+export function triggerCallback<T extends object|null> (
+                        target  : Observable<T>,
+                        callback: NoInfer<Callback<T>>,
+                        origin  : unknown
+                    ) {
+
+        const ctx = (target[MAIN_EVENT]as CallbackRegistry<T>).getTriggerContext(origin);
+        callback.apply(ctx);
 }
 
 export function unlisten<

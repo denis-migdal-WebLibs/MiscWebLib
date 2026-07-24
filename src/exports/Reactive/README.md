@@ -49,3 +49,22 @@ const event = createEvent();
 listen(event, () => {});
 trigger(event, origin?);
 ```
+
+## Observers
+
+```ts
+const arena = new ObservationArena();
+
+arena.listen(...)
+arena.observe(...)
+
+arena.clear();
+```
+
+```ts
+const observer = new Observer( () => {} );
+
+observer.listen(target);
+...
+observer.unlisten(target);
+```
