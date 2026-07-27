@@ -2,7 +2,8 @@ import { PropertyController } from "./PropertyController";
 
 class PropertyNotifyScheduler {
 
-    readonly pendingNotification = new Array<PropertyController<any>>();
+    collectedNotification = new Array<PropertyController<any>>();
+    queuedNotification    = new Array<PropertyController<any>>();
 
     lock = 0;
     enterBatch() {
@@ -19,14 +20,25 @@ class PropertyNotifyScheduler {
 
         ++this.lock; // prevents re-entry during execution.
 
-        while(this.pendingNotification.length) {
+        // can run many cycles...
+        while( this.collectedNotification.length !== 0 ) {
 
-            const pending = this.pendingNotification.pop()!;
+            const queue = this.collectedNotification;
+            this.collectedNotification = this.queuedNotification;
+            this.queuedNotification    = queue;
 
-            const slots  = pending.node.slots;
-            for(let i = 0; i < slots.length; ++i)
-                slots[i].notify();
-            pending.node.notificationOrigin = undefined;
+            for(let i = 0; i < queue.length; ++i) {
+                const pending = queue[i];
+                
+                const slots  = pending.node.slots;
+                for(let i = 0; i < slots.length; ++i)
+                    slots[i].notify();
+
+                // because re-entry in notifications is forbidden.
+                pending.node.notificationOrigin = undefined;
+            }
+
+            queue.length = 0;
         }
 
         --this.lock;
@@ -43,12 +55,12 @@ class PropertyNotifyScheduler {
 
         this.enterBatch(); // prevents re-entry during trigger.
 
+        // collect.
+        this.collectedNotification.push(target);
+
         const slots = target.node.slots; // must be non-null.
         for(let i = slots.length - 1; i >= 0 ; --i)
             slots[i].trigger();
-
-        // schedule.
-        this.pendingNotification.push(target);
 
         this.leaveBatch();
     }
