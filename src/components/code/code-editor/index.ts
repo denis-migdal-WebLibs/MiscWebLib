@@ -163,3 +163,6 @@ const CodeEditor = defineWebComponent({
 )
 
 export default CodeEditor;
+
+export {CodeEditor};
+export type CodeEditor = InstanceType<typeof CodeEditor>;
