@@ -1,4 +1,4 @@
-import { FCT_FALSE, NO_VALUE } from "MWL@2026:core/types";
+import { NO_VALUE } from "MWL@2026:core/types";
 import { SignalInstance } from "../Controllers/Signal";
 import { ValueInstance } from "../Controllers/Value";
 import { triggerProperty } from "./PropertyNotifyScheduler";
@@ -34,7 +34,7 @@ export function unsyncProperty<T>(srcSlot: PropertySlot<T>,
 
     for(let i = 0; i < slots.length; ++i)
         if( slots[i].get() === NO_VALUE )
-            slots[i].controller.set(controller.get(),
+            slots[i].controller.set!(controller.get(),
                                     controller.stamp);
 }
 
@@ -77,8 +77,8 @@ function needsSwap<T>(srcSlot: PropertySlot<T>,
     const src = srcSlot.controller;
     const dst = dstSlot.controller;
     
-    if( dst.set === FCT_FALSE ) {
-        if( src.set === FCT_FALSE )
+    if( dst.set === undefined ) {
+        if( src.set === undefined )
             return null;
 
         return true;

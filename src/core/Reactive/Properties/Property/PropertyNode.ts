@@ -27,7 +27,7 @@ export function fusePropertySlots<T>(
                                     id = ++order
                                 ) {
     // clear dst.
-    dst.controller.set(NO_VALUE as any, NO_VALUE as any); // suppress internal value.
+    dst.controller.set!(NO_VALUE as any, NO_VALUE as any); // suppress internal value.
 
     // set controller
     const dstSlots = dst.controller.node.slots; // should be defined.

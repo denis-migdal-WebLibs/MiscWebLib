@@ -1,17 +1,17 @@
 import { PropertyController } from "../Property/PropertyController";
-import { createPropertyNode } from "../Property/PropertyNode";
 
-export class ValueInstance<T> implements PropertyController<T>{
+export class ValueInstance<T> extends PropertyController<T>{
 
     protected value: T;
 
     constructor(initial: T) {
+        super();
         this.value = initial;
     }
 
     get() { return this.value; }
 
-    set(value: T) {
+    override set(value: T) {
 
         if( this.value === value )
             return false;
@@ -19,8 +19,6 @@ export class ValueInstance<T> implements PropertyController<T>{
         this.value = value;
         return true;
     }
-
-    readonly node = createPropertyNode<T>();
 }
 
 export default function Value<T>(defVal: T) {

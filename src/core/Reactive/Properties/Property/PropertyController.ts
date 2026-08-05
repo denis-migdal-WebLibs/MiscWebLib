@@ -1,9 +1,9 @@
-import { PropertyNode } from "./PropertyNode";
+import { createPropertyNode } from "./PropertyNode";
 
-export interface PropertyController<T> {
+export abstract class PropertyController<T> {
 
-    get(): T;
-    set(value: T, forceStamp?: Symbol): boolean;
+    abstract get(): T;
+    set?(value: T, forceStamp?: Symbol): boolean;
     /**
      * Two equal stamps indicate an equal value.
      * - Value/Fixed/Computed : the value is returned (known).
@@ -15,8 +15,9 @@ export interface PropertyController<T> {
     stamp?: any;
 
     // internal properties.
-    readonly node: PropertyNode<T>;
     validate?: () => (true|{ validation: string, value: unknown });
+
+    readonly node = createPropertyNode<T>();
 }
 
 export type PropertyDescriptor<CTX extends Record<string, any>, T>

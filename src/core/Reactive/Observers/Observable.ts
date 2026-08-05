@@ -1,8 +1,7 @@
 import { Cstr } from "MWL@2026:exports/types";
 import CallbackRegistry from "../CallbackRegistry";
 import {createEvent, Event} from "../Event";
-
-export const MAIN_EVENT: unique symbol = Symbol();
+import { MAIN_EVENT } from "./MAIN_EVENT";
 
 export type Observable<
                             T extends object|null

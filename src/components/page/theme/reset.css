@@ -12,6 +12,13 @@ script, style {
 
 p {
     text-align: justify;
+
+    &:first-child {
+        margin-top: 0;
+    }
+    &:last-child {
+        margin-bottom: 0;
+    }
 }
 
 ol > li > ol {
@@ -26,6 +33,13 @@ main {
 
     & > h1 {
         line-height: 26px;
+    }
+
+    h5 {
+        font-size: inherit;
+        font-style: italic;
+        margin-top: 0.5rem;
+        margin-bottom: 0.25rem;
     }
 
     & > div {

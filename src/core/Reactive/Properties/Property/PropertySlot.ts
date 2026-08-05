@@ -21,6 +21,9 @@ export default class PropertySlot<T> {
     }
     set(value: T, origin: unknown = null) {
 
+        if( this.controller.set === undefined)
+            return;
+        
         if( ! this.controller.set(value) )
             return;
 

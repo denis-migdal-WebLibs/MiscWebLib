@@ -1,13 +1,13 @@
 import { PropertyController } from "../Property/PropertyController";
-import { createPropertyNode } from "../Property/PropertyNode";
 
-export class SignalInstance<T> implements PropertyController<T>{
+export class SignalInstance<T> extends PropertyController<T>{
 
     protected value  : T;
 
-    stamp = Symbol();
+    override stamp = Symbol();
 
     constructor(initial: T) {
+        super();
         this.value = initial;
     }
 
@@ -15,13 +15,11 @@ export class SignalInstance<T> implements PropertyController<T>{
         return this.value;
     }
 
-    set(value: T, stamp = Symbol()) {
+    override set(value: T, stamp = Symbol()) {
         this.stamp = stamp; // uniqueness guaranteed.
         this.value = value;
         return true;
     }
-
-    readonly node = createPropertyNode<T>();
 }
 
 // Like Value() but always trigger a change.

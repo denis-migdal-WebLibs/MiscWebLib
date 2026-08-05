@@ -1,5 +1,5 @@
 import CallbackRegistry, { Callback } from "./CallbackRegistry";
-import { MAIN_EVENT } from "./Observers/Observable";
+import { MAIN_EVENT } from "./Observers/MAIN_EVENT";
 
 export type Event<
             T extends object|null,

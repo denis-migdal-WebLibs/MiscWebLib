@@ -1,5 +1,6 @@
 import { NULL_OP } from "MWL@2026:core/types";
-import { MAIN_EVENT, Observable } from "./Observers/Observable";
+import { Observable } from "./Observers/Observable";
+import { MAIN_EVENT } from "./Observers/MAIN_EVENT";
 
 export type CallbackContext<T extends object|null> = {
     readonly target: T,

@@ -1,15 +1,15 @@
-import { FCT_FALSE, NO_VALUE } from "MWL@2026:core/types";
+import { NO_VALUE } from "MWL@2026:core/types";
 import { PropertyController } from "../Property/PropertyController";
-import { createPropertyNode } from "../Property/PropertyNode";
 
 export class ComputedInstance<CTX extends Record<string, any>, T>
-                                                implements PropertyController<T>{
+                                                extends PropertyController<T>{
 
     protected readonly ctx : Readonly<CTX>;
     protected readonly calc: (ctx: Readonly<CTX>) => T;
     protected cache: T|typeof NO_VALUE = NO_VALUE;
 
     constructor(ctx: Readonly<CTX>, calc : (ctx: Readonly<CTX>) => T) {
+        super();
         this.ctx  = ctx;
         this.calc = calc;
     }
@@ -20,13 +20,6 @@ export class ComputedInstance<CTX extends Record<string, any>, T>
 
         return this.cache;
     }
-
-    declare set: typeof FCT_FALSE;
-    static {
-        this.prototype.set = FCT_FALSE;
-    }
-
-    readonly node = createPropertyNode<T>();
 }
 
 export default function Computed<CTX extends Record<string, any>, T>(

@@ -1,4 +1,4 @@
-import { Cstr, FCT_FALSE, isClass, NO_VALUE } from "MWL@2026:core/types";
+import { Cstr, isClass, NO_VALUE } from "MWL@2026:core/types";
 import { PropertyController } from "../Property/PropertyController";
 import { getProperties } from "../Properties/PropertiesProvider";
 import { CONTROLLERS, Properties } from "../Properties/PropertiesImpl";
@@ -48,11 +48,6 @@ export class ViewInstance<T, U> implements PropertyController<T> {
     }
 
     readonly node = createPropertyNode<T>();
-
-    declare set: typeof FCT_FALSE;
-    static {
-        this.prototype.set = FCT_FALSE;
-    }
 }
 
 type ViewConverter<T, U> = {convert(value: U): T};

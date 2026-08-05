@@ -1,5 +1,6 @@
-import { MAIN_EVENT, Observable } from "./Observable";
+import { Observable } from "./Observable";
 import CallbackRegistry, { Callback } from "../CallbackRegistry";
+import { MAIN_EVENT } from "./MAIN_EVENT";
 
 export function listen<
                         T    extends object|null

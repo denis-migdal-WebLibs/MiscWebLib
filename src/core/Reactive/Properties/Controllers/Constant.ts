@@ -1,24 +1,16 @@
-import { FCT_FALSE } from "MWL@2026:core/types";
 import { PropertyController } from "../Property/PropertyController";
-import { createPropertyNode } from "../Property/PropertyNode";
 
-export class ConstantInstance<T> implements PropertyController<T> {
+export class ConstantInstance<T> extends PropertyController<T> {
 
     readonly value;
 
     constructor(value: T) {
+        super();
         this.value = value;
     }
 
     get() {
         return this.value;
-    }
-
-    readonly node = createPropertyNode<T>();
-
-    declare set  : typeof FCT_FALSE;
-    static {
-        this.prototype.set   = FCT_FALSE;
     }
 }
 
