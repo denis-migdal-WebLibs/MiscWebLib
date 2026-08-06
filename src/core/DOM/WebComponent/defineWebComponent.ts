@@ -1,12 +1,12 @@
 import { NULL_OBJ } from "MWL@2026:core/types";
 
 import { Elements } from "../ElementsResolver/core/types";
-import createViewFactory, { ViewFactoryArgs } from "./createViewFactory";
+import {createViewFactory, ViewFactoryArgs } from "./createViewFactory";
 import { asControllerFactory, ControllerProvider } from "./core/controller";
 import { getMember, MemberType } from "./core/memberResolver";
 import { MAIN_EVENT } from "MWL@2026:core/Reactive/Observers/MAIN_EVENT";
 
-export default function defineWebComponent<
+export function defineWebComponent<
                         E         extends Elements    = {},
                         CTRLER    extends object|void = void,
                         RetAPI    extends object|void = void,

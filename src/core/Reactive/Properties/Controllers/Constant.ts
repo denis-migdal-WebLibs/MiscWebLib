@@ -14,6 +14,6 @@ export class ConstantInstance<T> extends PropertyController<T> {
     }
 }
 
-export default function Constant<T>(value: T) {
+export function Constant<T>(value: T) {
     return () => new ConstantInstance(value);
 }

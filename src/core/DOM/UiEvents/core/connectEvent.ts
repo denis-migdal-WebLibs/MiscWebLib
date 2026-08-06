@@ -1,6 +1,6 @@
-import RichEvent from "./RichEvent";
+import {RichEvent} from "./RichEvent";
 
-export default function connectEvent<NAME extends string>(
+export function connectEvent<NAME extends string>(
                                         target    : EventTarget,
                                         ev        : RichEvent<NAME, any>,
                                         controller: {[K in NAME]: () => void}

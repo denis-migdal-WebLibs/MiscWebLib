@@ -12,6 +12,6 @@ export class FixedInstance<T> extends PropertyController<T>{
     get() { return this.value; }
 }
 
-export default function Fixed<T>(defVal: T) {
+export function Fixed<T>(defVal: T) {
     return (_: object, initialVal = defVal) => new FixedInstance(initialVal);
 }

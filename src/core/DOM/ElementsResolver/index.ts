@@ -2,10 +2,10 @@ import { Cstr, isClass } from "MWL@2026:core/types";
 import { FCT_NULL_OBJ } from "MWL@2026:core/types/NullObjects";
 
 import { Elements, ExtractionTarget } from "./core/types";
-import getElements from "./getElements";
-import resolveElements, { Resolver, Resolvers } from "./resolveElements";
-import classResolver from "./resolvers/classResolver";
-import instanceResolver from "./resolvers/instanceResolver";
+import {getElements} from "./getElements";
+import {resolveElements, Resolver, Resolvers } from "./resolveElements";
+import {classResolver} from "./resolvers/classResolver";
+import {instanceResolver} from "./resolvers/instanceResolver";
 
 type Descriptors<E extends Elements> = {
     [K in keyof E]: Resolver<E[K]>|Cstr<E[K]>|E[K]
@@ -14,7 +14,7 @@ type Descriptors<E extends Elements> = {
 export {type Elements} from "./core/types";
 export {Descriptors as ElementsDescriptors};
 
-export default class ElementsResolver<E extends Elements> {
+export class ElementsResolver<E extends Elements> {
 
     private readonly resolvers: Resolvers<E>;
 

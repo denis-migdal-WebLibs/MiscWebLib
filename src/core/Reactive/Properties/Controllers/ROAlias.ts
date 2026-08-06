@@ -1,5 +1,5 @@
 import { PropertyController } from "../Property/PropertyController";
-import PropertySlot from "../Property/PropertySlot";
+import { PropertySlot } from "../Property/PropertySlot";
 import { TriggerGate } from "../Property/PropertyObserver";
 import { triggerProperty } from "../Property/PropertyNotifyScheduler";
 

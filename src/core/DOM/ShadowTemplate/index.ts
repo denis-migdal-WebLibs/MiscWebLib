@@ -1,5 +1,5 @@
-import style    from "./parsers/style";
-import template from "./parsers/template";
+import {style   } from "./parsers/style";
+import {template} from "./parsers/template";
 
 export type ContentGenerator = () => DocumentFragment|HTMLElement;
 
@@ -15,7 +15,7 @@ export type ShadowTemplateArgs = {
     style    ?: RawStyleType
 }
 
-export default class ShadowTemplate {
+export class ShadowTemplate {
 
     protected generateContent: ContentGenerator|null;
     protected styles         : CSSStyleSheet[];

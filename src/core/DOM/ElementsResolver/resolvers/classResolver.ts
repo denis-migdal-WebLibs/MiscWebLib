@@ -1,6 +1,6 @@
 import { Cstr } from "MWL@2026:core/types";
 
-export default function classResolver<K extends Cstr<HTMLElement>>(klass: K) {
+export function classResolver<K extends Cstr<HTMLElement>>(klass: K) {
     return (target: HTMLElement) => {
 
         if( __DEBUG__ && ! (target instanceof klass) )

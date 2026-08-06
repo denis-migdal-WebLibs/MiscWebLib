@@ -1,4 +1,4 @@
-import defineWebComponent from "MWL@2026:core/DOM/WebComponent/defineWebComponent";
+import {defineWebComponent} from "MWL@2026:core/DOM/WebComponent/defineWebComponent";
 
 class Controller {
     readonly i: number;

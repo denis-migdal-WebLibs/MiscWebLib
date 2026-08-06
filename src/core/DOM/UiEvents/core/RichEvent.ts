@@ -1,4 +1,4 @@
-export default class RichEvent<
+export class RichEvent<
                     Name      extends string,
                     EventName extends keyof HTMLElementEventMap
                 > {

@@ -1,5 +1,5 @@
 import { Cstr } from "MWL@2026:exports/types";
-import CallbackRegistry from "../CallbackRegistry";
+import { CallbackRegistry } from "../CallbackRegistry";
 import {createEvent, Event} from "../Event";
 import { MAIN_EVENT } from "./MAIN_EVENT";
 

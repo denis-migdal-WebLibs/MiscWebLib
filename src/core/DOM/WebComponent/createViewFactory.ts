@@ -1,7 +1,7 @@
 import { NULL_OP } from "MWL@2026:core/types";
 import { createResolver, Elements, ElementsDescriptors } from "../ElementsResolver";
-import TaskList from "../FrameScheduler/TaskList";
-import ShadowTemplate, { ShadowTemplateArgs } from "../ShadowTemplate"
+import { TaskList } from "../FrameScheduler/TaskList";
+import { ShadowTemplate, ShadowTemplateArgs } from "../ShadowTemplate"
 import { ViewCtx } from "./core/types";
 
 type Ctx<E extends Elements> = ViewCtx<E> & {renderer: TaskList};
@@ -27,7 +27,7 @@ export type ViewFactoryArgs<
 // Sometimes, Controller needs to be its own parameter, cf:
 // - https://github.com/microsoft/TypeScript/issues/63378
 // - https://github.com/microsoft/TypeScript/issues/63377
-export default function createViewFactory<
+export function createViewFactory<
                         E    extends Elements,
                         API  extends object|void = void,
                         ARGS extends any[]       = [],

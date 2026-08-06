@@ -1,4 +1,4 @@
-import defineWebComponent from "MWL@2026:core/DOM/WebComponent/defineWebComponent";
+import {defineWebComponent} from "MWL@2026:core/DOM/WebComponent/defineWebComponent";
 import { WithProperties } from "MWL@2026:exports/Reactive/Properties";
 import { Fixed } from "MWL@2026:exports/Reactive/Properties/controllers";
 

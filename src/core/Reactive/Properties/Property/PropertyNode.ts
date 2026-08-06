@@ -1,5 +1,5 @@
 import { NO_VALUE } from "MWL@2026:core/types";
-import PropertySlot from "./PropertySlot";
+import { PropertySlot } from "./PropertySlot";
 
 export type PropertyNode<T> = {
     notificationOrigin: unknown,

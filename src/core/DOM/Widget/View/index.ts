@@ -1,6 +1,6 @@
 import { createResolver, Elements, ElementsDescriptors } from "MWL@2026:core/DOM/ElementsResolver";
-import TaskList from "MWL@2026:core/DOM/FrameScheduler/TaskList";
-import ShadowTemplate, { ShadowTemplateArgs } from "MWL@2026:core/DOM/ShadowTemplate";
+import {TaskList} from "MWL@2026:core/DOM/FrameScheduler/TaskList";
+import {ShadowTemplate, ShadowTemplateArgs } from "MWL@2026:core/DOM/ShadowTemplate";
 import { NULL_OP } from "MWL@2026:core/types";
 
 export type ViewFactory<ViewCtx> = (

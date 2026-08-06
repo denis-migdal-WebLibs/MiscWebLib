@@ -1,4 +1,4 @@
-import PropertySlot from "./PropertySlot";
+import {PropertySlot} from "./PropertySlot";
 
 export type PropertyObserver<T> = {
     onTrigger: (slot: PropertySlot<T>) => void;

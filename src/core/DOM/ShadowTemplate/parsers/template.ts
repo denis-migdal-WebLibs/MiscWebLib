@@ -10,7 +10,7 @@ declare global {
 }
 
 
-export default function template( ...raw:Template<HTML>): DocumentFragment {
+export function template( ...raw:Template<HTML>): DocumentFragment {
 
     let elem = raw[0] as unknown as HTML;
 

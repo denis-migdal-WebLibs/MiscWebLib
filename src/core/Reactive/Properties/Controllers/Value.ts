@@ -21,6 +21,6 @@ export class ValueInstance<T> extends PropertyController<T>{
     }
 }
 
-export default function Value<T>(defVal: T) {
+export function Value<T>(defVal: T) {
     return (_:any, initialVal = defVal) => new ValueInstance(initialVal);
 }

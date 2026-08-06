@@ -2,7 +2,7 @@ import { Template } from "./types";
 
 export type CSS   = string|CSSStyleSheet|HTMLStyleElement;
 
-export default function style(...raw: Template<CSS>): CSSStyleSheet {
+export function style(...raw: Template<CSS>): CSSStyleSheet {
 
     let elem = raw[0];
 

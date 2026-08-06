@@ -1,10 +1,10 @@
-import Task from "./Task";
-import CallbackRegistry from "MWL@2026:core/Reactive/CallbackRegistry";
+import {Task} from "./Task";
+import {CallbackRegistry} from "MWL@2026:core/Reactive/CallbackRegistry";
 
 //TODO: move to types ?
 type Public<T> = { [K in keyof T]: T[K]; };
 
-export default class TaskList implements Public<Task> {
+export class TaskList implements Public<Task> {
 
     private readonly globalTask: Task;
     private readonly tasks = new CallbackRegistry(this);

@@ -1,3 +1,3 @@
-export {Observer as Observer} from "./Observer";
-export {default as ObservationArena} from "./ObservationArena";
+export {Observer}         from "./Observer";
+export {ObservationArena} from "./ObservationArena";
 export * from "./observe";

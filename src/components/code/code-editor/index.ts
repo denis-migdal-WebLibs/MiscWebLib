@@ -1,10 +1,10 @@
-import defineWebComponent from "MWL@2026:core/DOM/WebComponent/defineWebComponent";
-import UNDO from "MWL@2026:core/DOM/UiEvents/undo";
+import {defineWebComponent} from "MWL@2026:core/DOM/WebComponent/defineWebComponent";
+import {UNDO} from "MWL@2026:core/DOM/UiEvents/undo";
 import { connectEvents } from "MWL@2026:core/DOM/UiEvents/core/connectEvent";
-import REDO from "MWL@2026:core/DOM/UiEvents/redo";
-import NEWLINE from "MWL@2026:core/DOM/UiEvents/newline";
-import TAB from "MWL@2026:core/DOM/UiEvents/tab";
-import on from "MWL@2026:core/DOM/UiEvents/core/on";
+import {REDO} from "MWL@2026:core/DOM/UiEvents/redo";
+import {NEWLINE} from "MWL@2026:core/DOM/UiEvents/newline";
+import {TAB} from "MWL@2026:core/DOM/UiEvents/tab";
+import {on} from "MWL@2026:core/DOM/UiEvents/core/on";
 import StateHistory from "MWL@2026:core/StateHistory";
 import { updateProperties, WithProperties, GetPropertiesType } from "MWL@2026:exports/Reactive/Properties";
 import { Value } from "MWL@2026:exports/Reactive/Properties/controllers";
@@ -162,7 +162,6 @@ const CodeEditor = defineWebComponent({
     }
 )
 
-export default CodeEditor;
+type CodeEditor = InstanceType<typeof CodeEditor>;
 
 export {CodeEditor};
-export type CodeEditor = InstanceType<typeof CodeEditor>;

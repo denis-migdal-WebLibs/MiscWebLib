@@ -1,5 +1,5 @@
 import { Observable } from "./Observable";
-import CallbackRegistry, { Callback } from "../CallbackRegistry";
+import { CallbackRegistry, Callback } from "../CallbackRegistry";
 import { MAIN_EVENT } from "./MAIN_EVENT";
 
 export function listen<

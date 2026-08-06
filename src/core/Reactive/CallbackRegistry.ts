@@ -13,7 +13,7 @@ export type Callback<
             > = (this: CallbackContext<T>) => void;
 
 // do NOT extend ObservableObject.
-export default class CallbackRegistry<
+export class CallbackRegistry<
                                 T extends object|null
                             > implements Observable<any> {
 

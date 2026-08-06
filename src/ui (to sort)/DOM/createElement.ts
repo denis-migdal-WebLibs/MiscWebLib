@@ -4,7 +4,7 @@ type Props = {
     attrs: Record<string, string>
 };
 
-export default function createElement(tagname: string, props: Partial<Props>) {
+export function createElement(tagname: string, props: Partial<Props>) {
 
     const elem = document.createElement(tagname);
 

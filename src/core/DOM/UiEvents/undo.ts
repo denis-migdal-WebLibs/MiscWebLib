@@ -1,7 +1,5 @@
-import RichEvent from "./core/RichEvent";
+import {RichEvent} from "./core/RichEvent";
 
-const UNDO = new RichEvent("undo", "keydown", (ev: KeyboardEvent) => {
+export const UNDO = new RichEvent("undo", "keydown", (ev: KeyboardEvent) => {
     return ev.ctrlKey && ev.key === "z";
 });
-
-export default UNDO;

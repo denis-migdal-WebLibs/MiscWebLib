@@ -26,6 +26,6 @@ export class SignalInstance<T> extends PropertyController<T>{
 }
 
 // Like Value() but always trigger a change.
-export default function Signal<T>(defVal: T) {
+export function Signal<T>(defVal: T) {
     return (_: any, initialVal = defVal) => new SignalInstance(initialVal);
 }

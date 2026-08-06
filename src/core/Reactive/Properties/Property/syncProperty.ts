@@ -2,7 +2,7 @@ import { NO_VALUE } from "MWL@2026:core/types";
 import { SignalInstance } from "../Controllers/Signal";
 import { ValueInstance } from "../Controllers/Value";
 import { triggerProperty } from "./PropertyNotifyScheduler";
-import PropertySlot from "./PropertySlot";
+import {PropertySlot} from "./PropertySlot";
 import { fusePropertySlots } from "./PropertyNode";
 import { ROAlias } from "../Controllers/ROAlias";
 

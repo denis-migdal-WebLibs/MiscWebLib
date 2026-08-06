@@ -3,7 +3,7 @@ import { isTemplateString, Template } from "./types";
 const template = document.createElement("template");
 const df = template.content;
 
-export default function html<T extends HTMLElement>(...raw: Template<string>): T {
+export function html<T extends HTMLElement>(...raw: Template<string>): T {
     
     let elem = raw[0] as unknown as string;
 

@@ -1,12 +1,12 @@
 import GuardedState from "MWL@2026:core/GuardedState";
 import { NULL_OP }  from "MWL@2026:core/types";
 
-import scheduler from "./FrameScheduler";
+import {frameScheduler} from "./FrameScheduler";
 
-export default class Task {
+export class Task {
 
     private readonly task          = () => this.Requested.leave();
-    private readonly _scheduleTask = () => scheduler.scheduleTask(this.task);
+    private readonly _scheduleTask = () => frameScheduler.scheduleTask(this.task);
     private scheduleTask = this._scheduleTask;
 
     private readonly Requested = new GuardedState(
@@ -19,7 +19,7 @@ export default class Task {
 
             if( this.Requested.isInside ) {
                 // Requested will not be able to leave.
-                scheduler.cancelScheduledTask(this.task);
+                frameScheduler.cancelScheduledTask(this.task);
             }
         },
         () => {

@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { listen } from "MWL@2026:core/Reactive/Observers";
 import { Value } from "MWL@2026:core/Reactive/Properties/Controllers";
 import { createProperties } from "MWL@2026:core/Reactive/Properties/Properties/createProperties";

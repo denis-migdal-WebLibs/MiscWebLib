@@ -1,4 +1,4 @@
-import CallbackRegistry from "MWL@2026:core/Reactive/CallbackRegistry";
+import {CallbackRegistry} from "MWL@2026:core/Reactive/CallbackRegistry";
 import GuardedState from "MWL@2026:core/GuardedState";
 
 type FrameTask = () => void;
@@ -41,4 +41,4 @@ export class FrameScheduler {
     }
 }
 
-export default new FrameScheduler();
+export const frameScheduler = new FrameScheduler();

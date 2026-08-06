@@ -2,7 +2,7 @@ import { Cstr, isClass, NO_VALUE } from "MWL@2026:core/types";
 import { PropertyController } from "../Property/PropertyController";
 import { getProperties } from "../Properties/PropertiesProvider";
 import { CONTROLLERS, Properties } from "../Properties/PropertiesImpl";
-import PropertySlot from "../Property/PropertySlot";
+import { PropertySlot } from "../Property/PropertySlot";
 import { triggerProperty } from "../Property/PropertyNotifyScheduler";
 import { TriggerGate } from "../Property/PropertyObserver";
 
@@ -52,7 +52,7 @@ export class ViewInstance<T, U> extends PropertyController<T> {
 type ViewConverter<T, U> = {convert(value: U): T};
 //(target: U, prevVal: T|typeof NO_VALUE) => T;
 
-export default function View<K extends string, T, U>(
+export function View<K extends string, T, U>(
             target   : K,
             converter: Cstr<ViewConverter<T, U>>|((value: U) => T)
         ) {

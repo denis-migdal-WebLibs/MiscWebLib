@@ -2,7 +2,7 @@ import { triggerProperty } from "./PropertyNotifyScheduler";
 import { PropertyController, validate } from "./PropertyController";
 import { PropertyObserver } from "./PropertyObserver";
 
-export default class PropertySlot<T> {
+export class PropertySlot<T> {
 
     controller: PropertyController<T>;
     readonly originalController: PropertyController<T>;

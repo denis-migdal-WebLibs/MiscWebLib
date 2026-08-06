@@ -1,5 +1,5 @@
 import { listen } from "MWL@2026:core/Reactive/Observers";
-import Value from "MWL@2026:core/Reactive/Properties/Controllers/Value";
+import { Value } from "MWL@2026:core/Reactive/Properties/Controllers/Value";
 import { createProperties } from "MWL@2026:core/Reactive/Properties/Properties/createProperties";
 import { forwardProperty } from "MWL@2026:core/Reactive/Properties/Property/syncProperty";
 import { getProperty } from "MWL@2026:exports/Reactive/Properties/sync";

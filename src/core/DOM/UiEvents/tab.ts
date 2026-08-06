@@ -1,8 +1,6 @@
-import RichEvent from "./core/RichEvent";
+import {RichEvent} from "./core/RichEvent";
 
 // doesn't work with keypress.
-const TAB = new RichEvent("tab", "keydown", (ev: KeyboardEvent) => {
+export const TAB = new RichEvent("tab", "keydown", (ev: KeyboardEvent) => {
     return ev.code === "Tab"
 });
-
-export default TAB;

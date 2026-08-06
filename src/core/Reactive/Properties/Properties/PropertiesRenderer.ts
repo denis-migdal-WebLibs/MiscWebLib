@@ -10,7 +10,7 @@ type InternalBindingCondition =
 
 // PropertiesRenderer should not have the responsability to
 // watch the properties.
-export default class PropertiesRenderer<T extends Record<string, any>> {
+export class PropertiesRenderer<T extends Record<string, any>> {
 
     readonly properties: Readonly<T>;
     readonly cache = {} as Record<keyof T, any>;

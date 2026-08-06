@@ -1,10 +1,10 @@
-export default function get<T extends HTMLElement>(e    : Element,
+export function get<T extends HTMLElement>(e    : Element,
                                                    sync?: false
                                                 ) : Promise<T>
-export default function get<T extends HTMLElement>(e   : Element,
+export function get<T extends HTMLElement>(e   : Element,
                                                    sync: true
                                                 ) : T
-export default function get<T extends HTMLElement>(e   : Element,
+export function get<T extends HTMLElement>(e   : Element,
                                                    sync: boolean = true
                                                 ) : T|Promise<T> {
     

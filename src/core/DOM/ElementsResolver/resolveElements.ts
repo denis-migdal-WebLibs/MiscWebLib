@@ -6,7 +6,7 @@ export type Resolvers<E extends Elements> = {
     [K in keyof E]: Resolver<E[K]>
 }
 
-export default function resolveElements<E extends Elements>(
+export function resolveElements<E extends Elements>(
             elements : Elements,
             resolvers: Resolvers<E>,
         ): E {

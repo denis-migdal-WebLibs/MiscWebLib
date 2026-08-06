@@ -22,7 +22,7 @@ export class ComputedInstance<CTX extends Record<string, any>, T>
     }
 }
 
-export default function Computed<CTX extends Record<string, any>, T>(
+export function Computed<CTX extends Record<string, any>, T>(
             _calc: (ctx: Readonly<CTX>) => T
         ) {
 

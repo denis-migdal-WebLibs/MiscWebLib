@@ -3,7 +3,7 @@ import { Observable } from "./Observable";
 import { listen, triggerCallback, unlisten } from "./observe";
 
 // Register observer for easier cleanup.
-export default class ObservationArena {
+export class ObservationArena {
 
     private readonly targets   = new Array<any>();
     private readonly callbacks = new Array<any>();

@@ -2,7 +2,7 @@ import { Cstr, NULL_OBJ } from "MWL@2026:exports/types";
 import { createPassiveViewFactory, CreatePassiveViewFactoryOpts, ViewFactory } from "./View";
 import { CoordinatorClass, CoordinatorClass2, createCoordinatorClass, CreateCoordinatorClassOpts } from "./Coordinator";
 import { Elements } from "../ElementsResolver";
-import TaskList from "../FrameScheduler/TaskList";
+import { TaskList } from "../FrameScheduler/TaskList";
 import { extractData } from "../WebComponent/core/extractData";
 
 export type WidgetName = Lowercase<`${string}-${string}`>;

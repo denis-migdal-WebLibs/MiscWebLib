@@ -1,4 +1,4 @@
-import CallbackRegistry, { Callback } from "./CallbackRegistry";
+import { CallbackRegistry, Callback } from "./CallbackRegistry";
 import { MAIN_EVENT } from "./Observers/MAIN_EVENT";
 
 export type Event<
