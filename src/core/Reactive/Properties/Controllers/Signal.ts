@@ -3,8 +3,7 @@ import { PropertyController } from "../Property/PropertyController";
 export class SignalInstance<T> extends PropertyController<T>{
 
     protected value  : T;
-
-    override stamp = Symbol();
+    protected _stamp = Symbol();
 
     constructor(initial: T) {
         super();
@@ -16,9 +15,13 @@ export class SignalInstance<T> extends PropertyController<T>{
     }
 
     override set(value: T, stamp = Symbol()) {
-        this.stamp = stamp; // uniqueness guaranteed.
+        this._stamp = stamp; // uniqueness guaranteed.
         this.value = value;
         return true;
+    }
+
+    override get stamp() {
+        return this._stamp;
     }
 }
 

@@ -64,6 +64,8 @@ renderer.render(); // check properties and execute associated bindings.
 
 ## Types
 
+Note: standalone `Property` not implemented (would inherit `PropertySlot` and `Observable`). Then, will need some `new ValueProperty()` classes.
+
 - `Properties<Record<string, any>>`: a record of properties.
 - `PropertySlot<T>`: a property (a stable reference to a `PropertyController<T>`).
 - `PropertyController<T>`: a property behavior, can be shared when properties are synced.

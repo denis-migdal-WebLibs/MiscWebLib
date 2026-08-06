@@ -4,10 +4,9 @@ import { getProperties } from "../Properties/PropertiesProvider";
 import { CONTROLLERS, Properties } from "../Properties/PropertiesImpl";
 import PropertySlot from "../Property/PropertySlot";
 import { triggerProperty } from "../Property/PropertyNotifyScheduler";
-import { createPropertyNode } from "../Property/PropertyNode";
 import { TriggerGate } from "../Property/PropertyObserver";
 
-export class ViewInstance<T, U> implements PropertyController<T> {
+export class ViewInstance<T, U> extends PropertyController<T> {
 
     protected readonly transform: (value: U) => T;
 
@@ -20,6 +19,8 @@ export class ViewInstance<T, U> implements PropertyController<T> {
                     source   : PropertySlot<U>,
                     transform: (value: U) => T
                 ) {
+
+        super();
 
         this.source    = source;
         this.transform = transform;
@@ -43,11 +44,9 @@ export class ViewInstance<T, U> implements PropertyController<T> {
         return this.cache;
     }
 
-    get stamp() {
+    override get stamp() {
         return this.source.stamp;
     }
-
-    readonly node = createPropertyNode<T>();
 }
 
 type ViewConverter<T, U> = {convert(value: U): T};

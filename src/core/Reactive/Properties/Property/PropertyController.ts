@@ -3,7 +3,7 @@ import { createPropertyNode } from "./PropertyNode";
 export abstract class PropertyController<T> {
 
     abstract get(): T;
-    set?(value: T, forceStamp?: Symbol): boolean;
+    set?(value: T, forceStamp?: unknown): boolean;
     /**
      * Two equal stamps indicate an equal value.
      * - Value/Fixed/Computed : the value is returned (known).
@@ -12,7 +12,7 @@ export abstract class PropertyController<T> {
      * 
      * Getting a stamp shouldn't require computations.
      */
-    stamp?: any;
+    get stamp(): unknown { return this.get() }
 
     // internal properties.
     validate?: () => (true|{ validation: string, value: unknown });

@@ -4,6 +4,7 @@ import { ValueInstance } from "../Controllers/Value";
 import { triggerProperty } from "./PropertyNotifyScheduler";
 import PropertySlot from "./PropertySlot";
 import { fusePropertySlots } from "./PropertyNode";
+import { ROAlias } from "../Controllers/ROAlias";
 
 export function unsyncProperty<T>(srcSlot: PropertySlot<T>,
                                   dstSlot: PropertySlot<T>) {
@@ -59,6 +60,31 @@ export function syncProperty<T>(srcSlot: PropertySlot<T>,
         triggerProperty(dstSlot.controller, null);
 
     return true;
+}
+
+export function forwardProperty<T>( srcSlot: PropertySlot<T>,
+                                    dstSlot: PropertySlot<T>) {
+
+    if( dstSlot.controller.set === undefined )
+        throw new Error('Property cannot be forwarded');
+
+    const notify = needsNotify(srcSlot, dstSlot);
+
+    // clear dst / suppress internal value.
+    dstSlot.controller.set!(NO_VALUE as any, NO_VALUE as any);
+
+    // set ctrler
+    const ctrler = new ROAlias(srcSlot);
+    ctrler.node.bindings = dstSlot.controller.node.bindings;
+    ctrler.node.slots    = dstSlot.controller.node.slots;
+
+    // set controller
+    const dstSlots = ctrler.node.slots; // should be defined.
+    for(let i = 0; i < dstSlots.length; ++i)
+        dstSlots[i].controller = ctrler;
+    
+    if( notify )
+        triggerProperty(dstSlot.controller, null);
 }
 
 function needsNotify<T>(
