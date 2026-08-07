@@ -1,7 +1,7 @@
 // @ts-nocheck
 
 import { listen } from "MWL@2026:core/Reactive/Observers";
-import { Value } from "MWL@2026:core/Reactive/Properties/Controllers";
+import { Fixed, Value } from "MWL@2026:core/Reactive/Properties/Controllers";
 import { createProperties } from "MWL@2026:core/Reactive/Properties/Properties/createProperties";
 import { Properties } from "MWL@2026:exports/Reactive/Properties";
 
@@ -44,13 +44,31 @@ type ReadonlyKeys<T> = {
 type WritableKeys<T> = Exclude<keyof T, ReadonlyKeys<T>>;
 
 
-type Test<T extends Record<string, any>> = Expand<{
-    [K in WritableKeys<T>]: {set: () => void}
+type Test<T extends Record<string, any>> = {
+    [K in WritableKeys<T>]: {set(): void, get(): T[K]}
 } & {
-    [K in ReadonlyKeys<T>]: {}
-}>
+    [K in ReadonlyKeys<T>]: {get(): T[K]}
+}
 
 type Z = Test<{foo: 34, readonly faa: "e"}>;
+
+function foo<T extends Record<string, any>>(desc: Test<T>): T {
+
+}
+
+const c = foo({} as Test<{foo: 34, readonly faa: "e"}>)
+
+const x = {
+    faa: {
+        get() { return 34 as const },
+        set() {},
+    }
+};
+
+const z: Expand<Test<{faa: 34}>> = x;
+
+const c = foo(x);
+const d = foo(z as Test<{faa: 34}>);
 
 type ROProps<T> = {[K in keyof T]: {} };
 type RWProps<T> = {[K in keyof T]: { set(): boolean } };
@@ -72,10 +90,10 @@ function faa<
     return {} as any;
 }
 
-const e = faa({} as {foo: {}, faa: { set(): false}});
+const e = faa({} as {foo: {}, faa: { set(): boolean}});
 
 const props = expand(createProperties({
-    foo: Value(44)
+    foo: Fixed(44)
 }));
 
 type Expand<T> = T extends infer O

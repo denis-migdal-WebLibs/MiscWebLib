@@ -16,8 +16,8 @@ export function isClass<T    extends object    = object,
                         ARGS extends unknown[] = never[]>(
                             obj: Constructible<T, ARGS>|unknown
                         ): obj is Cstr<T, ARGS> {
+
     const prototype = Object.getOwnPropertyDescriptor(obj, "prototype");
-    if( prototype === undefined)
-        return false;
-    return prototype.writable === false;
+    
+    return prototype !== undefined && prototype.writable === false;
 }
