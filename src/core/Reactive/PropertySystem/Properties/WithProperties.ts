@@ -40,7 +40,7 @@ export function WithProperties<PD extends PropertiesDescriptors<any>>(
         // for easier access
         static {
             for(const name in descriptors)
-                Object.defineProperty(WithProperties, name, {
+                Object.defineProperty(WithProperties.prototype, name, {
                     // not enumerable.
                     set(value: unknown) {
                         this.properties[name] = value;
