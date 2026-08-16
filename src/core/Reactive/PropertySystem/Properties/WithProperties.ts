@@ -1,11 +1,11 @@
 import { PropertiesFactory, PropertiesType } from "./Properties";
-import { KEYS, PROPERTIES, Properties, PropertiesDescriptors } from "./PropertiesImpl";
+import { Properties, PropertiesDescriptors } from "./PropertiesImpl";
 
 import { ObservableProxy } from "MWL@2026/core/Reactive/Observers/Observable";
 
 export type WithProperties<T extends Record<string, any>> = {
     readonly properties  : Properties<T>;
-} & Properties<T>;
+} & T & ObservableProxy<Properties<T>>;
 
 type WithPropertiesCstr<T extends Record<string, any>> = {
     new(initialValues?: Partial<T>): WithProperties<T>
@@ -20,9 +20,6 @@ export function WithProperties<PD extends PropertiesDescriptors<any>>(
     return class WithProperties
                     extends ObservableProxy<Properties<PropertiesType<PD>>> {
 
-        readonly [PROPERTIES]: any;
-        readonly [KEYS]      : any;
-
         constructor(initialValues: Partial<PropertiesType<PD>> = {}) {
             // @ts-expect-error
             const properties  = Properties(initialValues);
@@ -30,8 +27,6 @@ export function WithProperties<PD extends PropertiesDescriptors<any>>(
 
             // @ts-expect-error
             this.properties = properties;
-            this[PROPERTIES] = this.properties[PROPERTIES];
-            this[KEYS]       = this.properties[KEYS];
         }
 
         // for clean Object.keys() / JSON.stringify() / structuredClone()

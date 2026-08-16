@@ -1,7 +1,6 @@
 import { hasListeners, triggerEvent } from "MWL@2026/core/Reactive/Observers/Observable";
 import { REACTIVE_NODE, ReactiveObject } from "./ReactiveObject";
 import { Link } from "./link";
-import { getID } from "MWL@2026/core/debug";
 import { incrVersion } from "./ReactiveNode";
 
 export class ReactiveScheduler {
