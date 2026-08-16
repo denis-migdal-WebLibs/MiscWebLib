@@ -1,7 +1,7 @@
 import { NULL_OBJ } from "MWL@2026/core/types";
 
-const CFG_ATTR_NAME = "w:cfg";
-const CFG_ATTR_PREFIX = "cfg:";
+const CFG_ATTR_NAME = "w-cfg";
+const CFG_ATTR_PREFIX = "cfg-";
 
 export function extractConfig<D extends Record<string,any>>(
                                                 target: HTMLElement,

@@ -4,7 +4,7 @@ export const WCID_DATANAME = "wcid";
 const WCID_ATTRNAME = `data-${WCID_DATANAME}`;
 const WCID_SELECTOR = `[${WCID_ATTRNAME}]`;
 
-export const WID_ATTRNAME = "w:id";
+export const WID_ATTRNAME = "w-id";
 const WID_SELECTOR = `[${WID_ATTRNAME}]`;
 
 export function getElements(target: ExtractionTarget) {
