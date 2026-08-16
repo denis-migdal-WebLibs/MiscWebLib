@@ -1,5 +1,7 @@
 export {WithProperties} from "MWL@2026/core/Reactive/PropertySystem/Properties/WithProperties";
 
+export {updateProperties} from "MWL@2026/core/Reactive/PropertySystem/Properties/PropertiesProvider";
+
 /*
 export {createPropertiesFactory} from "MWL@2026/core/Reactive/Properties/Properties/createProperties";
 /*

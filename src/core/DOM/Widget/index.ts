@@ -1,4 +1,4 @@
-import { Cstr, NULL_OBJ } from "MWL@2026/exports/types";
+import { NULL_OBJ } from "MWL@2026/exports/types";
 import { ViewFactory } from "./View";
 import { CoordinatorClass } from "./Coordinator";
 import { TaskList } from "../FrameScheduler/TaskList";
@@ -18,15 +18,14 @@ type WidgetClass<
                     Config extends Record<string, any>,
                     WidgetAPI,
                     DAPI extends keyof WidgetAPI,
-                > = Cstr<
+                > = {new(config?: Partial<Config>):
                         HTMLElement
                         & {
                             readonly api: Expand<WidgetAPI>,
                             readonly renderer: TaskList
                         }
                         & Pick<WidgetAPI, DAPI>,
-                        []|[Partial<Config>]
-                    >;
+                    };
 
 export function defineWidget<   
         Config extends Record<string, any>,
