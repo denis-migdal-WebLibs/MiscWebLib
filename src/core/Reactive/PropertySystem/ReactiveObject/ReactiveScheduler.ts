@@ -101,9 +101,6 @@ export class ReactiveScheduler {
 
     protected notify() {
 
-        for(let i = 0; i < this.pendingNotifications.length; ++i)
-            console.warn( getID(this.pendingNotifications[i]) )
-
         // re-entry is forbidden.
 
         for(let i = 0; i < this.pendingNotifications.length; ++i)
