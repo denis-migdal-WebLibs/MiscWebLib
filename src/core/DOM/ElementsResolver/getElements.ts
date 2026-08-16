@@ -19,7 +19,9 @@ export function getElements(target: ExtractionTarget) {
             const name = elements[i].getAttribute(WCID_ATTRNAME)!;
             results[name] = elements[i];
         }
-        console.warn("old ID", Object.keys(results));
+
+        if( elements.length )
+            console.warn("old ID", Object.keys(results));
     }
 
     const elements = target.querySelectorAll<HTMLElement>(WID_SELECTOR);
