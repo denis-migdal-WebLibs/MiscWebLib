@@ -4,9 +4,9 @@ import { getPropertyIndex } from "./PropertiesProvider";
 import { REACTIVE_NODE } from "../ReactiveObject/ReactiveObject";
 import { ReactiveNode } from "../ReactiveObject/ReactiveNode";
 
-// PropertiesRenderer should not have the responsability to
+// PropertiesEffects should not have the responsibility to
 // watch the properties.
-export class PropertiesRenderer<T extends Record<string, any>> {
+export class PropertiesEffects<T extends Record<string, any>> {
 
     readonly properties: Properties<Readonly<T>>;
     readonly nodes: ReactiveNode[];
@@ -56,7 +56,7 @@ export class PropertiesRenderer<T extends Record<string, any>> {
             this.afterEffectsCallback();
     }
 
-    addEffect(cond: Extract<keyof T, string>[]
+    add(cond: Extract<keyof T, string>[]
                | Extract<keyof T, string>,
          callback: () => void) {
 
@@ -74,7 +74,7 @@ export class PropertiesRenderer<T extends Record<string, any>> {
         this.effectsCond.push(idx);
     }
 
-    afterEffects(callback: () => void) {
+    after(callback: () => void) {
         this.afterEffectsCallback = callback;
     }
 }
