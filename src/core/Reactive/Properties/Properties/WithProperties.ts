@@ -1,7 +1,7 @@
 import { createPropertiesFactory } from "./createProperties";
 import { Properties, PropertiesDescriptors } from "./PropertiesImpl";
-import { Observable } from "MWL@2026:exports/Reactive/Events";
-import { ObservableProxy } from "MWL@2026:core/Reactive/Observers/Observable";
+import { Observable } from "MWL@2026/exports/Reactive/Events";
+import { ObservableProxy } from "MWL@2026/core/Reactive/Observers/Observable";
 
 export type WithProperties<T extends Record<string, any>> = {
     readonly properties  : Properties<T>;

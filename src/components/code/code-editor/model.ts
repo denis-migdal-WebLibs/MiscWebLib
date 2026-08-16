@@ -1,7 +1,7 @@
-import StateHistory from "MWL@2026:core/StateHistory";
-import { observe } from "MWL@2026:exports/Reactive/Events";
-import { updateProperties, WithProperties } from "MWL@2026:exports/Reactive/Properties";
-import { Value } from "MWL@2026:exports/Reactive/Properties/controllers";
+import StateHistory from "MWL@2026/core/StateHistory";
+import { observe } from "MWL@2026/exports/Reactive/Events";
+import { updateProperties, WithProperties } from "MWL@2026/exports/Reactive/Properties";
+import { Value } from "MWL@2026/exports/Reactive/Properties/controllers";
 
 export type InputState = {
     text: string,

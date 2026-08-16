@@ -64,7 +64,7 @@ export function fillEmptySlot<T>(
                             slot      : PropertySlot<T>,
                             controller: PropertyController<T>
                         ) {
-    // @ts-ignore
+    // @ts-expect-error
     slot.controller = slot.originalController = controller;
 
     controller.node.slots.push(slot);

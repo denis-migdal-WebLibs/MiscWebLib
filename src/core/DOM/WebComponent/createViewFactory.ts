@@ -1,4 +1,4 @@
-import { NULL_OP } from "MWL@2026:core/types";
+import { NULL_OP } from "MWL@2026/core/types";
 import { createResolver, Elements, ElementsDescriptors } from "../ElementsResolver";
 import { TaskList } from "../FrameScheduler/TaskList";
 import { ShadowTemplate, ShadowTemplateArgs } from "../ShadowTemplate"

@@ -1,4 +1,4 @@
-import { NO_VALUE } from "MWL@2026:core/types";
+import { NO_VALUE } from "MWL@2026/core/types";
 import { PropertyController } from "../Property/PropertyController";
 
 export class ComputedInstance<CTX extends Record<string, any>, T>

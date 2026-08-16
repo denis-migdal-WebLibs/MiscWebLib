@@ -1,5 +1,5 @@
-import { MAIN_EVENT } from "MWL@2026:core/Reactive/Observers/MAIN_EVENT";
-import { FCT_ID, NULL_OBJ } from "MWL@2026:exports/types";
+import { MAIN_EVENT } from "MWL@2026/core/Reactive/Observers/MAIN_EVENT";
+import { FCT_ID, NULL_OBJ } from "MWL@2026/exports/types";
 
 export type CoordinatorClass<
                             Config extends Record<string, any>,

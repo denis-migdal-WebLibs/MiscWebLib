@@ -1,9 +1,10 @@
-import { Cstr, NULL_OBJ } from "MWL@2026:exports/types";
+import { Cstr, NULL_OBJ } from "MWL@2026/exports/types";
 import { createPassiveViewFactory, CreatePassiveViewFactoryOpts, ViewFactory } from "./View";
 import { CoordinatorClass, CoordinatorClass2, createCoordinatorClass, CreateCoordinatorClassOpts } from "./Coordinator";
 import { Elements } from "../ElementsResolver";
 import { TaskList } from "../FrameScheduler/TaskList";
 import { extractData } from "../WebComponent/core/extractData";
+import { extractConfig } from "./extractConfig";
 
 export type WidgetName = Lowercase<`${string}-${string}`>;
 
@@ -33,7 +34,7 @@ export function defineWidget2<
           & CreatePassiveViewFactoryOpts<NoInfer<ViewCtx>, E>
     ) {
 
-    return defineWidget({
+    return defineWidget3({
         name: opts.name,
         coordinatorClass: createCoordinatorClass(opts),
         viewFactory     : createPassiveViewFactory(opts),
@@ -58,7 +59,7 @@ type WidgetClass<
                         []|[Partial<Config>]
                     >;
 
-export function defineWidget<   
+export function defineWidget3<   
                                 Config extends Record<string, any>,
                                 WidgetAPI,
                                 DAPI extends keyof WidgetAPI,
@@ -75,8 +76,7 @@ export function defineWidget<
         constructor(config: Partial<Config> = NULL_OBJ) {
             super();
 
-            //TODO: extractWidgetConfig.
-            config = extractData(this, config);
+            config = extractConfig(this, config);
 
             const coordinator = new opts.coordinatorClass(config);
 
@@ -109,7 +109,7 @@ export function defineWidget<
 
 
 
-export function defineWidget3<   
+export function defineWidget<   
         Config extends Record<string, any>,
         WidgetAPI,
         DAPI extends keyof WidgetAPI,

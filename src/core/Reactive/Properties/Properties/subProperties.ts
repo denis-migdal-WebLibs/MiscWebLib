@@ -1,8 +1,8 @@
-import { listen, ObservableProxy } from "MWL@2026:exports/Reactive/Events";
+import { listen, ObservableProxy } from "MWL@2026/exports/Reactive/Events";
 import { Fixed, Value } from "../Controllers";
 import { buildAttrDescriptors, createProperties, createPropertiesFactory } from "./createProperties";
 import { CONTROLLERS, Properties, PropertiesDescriptors, PropertiesImpl } from "./PropertiesImpl";
-import { NULL_OBJ } from "MWL@2026:core/types";
+import { NULL_OBJ } from "MWL@2026/core/types";
 import { PropertyController, PropertyDescriptor } from "../Property/PropertyController";
 import { FixedInstance } from "../Controllers/Fixed";
 import { ValueInstance } from "../Controllers/Value";
@@ -15,12 +15,12 @@ type Keys<T extends Record<string, any>> = {
 }
 
 type ROKeys<T extends Record<string, any>, K extends Keys<T>> = {
-    // @ts-ignore
+    // @ts-expect-error
     readonly [N in keyof K as K[N] extends typeof RO ? N : never]: T[N]
 };
 
 type RWKeys<T extends Record<string, any>, K extends Keys<T>> = {
-    // @ts-ignore
+    // @ts-expect-error
     [N in keyof K as K[N] extends typeof RW ? N : never]: T[N]
 };
 
@@ -118,4 +118,3 @@ listen(q2, function() {
 type T1 = FixedInstance<number> extends {set(value: unknown, stamp?: unknown): boolean} ? true : false;
 
 type T2 = ValueInstance<number> extends {set(value: unknown, stamp?: unknown): boolean} ? true : false;
-

@@ -1,6 +1,6 @@
 {
     "tasks": {
-        "test": "deno test ./**/*.ts --allow-all --unstable-sloppy-imports --unstable-node-globals"
+        "test": "deno test ./**/*.ts --allow-all"
     },
     "nodeModulesDir": "auto",
     "exclude": [
@@ -9,10 +9,21 @@
     "compilerOptions": {
         "lib": ["deno.ns", "dom", "dom.iterable"]
     },
+    "unstable": [
+        "sloppy-imports",
+        "node-globals"
+    ],
     "imports": {
         "std/assert": "jsr:@std/assert",
         "npm/linkedom": "npm:linkedom",
-        "@/": "../src/",
-        "@config": "./config.ts"
+        "@config": "./config.ts",
+        "MWL@2026/": "../src/"
+    },
+    "lint": {
+        "rules": {
+        "exclude": [
+            "no-sloppy-imports"
+        ]
+        }
     }
 }

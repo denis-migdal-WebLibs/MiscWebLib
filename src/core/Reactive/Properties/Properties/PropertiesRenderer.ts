@@ -1,4 +1,4 @@
-import { NO_VALUE, NULL_OP } from "MWL@2026:core/types";
+import { NO_VALUE, NULL_OP } from "MWL@2026/core/types";
 import { CONTROLLERS, Properties } from "./PropertiesImpl";
 
 type BindingCondition<T extends Record<string, any>> = (props: Readonly<T>, cache: Readonly<Record<keyof NoInfer<T>, any>>) => boolean;

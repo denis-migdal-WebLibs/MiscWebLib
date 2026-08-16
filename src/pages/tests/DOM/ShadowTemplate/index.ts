@@ -1,4 +1,4 @@
-import {ShadowTemplate} from "MWL@2026:core/DOM/ShadowTemplate";
+import {ShadowTemplate} from "MWL@2026/core/DOM/ShadowTemplate";
 
 const target = document.querySelector<HTMLElement>("div")!;
 

@@ -1,10 +1,10 @@
-import { NULL_OBJ } from "MWL@2026:core/types";
+import { NULL_OBJ } from "MWL@2026/core/types";
 
 import { Elements } from "../ElementsResolver/core/types";
 import {createViewFactory, ViewFactoryArgs } from "./createViewFactory";
 import { asControllerFactory, ControllerProvider } from "./core/controller";
 import { getMember, MemberType } from "./core/memberResolver";
-import { MAIN_EVENT } from "MWL@2026:core/Reactive/Observers/MAIN_EVENT";
+import { MAIN_EVENT } from "MWL@2026/core/Reactive/Observers/MAIN_EVENT";
 
 export function defineWebComponent<
                         E         extends Elements    = {},
@@ -42,10 +42,10 @@ export function defineWebComponent<
             this.renderer = view.renderer;
 
             if( view.api !== undefined)
-                // @ts-ignore
+                // @ts-expect-error
                 this.api = view.api;
             else
-                // @ts-ignore
+                // @ts-expect-error
                 this.api = controller;
 
             this.properties  = getMember(this.api, "properties");

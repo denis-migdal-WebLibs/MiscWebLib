@@ -1,4 +1,4 @@
-import { Cstr } from "MWL@2026:exports/types";
+import { Cstr } from "MWL@2026/exports/types";
 import { CallbackRegistry } from "../CallbackRegistry";
 import {createEvent, Event} from "../Event";
 import { MAIN_EVENT } from "./MAIN_EVENT";
@@ -7,7 +7,7 @@ export type Observable<
                             T extends object|null
                         > = {readonly [MAIN_EVENT]: Event<T>};
 
-export function trigger<
+export function triggerEvent<
                         T    extends object|null
                     >(
                         target : Observable<T>,
@@ -15,6 +15,15 @@ export function trigger<
                     ) {
     (target[MAIN_EVENT] as CallbackRegistry<T>).trigger(origin);
 }
+
+export function hasListeners<
+                        T    extends object|null
+                    >(target : Observable<T>) {
+
+    return (target[MAIN_EVENT] as CallbackRegistry<T>).hasListener();
+}
+
+export const trigger = triggerEvent;
 
 export class ObservableObject {
     readonly [MAIN_EVENT] = createEvent(this);

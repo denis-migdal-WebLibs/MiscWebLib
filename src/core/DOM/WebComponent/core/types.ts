@@ -1,4 +1,4 @@
-import { Elements } from "MWL@2026:core/DOM/ElementsResolver";
+import { Elements } from "MWL@2026/core/DOM/ElementsResolver";
 
 export type Root = HTMLElement|ShadowRoot;
 

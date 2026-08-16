@@ -1,5 +1,5 @@
-import GuardedState from "MWL@2026:core/GuardedState";
-import { NULL_OP }  from "MWL@2026:core/types";
+import GuardedState from "MWL@2026/core/GuardedState";
+import { NULL_OP }  from "MWL@2026/core/types";
 
 import {frameScheduler} from "./FrameScheduler";
 

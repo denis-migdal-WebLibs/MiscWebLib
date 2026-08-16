@@ -1,4 +1,4 @@
-import { Cstr, isClass, NULL_OP } from "MWL@2026:core/types";
+import { Cstr, isClass, NULL_OP } from "MWL@2026/core/types";
 import { extractData } from "./extractData";
 
 export type ControllerCstr<

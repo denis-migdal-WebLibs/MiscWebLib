@@ -1,4 +1,4 @@
-import { NULL_OBJ } from "MWL@2026:exports/types";
+import { NULL_OBJ } from "MWL@2026/exports/types";
 import { PropertiesDescriptors } from "./PropertiesImpl";
 import { CONTROLLERS, Properties, PropertiesImpl } from "./PropertiesImpl";
 

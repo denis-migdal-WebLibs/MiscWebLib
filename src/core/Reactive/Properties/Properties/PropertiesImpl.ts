@@ -1,8 +1,8 @@
-import { ObservableObject, trigger } from "MWL@2026:exports/Reactive/Events";
+import { ObservableObject, trigger } from "MWL@2026/exports/Reactive/Events";
 import { createEmptySlot, fillEmptySlot, PropertiesSlot } from "../Property/PropertySlot";
-import { NULL_OBJ } from "MWL@2026:exports/types";
-import { PropertyDescriptor as PropDesc } from "../Property/PropertyController";
+import { NULL_OBJ } from "MWL@2026/exports/types";
 import { NotifyGate } from "../Property/PropertyObserver";
+import { PropertyDescriptor as PropDesc } from "../Property/PropertyController";
 
 export type PropertiesDescriptors<T extends Record<string, any>> = {
     [K in keyof T]: PropDesc<T, T[K]>

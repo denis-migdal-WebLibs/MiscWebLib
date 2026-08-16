@@ -1,4 +1,4 @@
-import { NULL_OBJ } from "MWL@2026:core/types";
+import { NULL_OBJ } from "MWL@2026/core/types";
 import { WCID_DATANAME } from "../../ElementsResolver/getElements";
 
 export const WC_ATTRNAME   = "config";
@@ -20,7 +20,7 @@ export function extractData<D extends Record<string,any>>(
 
         if( name === WC_ATTRNAME || name === WCID_DATANAME) continue;
 
-        // @ts-ignore
+        // @ts-expect-error
         props[name] = target.dataset[name]!;
     }
 

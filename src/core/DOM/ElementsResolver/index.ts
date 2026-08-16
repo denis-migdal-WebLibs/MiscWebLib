@@ -1,5 +1,5 @@
-import { Cstr, isClass } from "MWL@2026:core/types";
-import { FCT_NULL_OBJ } from "MWL@2026:core/types/NullObjects";
+import { Cstr, isClass } from "MWL@2026/core/types";
+import { FCT_NULL_OBJ } from "MWL@2026/core/types/NullObjects";
 
 import { Elements, ExtractionTarget } from "./core/types";
 import {getElements} from "./getElements";
@@ -26,13 +26,13 @@ export class ElementsResolver<E extends Elements> {
             let descriptor = descriptors[name];
 
             if( isClass(descriptor) )
-                // @ts-ignore
+                // @ts-expect-error
                 descriptor = classResolver(descriptor);
             else if( typeof descriptor !== "function" )
-                // @ts-ignore
+                // @ts-expect-error
                 descriptor = instanceResolver(descriptor);
-
-            // @ts-ignore
+            
+            // @ts-expect-error
             this.resolvers[name] = descriptor;
         }
     }

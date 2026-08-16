@@ -25,7 +25,7 @@ export function getCursorXPos(target: HTMLElement, type: "start"|"end"): CursorP
 
     // Chromium/FF compatibility
     const root = target.getRootNode();
-    // @ts-ignore
+    // @ts-expect-error
     let selection = root.getSelection?.();
     if( selection === undefined )
         selection = window.getSelection();

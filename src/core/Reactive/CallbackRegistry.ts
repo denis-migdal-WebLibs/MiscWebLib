@@ -1,4 +1,4 @@
-import { NULL_OP } from "MWL@2026:core/types";
+import { NULL_OP } from "MWL@2026/core/types";
 import { Observable } from "./Observers/Observable";
 import { MAIN_EVENT } from "./Observers/MAIN_EVENT";
 
@@ -79,6 +79,10 @@ export class CallbackRegistry<
 
         this.callbacks[idx] = NULL_OP;
         this.removalPending = true;
+    }
+
+    hasListener() {
+        return this.callbacks.length !== 0;
     }
 
     // aliases for Event.

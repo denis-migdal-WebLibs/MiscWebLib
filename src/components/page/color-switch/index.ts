@@ -1,4 +1,4 @@
-import {html} from "MWL@2026:core/DOM/ShadowTemplate/parsers/html";
+import {html} from "MWL@2026/core/DOM/ShadowTemplate/parsers/html";
 
 const root = document.documentElement;
 root.classList.add( localStorage.getItem("color-scheme") ?? 'dark-mode');

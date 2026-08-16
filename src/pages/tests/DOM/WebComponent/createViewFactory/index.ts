@@ -1,4 +1,4 @@
-import {createViewFactory} from "MWL@2026:core/DOM/WebComponent/createViewFactory";
+import {createViewFactory} from "MWL@2026/core/DOM/WebComponent/createViewFactory";
 
 class X {
     foo() {}

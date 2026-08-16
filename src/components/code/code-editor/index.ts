@@ -1,19 +1,17 @@
-import {defineWebComponent} from "MWL@2026:core/DOM/WebComponent/defineWebComponent";
-import {UNDO} from "MWL@2026:core/DOM/UiEvents/undo";
-import { connectEvents } from "MWL@2026:core/DOM/UiEvents/core/connectEvent";
-import {REDO} from "MWL@2026:core/DOM/UiEvents/redo";
-import {NEWLINE} from "MWL@2026:core/DOM/UiEvents/newline";
-import {TAB} from "MWL@2026:core/DOM/UiEvents/tab";
-import {on} from "MWL@2026:core/DOM/UiEvents/core/on";
-import { updateProperties } from "MWL@2026:exports/Reactive/Properties";
+import {defineWebComponent} from "MWL@2026/core/DOM/WebComponent/defineWebComponent";
+import {UNDO} from "MWL@2026/core/DOM/UiEvents/undo";
+import { connectEvents } from "MWL@2026/core/DOM/UiEvents/core/connectEvent";
+import {REDO} from "MWL@2026/core/DOM/UiEvents/redo";
+import {NEWLINE} from "MWL@2026/core/DOM/UiEvents/newline";
+import {TAB} from "MWL@2026/core/DOM/UiEvents/tab";
+import {on} from "MWL@2026/core/DOM/UiEvents/core/on";
+import { updateProperties } from "MWL@2026/exports/Reactive/Properties";
 
-import { deferredObserve } from "MWL@2026:core/DOM/FrameScheduler/defer/deferredObserve";
+import { deferredObserve } from "MWL@2026/core/DOM/FrameScheduler/defer/deferredObserve";
 
 import { hl } from "../hl";
 import { Input } from "./Input";
 import { CodeEditorModel } from "./model";
-
-
 
 const CodeEditor = defineWebComponent({
         name: "code-editor",

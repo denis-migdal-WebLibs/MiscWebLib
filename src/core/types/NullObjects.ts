@@ -1,4 +1,4 @@
-export const NO_VALUE = Symbol();
+export const NO_VALUE: any = Symbol();
 
 export const NULL_OP  = () => {};
 export const NULL_OBJ   = Object.freeze({}); // for security.

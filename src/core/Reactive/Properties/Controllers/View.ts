@@ -1,4 +1,4 @@
-import { Cstr, isClass, NO_VALUE } from "MWL@2026:core/types";
+import { Cstr, isClass, NO_VALUE } from "MWL@2026/core/types";
 import { PropertyController } from "../Property/PropertyController";
 import { getProperties } from "../Properties/PropertiesProvider";
 import { CONTROLLERS, Properties } from "../Properties/PropertiesImpl";

@@ -15,6 +15,6 @@ export function getMember<
     if( target === undefined )
         return undefined as any;
 
-    // @ts-ignore
+    // @ts-expect-error
     return target[key];
 }

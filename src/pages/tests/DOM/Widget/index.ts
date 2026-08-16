@@ -1,6 +1,6 @@
-import {defineWidget, defineWidget2, defineWidget3} from "MWL@2026:core/DOM/Widget";
-import { Coordinator, createCoordinatorClass, modelFactory } from "MWL@2026:core/DOM/Widget/Coordinator";
-import { createPassiveViewFactory, View } from "MWL@2026:core/DOM/Widget/View";
+import {defineWidget, defineWidget2, defineWidget3} from "MWL@2026/core/DOM/Widget";
+import { Coordinator, createCoordinatorClass, modelFactory } from "MWL@2026/core/DOM/Widget/Coordinator";
+import { createPassiveViewFactory, View } from "MWL@2026/core/DOM/Widget/View";
 
 
 type Expand<T> = T extends infer O
@@ -14,7 +14,7 @@ function expose<K extends string|symbol>() {
 }
 
 {
-    const Klass = defineWidget3(
+    const Klass = defineWidget(
             "my-webcomp3",
             Coordinator(modelFactory, {
                 viewModel: expose<"foo">(),
@@ -38,7 +38,7 @@ function expose<K extends string|symbol>() {
     console.warn( elem );
 }
 {
-    const Klass = defineWidget({
+    const Klass = defineWidget3({
         name            : "my-webcomp",
         coordinatorClass: createCoordinatorClass({
             presentationModel: modelFactory, // could also be class.

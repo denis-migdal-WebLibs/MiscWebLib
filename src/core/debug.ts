@@ -3,7 +3,7 @@ const ID = Symbol();
 // setID(target)
 // cond && log(target, ...msg)
 
-export function setID(o: {}, id: string){
+export function setID(o: {}, id: string) {
     (o as any)[ID] = id;
 }
 

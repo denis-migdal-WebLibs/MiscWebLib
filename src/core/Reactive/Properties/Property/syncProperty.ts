@@ -1,4 +1,4 @@
-import { NO_VALUE } from "MWL@2026:core/types";
+import { NO_VALUE } from "MWL@2026/core/types";
 import { SignalInstance } from "../Controllers/Signal";
 import { ValueInstance } from "../Controllers/Value";
 import { triggerProperty } from "./PropertyNotifyScheduler";
