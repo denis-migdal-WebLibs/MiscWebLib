@@ -4,7 +4,7 @@ import { Properties, PropertiesDescriptors } from "./PropertiesImpl";
 
 export type WithProperties<T extends Record<string, any>> = {
     readonly properties  : Properties<T>;
-} & T & ReactiveProxy<Properties<T>>;
+} & T & ReactiveProxy<Properties<T>> & {toJSON(): Properties<T>};
 
 type WithPropertiesCstr<T extends Record<string, any>> = {
     new(initialValues?: Partial<T>): WithProperties<T>
@@ -26,6 +26,10 @@ export function WithProperties<PD extends PropertiesDescriptors<any>>(
 
             // @ts-expect-error
             this.properties = properties;
+        }
+
+        toJSON() {
+            return this.properties;
         }
 
         // for clean Object.keys() / JSON.stringify() / structuredClone()
