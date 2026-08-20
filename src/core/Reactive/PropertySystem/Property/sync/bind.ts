@@ -5,8 +5,7 @@ import { addSyncLink } from "./links";
 
 export function bind<T>(src: Property<T>, dst: Property<T>) {
 
-    if( __DEBUG__ && ( src.isRO || dst.isRO ) )
-        throw new Error("RO property !");
+    __ASSERT__( ! src.isRO && ! dst.isRO, "RO property !");
     
     (dst.controller as RWPropertyController<T>).clearValue();
     dst.value = src.value;

@@ -33,8 +33,8 @@ export class Property<T> extends ReactiveObject {
     }
 
     set(value: T) {
-        if( __DEBUG__ && this.isRO )
-            throw new Error("This property is RO only");
+
+        __ASSERT__( ! this.isRO, "This property is RO only");
 
         const controller = this.controller as RWPropertyController<T>;
         this.value = controller;

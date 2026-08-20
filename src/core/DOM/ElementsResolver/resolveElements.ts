@@ -18,8 +18,7 @@ export function resolveElements<E extends Elements>(
         const target  = elements[name];
         const resolver = resolvers[name];
 
-        if( __DEBUG__ && resolver === undefined)
-            throw new Error(`Unknown element: ${name}`);
+        __ASSERT__(resolver !== undefined, `Unknown element: ${name}`);
 
         const element = resolver(target)!;
 

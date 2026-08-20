@@ -10,8 +10,8 @@ export function unsyncProperty<T>(srcSlot: PropertySlot<T>,
                                   dstSlot: PropertySlot<T>) {
 
     // both should reference the same controller
-    if( __DEBUG__ && srcSlot.controller !== dstSlot.controller )
-        throw new Error("Properties aren't sync");
+    __ASSERT__(srcSlot.controller === dstSlot.controller,
+                "Properties aren't sync");
 
     const controller = srcSlot.controller;
     let bindings = controller.node.bindings;
