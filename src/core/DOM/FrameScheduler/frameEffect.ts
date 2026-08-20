@@ -1,6 +1,6 @@
 import { frameScheduler } from "./FrameScheduler";
 
-export function effect(callback: () => void): () => void {
+export function frameEffect(callback: () => void): () => void {
 
     return () => {
         if( ! frameScheduler.isTaskScheduled(callback) )
