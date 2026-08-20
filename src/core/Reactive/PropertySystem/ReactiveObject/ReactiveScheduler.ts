@@ -111,6 +111,12 @@ export class ReactiveScheduler {
 
 const reactiveScheduler = new ReactiveScheduler();
 
+export function atomicReaction( callback: () => void ) {
+    pauseReactions();
+    callback();
+    resumeReactions();
+}
+
 export function pauseReactions() {
     reactiveScheduler.pausePropagation();
 }

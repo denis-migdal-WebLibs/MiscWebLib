@@ -41,10 +41,10 @@ export class CodeEditorModel extends Base {
 
     undo() {
         this.history.prev();
-        updateProperties(this, this.history.currentState);
+        updateProperties<CodeEditorModel>(this, this.history.currentState);
     }
     redo() {
         this.history.next();
-        updateProperties(this, this.history.currentState);
+        updateProperties<CodeEditorModel>(this, this.history.currentState);
     }
 }

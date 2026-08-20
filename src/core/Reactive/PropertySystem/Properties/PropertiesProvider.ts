@@ -48,17 +48,62 @@ export function getPropertyController<T extends Record<string, any>>(
 }
 */
 
-export function updateProperties<T extends Record<string, any>>(
-                                        target: PropertiesProvider<T>,
-                                        values: Partial<T>
+
+
+export function setProperties<T extends PropertiesProvider<Record<string, any>>>(
+                                        target: T,
+                                        //& PropertiesProvider<Record<string, any>>,
+                                        values: Partial<PropertiesShape<T>>
                                     ) {
     
     pauseReactions();
 
-    target = getProperties(target);
+    const properties = getProperties(target);
 
-    for(const name in values)
-        target[name] = values[name]!;
+    const keys  = properties[KEYS];
+    const props = properties[PROPERTIES];
+
+    for(let i = 0; i < keys.length; ++i) {
+
+        const name = keys [i];
+        const prop = props[i];
+
+        // useful when importing data.
+        if( prop.isRO )
+            continue;
+            // we could check that ro are identical,
+            // but not practical when using View()
+
+        if( ! (name in values) ) {
+            prop.clear();
+        } else {
+            prop.set(values[name]);
+        }
+    }
+
+    resumeReactions();
+}
+
+export function updateProperties<T extends PropertiesProvider<Record<string, any>>>(
+                                        target: T,
+                                        //& PropertiesProvider<Record<string, any>>,
+                                        values: Partial<PropertiesShape<T>>
+                                    ) {
+    
+    pauseReactions();
+
+    for(const name in values) {
+
+        const prop = getProperty(target, name);
+
+        // useful when importing data.
+        if( prop.isRO )
+            continue;
+            // we could check that ro are identical,
+            // but not practical when using View()
+
+        prop.set(values[name]);
+    }
 
     resumeReactions();
 }

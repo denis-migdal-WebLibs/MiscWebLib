@@ -27,6 +27,8 @@ export class SignalController<T> implements RWPropertyController<T>{
 }
 
 // Like Value() but always trigger a change.
+// use an initialVal instead of defaultVal (would make little to no sense).
+// -> maybe Signal isn't a good thing ?
 export function Signal<T>(defVal: T) {
     return (initialVal = defVal) => new SignalController(initialVal);
 }

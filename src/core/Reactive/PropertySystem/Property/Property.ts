@@ -32,6 +32,17 @@ export class Property<T> extends ReactiveObject {
         }   
     }
 
+    clear() {
+
+        __ASSERT__( ! this.isRO, "This property is RO only");
+
+        const controller = this.controller as RWPropertyController<T>;
+        this.value = controller;
+        
+        controller.clearValue();
+        triggerReactiveObject(this);
+    }
+
     set(value: T) {
 
         __ASSERT__( ! this.isRO, "This property is RO only");
