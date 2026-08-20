@@ -1,11 +1,10 @@
+import { ReactiveProxy } from "../ReactiveObject/ReactiveObject";
 import { PropertiesFactory, PropertiesType } from "./Properties";
 import { Properties, PropertiesDescriptors } from "./PropertiesImpl";
 
-import { ObservableProxy } from "MWL@2026/core/Reactive/Observers/Observable";
-
 export type WithProperties<T extends Record<string, any>> = {
     readonly properties  : Properties<T>;
-} & T & ObservableProxy<Properties<T>>;
+} & T & ReactiveProxy<Properties<T>>;
 
 type WithPropertiesCstr<T extends Record<string, any>> = {
     new(initialValues?: Partial<T>): WithProperties<T>
@@ -18,7 +17,7 @@ export function WithProperties<PD extends PropertiesDescriptors<any>>(
     const Properties = PropertiesFactory(descriptors);
 
     return class WithProperties
-                    extends ObservableProxy<Properties<PropertiesType<PD>>> {
+                    extends ReactiveProxy<Properties<PropertiesType<PD>>> {
 
         constructor(initialValues: Partial<PropertiesType<PD>> = {}) {
             // @ts-expect-error

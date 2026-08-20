@@ -37,9 +37,19 @@ export function addDependencyLink(src: Property<any>, dst: Property<any>) {
 
 export function addLink(src: ReactiveObject, dst: ReactiveObject) {
 
-    src[REACTIVE_NODE].links.push({
+    const link = {
         src,
         dst,
         propagate: NULL_OP
-    });
+    }
+    src[REACTIVE_NODE].links.push(link);
+
+    return link;
+}
+
+// Be-careful... link requires an onRemove(?)
+export function removeLink(link: Link) {
+    const links = link.src[REACTIVE_NODE].links;
+    const idx = links.indexOf(link);
+    links.splice(idx, 1)
 }

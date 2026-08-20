@@ -31,6 +31,10 @@ export class FrameScheduler {
         this.tasks.trigger();
     });
 
+    isTaskScheduled( task: FrameTask ) {
+        return this.tasks.has(task);
+    }
+
     scheduleTask( task: FrameTask ) {
         this.tasks.add(task);
         this.core.schedule();

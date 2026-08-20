@@ -14,18 +14,20 @@ type Expand<T> = T extends infer O
     ? { [K in keyof O]: O[K] }
     : never;
 
+export type Widget<WidgetAPI,
+                   DAPI extends keyof WidgetAPI = never
+                > = HTMLElement
+                    & {
+                        readonly api: Expand<WidgetAPI>,
+                        readonly renderer: TaskList
+                    }
+                    & Pick<WidgetAPI, DAPI>;
+
 type WidgetClass<   
                     Config extends Record<string, any>,
                     WidgetAPI,
                     DAPI extends keyof WidgetAPI,
-                > = {new(config?: Partial<Config>):
-                        HTMLElement
-                        & {
-                            readonly api: Expand<WidgetAPI>,
-                            readonly renderer: TaskList
-                        }
-                        & Pick<WidgetAPI, DAPI>,
-                    };
+                > = { new(config?: Partial<Config>): Widget<WidgetAPI, DAPI> };
 
 export function defineWidget<   
         Config extends Record<string, any>,

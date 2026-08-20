@@ -67,6 +67,10 @@ export class CallbackRegistry<
             this.clear();
     }
 
+    has(callback: Callback<T>) {
+        return this.callbacks.includes(callback);
+    }
+
     add(callback: Callback<T>) {
         this.callbacks.push(callback);
     }
