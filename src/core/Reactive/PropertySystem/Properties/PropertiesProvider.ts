@@ -5,6 +5,9 @@ import { KEYS, Properties, PROPERTIES } from "./PropertiesImpl";
 export type PropertiesProvider<T extends Record<string, any>>
     = {readonly properties: Properties<T>}|Properties<T>;
 
+export type PropertiesShape<T extends PropertiesProvider<any>>
+    = T extends PropertiesProvider<infer U> ? U : never;
+
 export function getProperties<T extends Record<string, any>>(
                                         target: PropertiesProvider<T>,
                                     ): Properties<T> {
