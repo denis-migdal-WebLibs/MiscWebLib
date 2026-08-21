@@ -18,6 +18,19 @@
     margin-top: 0;
     margin-bottom: 0;
 
+    &.gap {
+        gap: 10px;
+    }
+
+    & > .span-2 {
+        grid-column: span 2;
+    }
+
+    & > div {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
     &.flex-2 {
         grid: auto / 1fr 1fr;
     }

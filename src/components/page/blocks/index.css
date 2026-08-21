@@ -15,12 +15,15 @@ img {
     }
 }
 
-quote {
+quote, .quote {
+
+    font-style: italic;
+
     &::before {
-        content: "«"
+        content: "« "
     }
     &::after {
-        content: "»"
+        content: " »"
     }
 }
 
@@ -37,10 +40,15 @@ todo {
     }
 }
 
-.danger, .hint, .info, .exo, div.custom, .context {
+.quote {
 
-    margin-top: 1px;
-    margin-bottom: 1px;
+    &:not(:is(div + &)) {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+}
+
+.danger, .hint, .info, .exo, div.custom, .context {
 
     border-radius: 5px;
     border-left: 2px solid var(--block-color);
@@ -48,6 +56,11 @@ todo {
     padding-right: 4px;
 
     background-color: color-mix(in srgb, var(--block-color) 40%, light-dark(white, black));
+
+    &:not(:is(div + &)) {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
 
     &::before {
         color: var(--block-color);
