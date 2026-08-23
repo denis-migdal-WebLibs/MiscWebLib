@@ -167,6 +167,28 @@ export class ReactiveScheduler {
 
 const reactiveScheduler = new ReactiveScheduler();
 
+export function triggerReactiveObject(target: ReactiveObject) {
+    reactiveScheduler.trigger(target);
+}
+
+/***/
+
+export function pauseReactions2(target: ReactiveObject) {
+    ++target[REACTIVE_NODE].triggerDepth;
+}
+
+export function resumeReactions2(target: ReactiveObject) {
+
+    // re-entry
+    if( --target[REACTIVE_NODE].triggerDepth !== 0)
+        return;
+    
+    // we assume the object must have been triggered.
+    triggerReactiveObject(target);
+}
+
+/***/
+
 export function atomicReaction( callback: () => void ) {
     pauseReactions();
     callback();
@@ -201,8 +223,4 @@ export function atomicAssign<T extends Record<string, any>>(
     Object.assign(target, source);
 
     reactiveScheduler.propagation.resume();
-}
-
-export function triggerReactiveObject(target: ReactiveObject) {
-    reactiveScheduler.trigger(target);
 }
