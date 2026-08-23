@@ -27,8 +27,6 @@ class Propagation {
     }
 }
 
-let processed: any[] = []; // for debug.
-
 export class ReactiveScheduler {
 
     readonly propagation = new Propagation(() => this.resumePendingPropagations());
@@ -39,11 +37,6 @@ export class ReactiveScheduler {
 
     trigger(target: ReactiveObject) {
 
-        if( ! this.propagation.isPaused )
-            for(let i = 0; i < processed.length ; ++i)
-                if( processed[i][REACTIVE_NODE].triggerDepth !== 0)
-                    throw new Error("Prev NOK");
-
         this.propagateTrigger(target);
 
         if( this.propagation.isPaused ) {
@@ -52,24 +45,14 @@ export class ReactiveScheduler {
         }
 
         this.propagateValue(target);
-
-        for(let i = 0; i < processed.length ; ++i)
-            if( processed[i][REACTIVE_NODE].triggerDepth !== 0)
-                throw new Error("NOK2");
-
         this.notify();
     }
 
     protected propagateTrigger(target: ReactiveObject) {
 
-        if( debug )
-            console.warn("trigger", target);
-
         const links = target[REACTIVE_NODE].links;
         
         for(let i = links.length - 1; i >= 0; --i) {
-            processed.push(links[i].dst);
-            if( debug) console.warn(links[i].dst[REACTIVE_NODE].triggerDepth);
             if( links[i].dst[REACTIVE_NODE].triggerDepth++ === 0 )
                 this.stack.push(links[i]);
         }
@@ -78,16 +61,12 @@ export class ReactiveScheduler {
 
             const curLink = this.stack.pop()!;
 
-            if( debug )
-                console.warn("process", curLink);
-
             const nextLinks = curLink.dst[REACTIVE_NODE].links;
             for(let i = nextLinks.length - 1; i >= 0; --i) {
                 const nextLink = nextLinks[i];
                 if(nextLink.dst === curLink.src)
                     continue;
 
-                processed.push(nextLink.dst);
                 if( nextLink.dst[REACTIVE_NODE].triggerDepth++ === 0 )
                     this.stack.push(nextLink);
             }
@@ -98,10 +77,6 @@ export class ReactiveScheduler {
         for(let i = 0; i < this.pendingPropagations.length; ++i)
             this.propagateValue(this.pendingPropagations[i]);
         this.pendingPropagations.length = 0;
-
-        for(let i = 0; i < processed.length ; ++i)
-            if( processed[i][REACTIVE_NODE].triggerDepth !== 0)
-                throw new Error("NOK");
         
         this.notify();
     }
@@ -116,7 +91,6 @@ export class ReactiveScheduler {
 
         const links = target[REACTIVE_NODE].links;
         for(let i = links.length - 1; i >= 0; --i) {
-            if( debug ) console.warn( links[i].dst[REACTIVE_NODE].triggerDepth );
             if( --links[i].dst[REACTIVE_NODE].triggerDepth === 0 )
                 this.stack.push(links[i]);
         }
@@ -124,9 +98,6 @@ export class ReactiveScheduler {
         while(this.stack.length) {
 
             const curLink = this.stack.pop()!;
-
-            if( debug )
-                console.warn("process", curLink);
 
             curLink.propagate();
             incrVersion(curLink.dst[REACTIVE_NODE]);
@@ -152,9 +123,6 @@ export class ReactiveScheduler {
     }
 
     protected notify() {
-
-        if( debug )
-            console.warn("Notify list", this.pendingNotifications.slice() );
 
         // re-entry is forbidden.
 
@@ -204,14 +172,6 @@ export function pauseReactions() {
 }
 export function resumeReactions() {
     reactiveScheduler.propagation.resume();
-}
-
-let debug = false;
-export function debugStart() {
-    debug = true;
-}
-export function debugEnd() {
-    debug = false;
 }
 
 export function atomicAssign<T extends Record<string, any>>(
