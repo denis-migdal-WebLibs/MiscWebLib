@@ -6,7 +6,7 @@ export type WithProperties<T extends Record<string, any>> = {
     readonly properties  : Properties<T>;
 } & T & ReactiveProxy<Properties<T>> & {toJSON(): Properties<T>};
 
-type WithPropertiesCstr<T extends Record<string, any>> = {
+export type WithPropertiesCstr<T extends Record<string, any>> = {
     new(initialValues?: Partial<T>): WithProperties<T>
 }
 

@@ -2,13 +2,17 @@ import { Observable } from "./Observable";
 import { CallbackRegistry, Callback } from "../CallbackRegistry";
 import { MAIN_EVENT } from "./MAIN_EVENT";
 
+type Observed<T extends Observable<any>> = T extends Observable<infer U>
+                                            ? U
+                                            : never;
+
 export function listen<
-                        T    extends object|null
+                        T    extends Observable<object|null>
                     >(
-                        target: Observable<T>,
-                        callback: NoInfer<Callback<T>>
+                        target  : T,
+                        callback: NoInfer<Callback<Observed<T>>>
                     ) {
-    (target[MAIN_EVENT]as CallbackRegistry<T>).add(callback);
+    (target[MAIN_EVENT] as CallbackRegistry<Observed<T>>).add(callback);
 }
 
 export function observe<

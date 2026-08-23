@@ -1,5 +1,7 @@
 import { bind } from "../Property/sync/bind";
-import { getProperty, PropertiesProvider } from "./PropertiesProvider";
+import { forward } from "../Property/sync/forward";
+import { KEYS, PROPERTIES } from "./PropertiesImpl";
+import { getProperties, getProperty, PropertiesProvider } from "./PropertiesProvider";
 
 /*
 type Mapping<S, D> = {
@@ -48,6 +50,47 @@ export function bindProperties<
         const srcProp = getProperty(src, mapping[i][0]);
         const dstProp = getProperty(dst, mapping[i][1]);
         bind(srcProp, dstProp);
+    }
+}
+
+  export function forwardProperties<
+      T extends Record<string, any>
+  >(
+      src     : PropertiesProvider<T>,
+      dst     : PropertiesProvider<NoInfer<T>>,
+  ): void
+  export function forwardProperties<
+      T extends Record<string, any>,
+      U extends Record<string, any>
+  >(
+      src     : PropertiesProvider<T>,
+      dst     : PropertiesProvider<U>,
+      mapping?: MAP<NoInfer<T>, NoInfer<U>>
+  ): void
+export function forwardProperties<
+                        T extends Record<string, any>,
+                        U extends Record<string, any>
+                    >(
+                        src     : PropertiesProvider<T>,
+                        dst     : PropertiesProvider<U>,
+                        mapping?: MAP<NoInfer<T>, NoInfer<U>>
+                    ) {
+
+    if( mapping === undefined) {
+      const keys     = getProperties(src)[KEYS];
+      const srcProps = getProperties(src)[PROPERTIES];
+      for(let i = 0; i < keys.length; ++i) {
+        const dstProp = getProperty(dst, keys[i]);
+        if( dstProp.isRO ) continue;
+        forward(srcProps[i], dstProp);
+      }
+      return;
+    }
+
+    for(let i = 0; i < mapping.length; ++i) {
+        const srcProp = getProperty(src, mapping[i][0]);
+        const dstProp = getProperty(dst, mapping[i][1]);
+        forward(srcProp, dstProp);
     }
 }
 

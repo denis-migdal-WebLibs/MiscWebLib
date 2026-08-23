@@ -29,7 +29,7 @@ export type CoordinatorOpts<
     widgetAPI       ?: (presentation: NoInfer<T>) => WidgetAPI
 };
 
-type CoordinatorDAPI<T> = Extract<keyof T, "properties"|typeof MAIN_EVENT>;
+export type CoordinatorDAPI<T> = Extract<keyof T, "properties"|typeof MAIN_EVENT>;
 
 // explicit return type annotation required.
 export function Coordinator<

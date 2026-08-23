@@ -1,8 +1,9 @@
 import { NULL_OBJ } from "MWL@2026/exports/types";
 import { ViewFactory } from "./View";
-import { CoordinatorClass } from "./Coordinator";
+import { CoordinatorClass, CoordinatorDAPI } from "./Coordinator";
 import { TaskList } from "../FrameScheduler/TaskList";
 import { extractConfig } from "./extractConfig";
+import { WithProperties } from "MWL@2026/exports/Reactive/PropertySystem";
 
 export type WidgetName = Lowercase<`${string}-${string}`>;
 
@@ -23,10 +24,10 @@ export type Widget<WidgetAPI,
                     }
                     & Pick<WidgetAPI, DAPI>;
 
-type WidgetClass<   
+export type WidgetCstr<   
                     Config extends Record<string, any>,
-                    WidgetAPI,
-                    DAPI extends keyof WidgetAPI,
+                    WidgetAPI                    = WithProperties<Config>,
+                    DAPI extends keyof WidgetAPI = CoordinatorDAPI<WidgetAPI>,
                 > = { new(config?: Partial<Config>): Widget<WidgetAPI, DAPI> };
 
 export function defineWidget<   
@@ -38,7 +39,7 @@ export function defineWidget<
         name            : WidgetName,
         coordinatorClass: CoordinatorClass<Config, WidgetAPI, DAPI, ViewModel>,
         viewFactory     : ViewFactory<NoInfer<ViewModel>>,
-    ): WidgetClass<Config, WidgetAPI, DAPI> {
+    ): WidgetCstr<Config, WidgetAPI, DAPI> {
 
     class Widget extends HTMLElement {
 
