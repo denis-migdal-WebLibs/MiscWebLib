@@ -39,7 +39,10 @@ export class ReactiveScheduler {
 
         this.propagateTrigger(target);
 
-        if( this.propagation.isPaused ) {
+        //TODO: fix...
+        if( this.propagation.isPaused 
+            || target[REACTIVE_NODE].triggerDepth !== 0
+        ) {
             this.pendingPropagations.push(target);
             return;
         }
@@ -82,9 +85,6 @@ export class ReactiveScheduler {
     }
 
     protected propagateValue(target: ReactiveObject) {
-
-        if( debug )
-            console.warn("propagate value of", target);
 
         this.scheduleNotify(target);
         incrVersion(target[REACTIVE_NODE]);
