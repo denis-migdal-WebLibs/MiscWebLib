@@ -56,12 +56,12 @@ export function setProperties<T extends PropertiesProvider<Record<string, any>>>
                                         values: Partial<PropertiesShape<T>>
                                     ) {
     
-    pauseReactions();
-
     const properties = getProperties(target);
 
     const keys  = properties[KEYS];
     const props = properties[PROPERTIES];
+
+    pauseReactions(...props);
 
     for(let i = 0; i < keys.length; ++i) {
 
@@ -81,7 +81,7 @@ export function setProperties<T extends PropertiesProvider<Record<string, any>>>
         }
     }
 
-    resumeReactions();
+    resumeReactions(...props);
 }
 
 export function updateProperties<T extends PropertiesProvider<Record<string, any>>>(
@@ -90,7 +90,8 @@ export function updateProperties<T extends PropertiesProvider<Record<string, any
                                         values: Partial<PropertiesShape<T>>
                                     ) {
     
-    pauseReactions();
+    const properties = getProperties(target)[PROPERTIES];
+    pauseReactions(...properties);
 
     for(const name in values) {
 
@@ -105,5 +106,5 @@ export function updateProperties<T extends PropertiesProvider<Record<string, any
         prop.set(values[name]);
     }
 
-    resumeReactions();
+    resumeReactions(...properties);
 }

@@ -9,7 +9,9 @@ export function incrVersion(node: ReactiveNode) {
 
 export class ReactiveNode {
     readonly links = new Array<Link>();
-    triggerDepth = 0;
+
+    triggerDepth   = 0;
+    triggerPending = false;
 
     version: number;
 
