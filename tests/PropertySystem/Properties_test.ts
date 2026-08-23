@@ -56,12 +56,3 @@ Deno.test("JSON", () => {
 
     assertEquals( JSON.stringify(properties), '{"foo":42,"faa":84}' );
 })
-
-/**/
-const X = WithProperties({foo: Value(34)});
-const x = new X();
-
-const _p: Properties<{foo: number}> = x;
-
-x.foo = 34;
-/**/
