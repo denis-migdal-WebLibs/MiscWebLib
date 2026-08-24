@@ -49,6 +49,8 @@ export function bindProperties<
     for(let i = 0; i < mapping.length; ++i) {
         const srcProp = getProperty(src, mapping[i][0]);
         const dstProp = getProperty(dst, mapping[i][1]);
+
+        // @ts-expect-error
         bind(srcProp, dstProp);
     }
 }
@@ -90,6 +92,8 @@ export function forwardProperties<
     for(let i = 0; i < mapping.length; ++i) {
         const srcProp = getProperty(src, mapping[i][0]);
         const dstProp = getProperty(dst, mapping[i][1]);
+
+        // @ts-expect-error
         forward(srcProp, dstProp);
     }
 }

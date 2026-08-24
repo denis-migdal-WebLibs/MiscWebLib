@@ -1,3 +1,4 @@
+import { Property } from "../Property/Property";
 import { pauseReactions, resumeReactions } from "../ReactiveObject/ReactiveScheduler";
 import { KEYS, Properties, PROPERTIES } from "./PropertiesImpl";
 
@@ -27,10 +28,10 @@ export function getPropertyIndex<T extends Record<string, any>>(
     return getProperties(target)[KEYS].indexOf(name as string);
 }
 
-export function getProperty<T extends Record<string, any>>(
+export function getProperty<T extends Record<string, any>, K extends keyof T>(
             target: PropertiesProvider<T>,
-            name  : keyof NoInfer<T>
-        ) {
+            name  : K
+        ): Property<T[K]> {
 
     target = getProperties(target);
 
