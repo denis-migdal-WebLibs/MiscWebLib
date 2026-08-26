@@ -1,3 +1,32 @@
+Project structure:
+- dist/
+- build/
+- libs/
+- tests/
+- src/
+  - libs/ (compiled lib)
+  - exports/ (source lib)
+    - README.md for the documentation.
+  - pages/ : (Website) artefacts
+    - templates/
+    - assets/
+    - tests/
+    - content.txt
+  - routes/ (REST)
+  - models/
+  - widgets/ : content
+  - presentation/
+    - widgets/ : structure
+    - capabilities/
+    - styles/
+    - [page specific]/
+  - ports/ : APIs, e.g. REST, BDD, Browser
+
+Subdirectories:
+- index (an index to facilitate imports).
+- core
+- tools
+
 Properties:
   * Object(Interface) controller for complex object (e.g. List, Record, KeyDB).
     - Interface is a wrapper around the value enabling to mutate it.

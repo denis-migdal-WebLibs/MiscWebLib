@@ -1,3 +1,4 @@
+import { listen } from "../../Observers";
 import { Property } from "../Property/Property";
 import { pauseReactions, resumeReactions } from "../ReactiveObject/ReactiveScheduler";
 import { KEYS, Properties, PROPERTIES } from "./PropertiesImpl";
@@ -108,4 +109,13 @@ export function updateProperties<T extends PropertiesProvider<Record<string, any
     }
 
     resumeReactions(...properties);
+}
+
+export function listenProperty<T extends Record<string, any>>(
+                                        target: PropertiesProvider<T>,
+                                        key   : keyof T,
+                                        callback: () => void
+                                    ) {
+
+    listen( getProperty(target, key), callback );
 }

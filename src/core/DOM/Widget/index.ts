@@ -1,6 +1,6 @@
 import { NULL_OBJ } from "MWL@2026/exports/types";
 import { ViewFactory } from "./View";
-import { CoordinatorClass, CoordinatorDAPI } from "./Coordinator";
+import { CoordinatorClass, CoordinatorDAPI, NullCoordinator } from "./Coordinator";
 import { TaskList } from "../FrameScheduler/TaskList";
 import { extractConfig } from "./extractConfig";
 import { WithProperties } from "MWL@2026/exports/Reactive/PropertySystem";
@@ -36,10 +36,22 @@ export function defineWidget<
         DAPI extends keyof WidgetAPI,
         ViewModel
     >(
-        name            : WidgetName,
-        coordinatorClass: CoordinatorClass<Config, WidgetAPI, DAPI, ViewModel>,
-        viewFactory     : ViewFactory<NoInfer<ViewModel>>,
+        ...args: [
+            name            : WidgetName,
+            coordinatorClass: CoordinatorClass<Config, WidgetAPI, DAPI, ViewModel>,
+            viewFactory     : ViewFactory<NoInfer<ViewModel>>,
+        ]|[
+            name            : WidgetName,
+            viewFactory     : ViewFactory<NoInfer<ViewModel>>,
+        ]
     ): WidgetCstr<Config, WidgetAPI, DAPI> {
+
+    const name       : WidgetName = args[0];
+    const viewFactory: ViewFactory<NoInfer<ViewModel>> = args[args.length-1] as any;
+
+    let coordinatorClass: CoordinatorClass<Config, WidgetAPI, DAPI, ViewModel> = NullCoordinator as any;
+    if( args.length >= 3)
+        coordinatorClass = args[1] as any;
 
     class Widget extends HTMLElement {
 

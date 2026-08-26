@@ -31,6 +31,14 @@ export type CoordinatorOpts<
 
 export type CoordinatorDAPI<T> = Extract<keyof T, "properties"|typeof MAIN_EVENT>;
 
+export class NullCoordinator {
+
+    readonly viewModel = NULL_OBJ;
+    readonly widgetAPI = NULL_OBJ;
+
+    static readonly directAPI = [];
+}
+
 // explicit return type annotation required.
 export function Coordinator<
                         Config extends Record<string, any>,

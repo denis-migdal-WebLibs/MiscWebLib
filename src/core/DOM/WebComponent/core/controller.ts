@@ -26,8 +26,6 @@ export function asControllerFactory<
     if( provider === undefined )
         return NULL_OP as any;
 
-    console.warn(provider, isClass(provider));
-
     if( ! isClass( provider ) )
         return provider;
 
