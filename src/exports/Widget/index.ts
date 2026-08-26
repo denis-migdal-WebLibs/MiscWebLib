@@ -1,4 +1,6 @@
-export {defineWidget}  from "MWL@2026/widgets/core/Widget/";
+export {
+        defineWidget, type Widget, type WidgetCstr
+    }  from "MWL@2026/widgets/core/Widget/";
 export { View }        from "MWL@2026/widgets/core/Widget/View";
 export { Coordinator } from "MWL@2026/widgets/core/Widget/Coordinator";
 
