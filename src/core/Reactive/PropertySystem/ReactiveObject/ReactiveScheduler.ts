@@ -1,4 +1,4 @@
-import { hasListeners, triggerEvent } from "MWL@2026/core/Reactive/Observers/Observable";
+import { hasListeners, triggerEvent } from "MWL@2026/core/Reactive/Observable";
 import { REACTIVE_NODE, ReactiveObject } from "./ReactiveObject";
 import { Link } from "./link";
 import { incrVersion, ReactiveNode } from "./ReactiveNode";

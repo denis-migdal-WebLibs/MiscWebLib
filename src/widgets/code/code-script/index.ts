@@ -1,4 +1,4 @@
-import { defineWidget, Coordinator, View } from "MWL@2026/exports/DOM/Widget";
+import { defineWidget, Coordinator, View } from "MWL@2026/exports/Widget";
 import { WithProperties } from "MWL@2026/exports/Reactive/PropertySystem";
 import { Fixed } from "MWL@2026/exports/Reactive/PropertySystem/controllers";
 import { hl } from "../hl";

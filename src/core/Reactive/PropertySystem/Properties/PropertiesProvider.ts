@@ -1,4 +1,4 @@
-import { listen } from "../../Observers";
+import { listen } from "../../Observable";
 import { Property } from "../Property/Property";
 import { pauseReactions, resumeReactions } from "../ReactiveObject/ReactiveScheduler";
 import { KEYS, Properties, PROPERTIES } from "./PropertiesImpl";

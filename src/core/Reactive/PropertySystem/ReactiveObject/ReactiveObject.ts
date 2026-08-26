@@ -1,4 +1,4 @@
-import { ObservableObject, ObservableProxy } from "MWL@2026/exports/Reactive/Events";
+import { ObservableObject, ObservableProxy } from "MWL@2026/exports/Reactive/Observable";
 import { ReactiveNode } from "./ReactiveNode";
 
 export const REACTIVE_NODE = Symbol();

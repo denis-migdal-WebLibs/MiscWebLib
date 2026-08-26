@@ -1,10 +1,8 @@
-import { defineWidget } from "MWL@2026/core/DOM/Widget";
-import { Coordinator, View } from "MWL@2026/exports/DOM/Widget";
+import { defineWidget, Coordinator, View } from "MWL@2026/exports/Widget";
 import { updateProperties } from "MWL@2026/exports/Reactive/PropertySystem";
-
-import { deferredObserve } from "MWL@2026/core/DOM/FrameScheduler/defer/deferredObserve";
-
-import {on, UNDO, REDO, NEWLINE, TAB, connectEvents} from "MWL@2026/exports/DOM/UiEvents";
+import {on, UNDO, REDO, NEWLINE, TAB, connectEvents} from "MWL@2026/exports/browser/UiEvents";
+import { deferredCallback } from "MWL@2026/exports/browser/scheduler";
+import { listen } from "MWL@2026/exports/Reactive/Observable";
 
 import { hl } from "../hl";
 import { Input } from "./Input";
@@ -30,11 +28,11 @@ const CodeEditor = defineWidget("code-editor",
 
                 // even if the text/pos didn't changed, we need to
                 // re-render the text to properly highlight it.
-                deferredObserve(controller, this.renderer, () => {
+                listen(controller, deferredCallback(this.renderer, () => {
                     input.text = controller.properties.text;
                     input.pos  = controller.properties.pos;
                     input.push();
-                });
+                }))
 
                 connectEvents(output, [UNDO, REDO], controller);
 

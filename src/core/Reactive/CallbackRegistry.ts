@@ -1,11 +1,10 @@
 import { NULL_OP } from "MWL@2026/core/types";
-import { Observable } from "./Observers/Observable";
-import { MAIN_EVENT } from "./Observers/MAIN_EVENT";
+import { Observable } from "./Observable";
+import { MAIN_EVENT } from "./Observable/MAIN_EVENT";
 
 export type CallbackContext<T extends object|null> = {
     readonly target: T,
     readonly event : unknown, /* we hide implementation */
-    readonly origin: unknown  /* this is an arbitrary data */
 }
 
 export type Callback<
@@ -31,24 +30,23 @@ export class CallbackRegistry<
                     target: T,
                     clearAfterTrigger = false
                 ) {
+
         this.clearAfterTrigger = clearAfterTrigger;
         this.target = target;
 
         this.triggerContext = {
             event : this,
-            target: this.target,
-            origin: null as unknown
+            target,
         };
     }
 
     // re-entry is forbidden, therefore we can reuse the trigger context.
-    getTriggerContext(origin: unknown) {
-        this.triggerContext.origin = origin;
+    getTriggerContext() {
         return this.triggerContext;
     }
 
     // reentry is FORBIDDEN
-    trigger(origin: unknown = null) {
+    trigger() {
 
         // need to compact to avoid growing callback list.
         if( ! this.clearAfterTrigger )
@@ -57,7 +55,7 @@ export class CallbackRegistry<
         if( this.callbacks.length === 0) // opti.
             return;
 
-        const ctx = this.getTriggerContext(origin);
+        const ctx = this.getTriggerContext();
 
         // we could bind...
         for(let i = 0; i < this.callbacks.length; ++i)

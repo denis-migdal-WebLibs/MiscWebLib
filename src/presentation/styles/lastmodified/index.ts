@@ -1,4 +1,4 @@
-import {html} from "MWL@2026/core/DOM/ShadowTemplate/parsers/html";
+import {html} from "MWL@2026/exports/DOM";
 
 const title = document.querySelector("h1");
 if( title !== null) {
