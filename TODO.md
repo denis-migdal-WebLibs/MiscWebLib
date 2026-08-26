@@ -1,6 +1,8 @@
 Project structure:
 - dist/
 - build/
+  - cache/
+  - scripts/
 - libs/
 - tests/
 - src/
