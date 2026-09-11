@@ -21,8 +21,8 @@ ttf -> woff2 conversion:
 Sources
 -------
 
-- Noto Font:
-    - https://fonts.google.com/
+- Noto Color Emoji:
+    - https://fonts.google.com/noto/specimen/Noto+Color+Emoji/glyphs
     - WOFF2: https://github.com/applecuckoo/noto-color-emoji-builds/blob/main/NotoColorEmoji.woff2
 
 
