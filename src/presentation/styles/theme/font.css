@@ -4,7 +4,7 @@
     font-weight: normal bold;
 
 	src: local("[X]Noto Color Emoji"),
-	     url("/assets/font/NotoColorEmoji.woff2") format('woff2');
+	     url("[X]/assets/font/NotoColorEmoji.woff2") format('woff2');
     /*
         🧩 U+1F9E9
     */
