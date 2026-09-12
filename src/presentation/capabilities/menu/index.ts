@@ -46,20 +46,29 @@ function buildPagesMenu(content: string) {
 
     for(let item of content.split("\n") ) {
 
-        if( item[1] === "-") {
-            root.children.push(HR);
+        // get level
+        const offset = item.search(/(\-|\+)/);
+        const level = offset / 4 + 2;
+        const parent = current[level-1];
+
+        // item separator
+        if( item[offset] === "-" && item[offset+1] === "-" ) {
+            parent.children.push(HR);
             continue;
         }
 
-        const offset = item.search(/(\-|\+)/);
-        const level = offset / 4 + 2;
+        // get item target/text.
+        let target;
+        let text;
 
         const sep = item.lastIndexOf(":");
+        if( sep !== -1) {
+            target = item.slice(offset+2, sep);
+            text   = item.slice(sep+1);
+        } else {
+            text = target = item.slice(offset+2);
+        }
 
-        const target = item.slice(offset+2, sep);
-        const text   = item.slice(sep+1);
-
-        const parent = current[level-1];
 
         const isVirtual = item[offset] === "+";
 
@@ -257,6 +266,21 @@ function updatePageMenu(menu: PageMenuNode) {
     menu_page.replaceChildren(...html);
 }
 
+function resolvePageNumber(page: PagesMenuNode) {
+
+    let cur: PagesMenuNode|null = page;
+    let pos = -1;
+
+    while( (cur = cur.parent) !== null )
+        if( (pos = cur.text.indexOf(".")) !== -1 )
+            break;
+    
+    if( pos === -1) // not found.
+        return null;
+
+    return Number(cur!.text.slice(0, pos));
+}
+
 export function initMenu(menu: string) {
 
     const cur_page =  searchCurPagesHeader(buildPagesMenu(menu));
@@ -274,8 +298,9 @@ export function initMenu(menu: string) {
     if(cur_page.parent === null)
         return;
     
-    const idx = cur_page.parent.children.indexOf(cur_page);
-    document.body.style.setProperty('counter-set', `h1 ${idx}` );
+    const idx = resolvePageNumber(cur_page);
+    if( idx !== null)
+        document.body.setAttribute("page-number", `${idx}`);
     
     const hasH1 = document.body.querySelector("h1") !== null;
     

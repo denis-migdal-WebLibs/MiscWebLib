@@ -97,23 +97,32 @@
 
 /* compteurs */
 body {
-    counter-reset: h1 h2 h3;
-    counter-set: h1 var(--header_start_id);
+    counter-reset: h2 h3;
 }
 
-h1::before {
+h1 {
     counter-set: h2 h3;
-    counter-increment: h1;
-    content: counter(h1, upper-roman) ". ";
 }
+
 h2::before {
     counter-set: h3;
     counter-increment: h2;
-    content: counter(h1, upper-roman) "." counter(h2) ". ";
+    content: var(--title-prefix) counter(h2) ". ";
 }
 h3::before {
     counter-increment: h3;
-    content: counter(h1, upper-roman) "." counter(h2) "." counter(h3, lower-alpha) ". ";
+    content: var(--title-prefix) counter(h2) "." counter(h3, lower-alpha) ". ";
+}
+
+body[page-number] {
+    --page-number: attr(page-number type(<number>));
+
+    counter-set: h1 calc( var(--page-number) );
+    --title-prefix: counter(h1, upper-roman) ".";
+
+    & h1::before {
+        content: var(--title-prefix) " ";
+    }
 }
 
 h1, h2, h3, h4, h5, h6 {
