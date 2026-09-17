@@ -29,7 +29,7 @@ body.overview {
         height: calc( 100vh / var(--scale) );
         width: calc( 100vw / var(--scale) );
 
-        transform: scale( var(--scale) );
+        scale: var(--scale);
         transform-origin: top left;
     }
 
