@@ -1,10 +1,10 @@
-import { defineWidget, Coordinator, View } from "MWL@2026/exports/Widget";
-import { updateProperties } from "MWL@2026/exports/Reactive/PropertySystem";
-import {on, UNDO, REDO, NEWLINE, TAB, connectEvents} from "MWL@2026/exports/browser/UiEvents";
-import { deferredCallback } from "MWL@2026/exports/browser/scheduler";
-import { listen } from "MWL@2026/exports/Reactive/Observable";
+import { defineWidget, Coordinator, View } from "MWL@2026/@exports/Widget";
+import { updateProperties } from "MWL@2026/@exports/Reactive/PropertySystem";
+import {on, UNDO, REDO, NEWLINE, TAB, connectEvents} from "MWL@2026/@exports/browser/UiEvents";
+import { deferredCallback } from "MWL@2026/@exports/browser/scheduler";
+import { listen } from "MWL@2026/@exports/Reactive/Observable";
 
-import { hl } from "../hl";
+import { hl } from "../@core/hl";
 import { Input } from "./Input";
 import { CodeEditorModel } from "./model";
 
@@ -14,7 +14,7 @@ const CodeEditor = defineWidget("code-editor",
             content : __LOAD_FILE__("./index.html"),
             style   : [
                 __LOAD_FILE__("./index.css"),
-                __LOAD_FILE__("../Tomorrow.css"),
+                __LOAD_FILE__("../@core/Tomorrow.css"),
             ],
             elements: {
                 output: HTMLElement

@@ -1,4 +1,4 @@
-import { getCursorBegPos, getCursorEndPos, getCursorPos, setCursorPos } from "../hl";
+import { getCursorBegPos, getCursorEndPos, getCursorPos, setCursorPos } from "../@core/hl";
 import { InputState } from "./model";
 
 export class Input implements InputState {

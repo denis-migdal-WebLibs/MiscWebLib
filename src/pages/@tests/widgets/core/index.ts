@@ -1,4 +1,4 @@
-import {defineWidget, Coordinator, View} from "MWL@2026/exports/Widget";
+import {defineWidget, Coordinator, View} from "MWL@2026/@exports/Widget";
 
 class Model {
     readonly foo = "ok";

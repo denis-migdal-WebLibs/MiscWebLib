@@ -1,9 +1,9 @@
 import { getProperties, PropertiesProvider } from "MWL@2026/core/Reactive/PropertySystem/Properties/PropertiesProvider";
 
-import { TaskList, deferredCallback} from "MWL@2026/exports/browser/scheduler";
+import { TaskList, deferredCallback} from "MWL@2026/@exports/browser/scheduler";
 
 import { PropertiesEffects } from "MWL@2026/core/Reactive/PropertySystem/Properties/PropertiesEffects";
-import { observe } from "MWL@2026/exports/Reactive/Observable";
+import { observe } from "MWL@2026/@exports/Reactive/Observable";
 
 export function DeferredEffects<T extends Record<string, any>>(
     properties: PropertiesProvider<T>,

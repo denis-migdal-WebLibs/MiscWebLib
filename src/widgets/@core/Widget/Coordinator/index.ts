@@ -1,6 +1,6 @@
 import { OBSERVABLE } from "MWL@2026/core/Reactive/Observable/contract/internals";
 import { isClass } from "MWL@2026/core/types";
-import { FCT_ID, NULL_OBJ } from "MWL@2026/exports/types";
+import { FCT_ID, NULL_OBJ } from "MWL@2026/@exports/types";
 
 type ModelProvider<Config extends Record<string,any>, T extends object>
                         = ((config: Partial<Config>) => T)

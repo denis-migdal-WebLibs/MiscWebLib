@@ -1,10 +1,10 @@
-import { NULL_OBJ } from "MWL@2026/exports/types";
+import { NULL_OBJ } from "MWL@2026/@exports/types";
 import { ViewFactory } from "./View";
 import { CoordinatorClass, CoordinatorDAPI, NullCoordinator } from "./Coordinator";
 
 import { extractConfig } from "./extractConfig";
-import { WithProperties } from "MWL@2026/exports/Reactive/PropertySystem";
-import { TaskList } from "MWL@2026/exports/browser/scheduler";
+import { WithProperties } from "MWL@2026/@exports/Reactive/PropertySystem";
+import { TaskList } from "MWL@2026/@exports/browser/scheduler";
 
 export type WidgetName = Lowercase<`${string}-${string}`>;
 

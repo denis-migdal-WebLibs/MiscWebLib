@@ -1,7 +1,7 @@
-import { defineWidget, Coordinator, View } from "MWL@2026/exports/Widget";
-import { WithProperties } from "MWL@2026/exports/Reactive/PropertySystem";
-import { Fixed } from "MWL@2026/exports/Reactive/PropertySystem/controllers";
-import { hl } from "../hl";
+import { defineWidget, Coordinator, View } from "MWL@2026/@exports/Widget";
+import { WithProperties } from "MWL@2026/@exports/Reactive/PropertySystem";
+import { Fixed } from "MWL@2026/@exports/Reactive/PropertySystem/controllers";
+import { hl } from "../@core/hl";
 
 const Script = defineWidget(
     "code-script",
@@ -12,7 +12,7 @@ const Script = defineWidget(
         }) ),
     View({
         style: [
-            __LOAD_FILE__("../Tomorrow.css"),
+            __LOAD_FILE__("../@core/Tomorrow.css"),
             __LOAD_FILE__("./index.css"),
         ],
         setup(ctrler) {

@@ -1,4 +1,4 @@
-import { NULL_OBJ } from "MWL@2026/exports/types";
+import { NULL_OBJ } from "MWL@2026/@exports/types";
 import { PropertyController } from "../Property/PropertyController";
 import { ReactiveObject } from "../ReactiveObject/ReactiveObject";
 import { completeProperty, createIncompleteProperty, Property } from "../Property/Property";

@@ -1,8 +1,8 @@
 import {
         ShadowTemplate, ShadowTemplateArgs,
         createResolver, Elements, ElementsDescriptors
-    } from "MWL@2026/exports/DOM";
-import {TaskList} from "MWL@2026/exports/browser/scheduler";
+    } from "MWL@2026/@exports/DOM";
+import {TaskList} from "MWL@2026/@exports/browser/scheduler";
 import { NULL_OP } from "MWL@2026/core/types";
 
 export type ViewFactory<ViewCtx> = (
