@@ -66,6 +66,16 @@ todo {
         color: var(--block-color);
         content: var(--block-symbol) " ";
     }
+
+    &li {
+
+        color  : var(--block-color);
+        content: var(--block-symbol) " ";        
+
+        &::before {
+            content: ""
+        };
+    }
 }
 
 .context {
