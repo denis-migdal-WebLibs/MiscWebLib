@@ -21,8 +21,8 @@ function expose<K extends string|symbol>() {
     const Klass = defineWidget(
             "my-webcomp",
             Coordinator(Model, {
-                viewModel: expose<"foo">(),
-                widgetAPI: expose<"faa">(),
+                subjectModel: expose<"faa">(),
+                viewModel   : expose<"foo">(),
             }),
             View({
                 content  : "<div data-wcid='ok'>ok</div>",

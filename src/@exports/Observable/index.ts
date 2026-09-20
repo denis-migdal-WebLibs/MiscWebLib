@@ -3,4 +3,4 @@ export {
     canSkipTrigger, trigger, triggerDrain, clear,
     listen, observe, isListening, unlisten, unobserve,
     createOwnedHook,
-} from "MWL@2026/core/Reactive/Observable";
+} from "MWL@2026/core/Observable";
