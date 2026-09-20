@@ -1,4 +1,4 @@
-import { ObservableObject, ObservableProxy } from "MWL@2026/@exports/Reactive/Observable";
+import { ObservableObject, ObservableProxy } from "MWL@2026/@exports/Observable";
 import { ReactiveNode } from "./ReactiveNode";
 import { ObservableContext } from "../../Observable/contract";
 

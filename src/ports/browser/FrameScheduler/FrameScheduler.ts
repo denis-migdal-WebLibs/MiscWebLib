@@ -1,5 +1,5 @@
 import GuardedState from "./GuardedState";
-import { createOwnedHook, isListening, listen, triggerDrain, unlisten } from "MWL@2026/@exports/Reactive/Observable";
+import { createOwnedHook, isListening, listen, triggerDrain, unlisten } from "MWL@2026/@exports/Observable";
 
 type FrameTask = () => void;
 

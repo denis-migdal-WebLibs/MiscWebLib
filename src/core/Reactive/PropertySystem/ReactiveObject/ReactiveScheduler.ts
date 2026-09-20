@@ -1,4 +1,4 @@
-import { canSkipTrigger, trigger } from "MWL@2026/@exports/Reactive/Observable";
+import { canSkipTrigger, trigger } from "MWL@2026/@exports/Observable";
 import { REACTIVE_NODE, ReactiveObject } from "./ReactiveObject";
 import { Link } from "./link";
 import { incrVersion, ReactiveNode } from "./ReactiveNode";

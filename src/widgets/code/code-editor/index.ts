@@ -2,7 +2,7 @@ import { defineWidget, Coordinator, View } from "MWL@2026/@exports/Widget";
 import { updateProperties } from "MWL@2026/@exports/Reactive/PropertySystem";
 import {on, UNDO, REDO, NEWLINE, TAB, connectEvents} from "MWL@2026/@exports/browser/UiEvents";
 import { deferredCallback } from "MWL@2026/@exports/browser/scheduler";
-import { listen } from "MWL@2026/@exports/Reactive/Observable";
+import { listen } from "MWL@2026/@exports/Observable";
 
 import { hl } from "../@core/hl";
 import { Input } from "./Input";

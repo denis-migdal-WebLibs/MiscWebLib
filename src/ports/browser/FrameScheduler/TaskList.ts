@@ -1,7 +1,7 @@
-import { createOwnedHook } from "MWL@2026/core/Reactive/Observable";
+import { createOwnedHook } from "MWL@2026/core/Observable";
 import {Task} from "./Task";
 
-import {trigger, listen, unlisten} from "MWL@2026/@exports/Reactive/Observable";
+import {trigger, listen, unlisten} from "MWL@2026/@exports/Observable";
 
 //TODO: move to types ?
 type Public<T> = { [K in keyof T]: T[K]; };

@@ -1,5 +1,5 @@
 import StateHistory from "./StateHistory";
-import { observe } from "MWL@2026/@exports/Reactive/Observable";
+import { observe } from "MWL@2026/@exports/Observable";
 import { updateProperties, WithProperties } from "MWL@2026/@exports/Reactive/PropertySystem";
 import { Value } from "MWL@2026/@exports/Reactive/PropertySystem/controllers";
 
