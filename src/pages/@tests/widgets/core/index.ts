@@ -38,6 +38,6 @@ function expose<K extends string|symbol>() {
     const elem = new Klass();
     document.body.append( elem );
 
-    console.warn( elem.api );
+    console.warn( elem.subject );
     console.warn( elem );
 }

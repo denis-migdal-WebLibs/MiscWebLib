@@ -15,7 +15,7 @@ const Base = WithProperties({
                                 pos : Value<number|null>(null),
                             });
 
-export class CodeEditorModel extends Base {
+export class CodeEditor extends Base {
 
     readonly history    = new StateHistory<InputState>();
 
@@ -41,10 +41,10 @@ export class CodeEditorModel extends Base {
 
     undo() {
         this.history.prev();
-        updateProperties<CodeEditorModel>(this, this.history.currentState);
+        updateProperties<CodeEditor>(this, this.history.currentState);
     }
     redo() {
         this.history.next();
-        updateProperties<CodeEditorModel>(this, this.history.currentState);
+        updateProperties<CodeEditor>(this, this.history.currentState);
     }
 }

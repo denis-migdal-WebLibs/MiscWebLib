@@ -1,5 +1,5 @@
 export {
-        defineWidget, type Widget, type WidgetCstr
+        defineWidget, type Widget
     }  from "MWL@2026/widgets/@core/Widget/";
 export { View }        from "MWL@2026/widgets/@core/Widget/View";
 export { Coordinator, LazyCoordinator } from "MWL@2026/widgets/@core/Widget/Coordinator";

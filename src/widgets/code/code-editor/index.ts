@@ -6,10 +6,10 @@ import { listen } from "MWL@2026/@exports/Reactive/Observable";
 
 import { hl } from "../@core/hl";
 import { Input } from "./Input";
-import { CodeEditorModel } from "./model";
+import { CodeEditor } from "./model";
 
-const CodeEditor = defineWidget("code-editor",
-        Coordinator(CodeEditorModel),
+const CodeEditorWidget = defineWidget("code-editor",
+        Coordinator(CodeEditor),
         View({
             content : __LOAD_FILE__("./index.html"),
             style   : [
@@ -63,6 +63,6 @@ const CodeEditor = defineWidget("code-editor",
             }
         }) );
 
-type CodeEditor = InstanceType<typeof CodeEditor>;
+type CodeEditorWidget = InstanceType<typeof CodeEditorWidget>;
 
-export {CodeEditor};
+export {CodeEditorWidget};

@@ -3,7 +3,7 @@ import { WithProperties } from "MWL@2026/@exports/Reactive/PropertySystem";
 import { Fixed } from "MWL@2026/@exports/Reactive/PropertySystem/controllers";
 import { hl } from "../@core/hl";
 
-const Script = defineWidget(
+const ScriptWidget = defineWidget(
     "code-script",
     Coordinator(WithProperties({
             // we assume that the script content should not be modified.
@@ -84,7 +84,7 @@ export function raw2html(code: string, codeLang: string) {
 
 for(let script of document.querySelectorAll('script[type^="c-"]') ) {
 
-    const code = new Script({
+    const code = new ScriptWidget({
         text: script.textContent!,
         lang: script.getAttribute("type")!.slice(2)
     })
