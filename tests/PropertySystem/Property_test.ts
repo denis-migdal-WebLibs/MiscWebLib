@@ -6,7 +6,7 @@ import {ValueController} from "MWL@2026/core/Reactive/PropertySystem/Controllers
 
 import {forward} from "MWL@2026/core/Reactive/PropertySystem/Property/sync/forward";
 import {bind} from "MWL@2026/core/Reactive/PropertySystem/Property/sync/bind";
-import { listen } from "MWL@2026/exports/Reactive/Observable.ts";
+import { listen } from "MWL@2026/@exports/Observable";
 
 Deno.test("Get", () => {
     const property = new Property(new ValueController(42));

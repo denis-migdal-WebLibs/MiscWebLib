@@ -1,0 +1,33 @@
+
+body.overview {
+    
+    overflow-y: hidden;
+
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+
+    main {
+
+        margin: 0;
+
+        border-left: none;
+        border-right: none;
+
+        columns: auto 210mm;
+
+        overflow-x: auto;
+
+        /* TODO: scale */
+        --scale: calc( (var(--screen_width)/818) / var(--overview) );
+        height: calc( 100vh / var(--scale) );
+        width: calc( 100vw / var(--scale) );
+
+        scale: var(--scale);
+        transform-origin: top left;
+    }
+
+    & .menu_area {
+        display: none;
+    }
+}

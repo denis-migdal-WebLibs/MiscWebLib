@@ -1,6 +1,6 @@
 import { ObservableObject, ObservableProxy } from "MWL@2026/@exports/Observable";
 import { ReactiveNode } from "./ReactiveNode";
-import { ObservableContext } from "../../Observable/contract";
+import { ObservableContext } from "../../../Observable/contract";
 
 export const REACTIVE_NODE = Symbol();
 

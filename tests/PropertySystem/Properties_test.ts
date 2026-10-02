@@ -5,7 +5,7 @@ import {Properties} from "MWL@2026/core/Reactive/PropertySystem/Properties/Prope
 
 import {updateProperties} from "MWL@2026/core/Reactive/PropertySystem/Properties/PropertiesProvider.ts";
 
-import { listen } from "MWL@2026/exports/Reactive/Observable.ts";
+import { listen } from "MWL@2026/@exports/Observable";
 import { Value } from "MWL@2026/core/Reactive/PropertySystem/Controllers/Value.ts";
 import { View } from "MWL@2026/core/Reactive/PropertySystem/Controllers/View.ts";
 import { Constant } from "MWL@2026/core/Reactive/PropertySystem/Controllers/Constant.ts";
