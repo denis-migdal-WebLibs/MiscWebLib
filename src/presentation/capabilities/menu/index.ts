@@ -69,6 +69,14 @@ function buildPagesMenu(content: string) {
             text = target = item.slice(offset+2);
         }
 
+        if(target[0] === "#") {
+
+            if( location.hostname === "cours.migdal.ovh" )
+                continue
+
+            target = target.slice(1);
+        }
+
 
         const isVirtual = item[offset] === "+";
 
