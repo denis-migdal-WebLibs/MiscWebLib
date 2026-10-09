@@ -4,8 +4,6 @@ import { ReactiveObject } from "../ReactiveObject/ReactiveObject";
 import { completeProperty, createIncompleteProperty, Property } from "../Property/Property";
 import { addLink } from "../Property/sync/links";
 
-export const PROPERTIES = Symbol();
-
 export type PPDescriptor<P extends Record<string, any>, T>
         = (this: Readonly<P>, initialValue?: T) => PropertyController<T>
 
@@ -13,6 +11,7 @@ export type PropertiesDescriptors<T extends Record<string, any>> = {
     [K in keyof T]: PPDescriptor<T, T[K]>
 }
 
+export const PROPERTIES = Symbol();
 export const KEYS = Symbol();
 
 export class PropertiesImpl<T extends Record<string, any>>

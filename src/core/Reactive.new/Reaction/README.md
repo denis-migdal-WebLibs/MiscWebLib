@@ -1,0 +1,1 @@
+A ReactiveObject can be triggered by multiple Links. However, each new activation supersedes the previous one. Therefore, only the latest activation remains valid.
