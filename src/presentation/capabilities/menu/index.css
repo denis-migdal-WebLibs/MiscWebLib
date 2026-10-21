@@ -107,11 +107,11 @@ h1 {
 h2::before {
     counter-set: h3;
     counter-increment: h2;
-    content: var(--title-prefix) counter(h2) ". ";
+    content: var(--title-prefix, "") counter(h2) ". ";
 }
 h3::before {
     counter-increment: h3;
-    content: var(--title-prefix) counter(h2) "." counter(h3, lower-alpha) ". ";
+    content: var(--title-prefix, "") counter(h2) "." counter(h3, lower-alpha) ". ";
 }
 
 body[page-number] {
