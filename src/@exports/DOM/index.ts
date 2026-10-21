@@ -1,6 +1,6 @@
 export {
         resolve, createResolver, type Elements, type ElementsDescriptors
-    } from "MWL@2026/ports/DOM/ElementsResolver";
+    } from "MWL@2026/infrastructure/DOM/ElementsResolver";
 
-export { ShadowTemplate, type ShadowTemplateArgs } from "MWL@2026/ports/DOM/ShadowTemplate";
-export {html} from "MWL@2026/ports/DOM/ShadowTemplate/parsers/html";
+export { ShadowTemplate, type ShadowTemplateArgs } from "MWL@2026/infrastructure/DOM/ShadowTemplate";
+export {html} from "MWL@2026/infrastructure/DOM/ShadowTemplate/parsers/html";

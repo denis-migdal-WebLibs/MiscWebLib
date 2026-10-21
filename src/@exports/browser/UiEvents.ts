@@ -1,1 +1,1 @@
-export * from "MWL@2026/ports/browser/UiEvents";
+export * from "MWL@2026/infrastructure/browser/UiEvents";
