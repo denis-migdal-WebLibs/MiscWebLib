@@ -1,6 +1,7 @@
-import { ObservableObject, ObservableProxy } from "MWL@2026/@exports/Observable";
+import { ObservableObject } from "MWL@2026/modules/Observable";
 import { ReactiveNode } from "./ReactiveNode";
-import { ObservableContext } from "../../../Observable/contract";
+import { ObservableCtx } from "MWL@2026/@contracts/Observable/@types/def";
+import { ObservableProxy } from "MWL@2026/modules/Observable/ObservableProxy";
 
 export const REACTIVE_NODE = Symbol();
 
@@ -8,7 +9,7 @@ export class ReactiveObject extends ObservableObject {
     readonly [REACTIVE_NODE] = new ReactiveNode();
 }
 
-export class ReactiveProxy<T extends object|void> extends ObservableProxy<ObservableContext<T>> {
+export class ReactiveProxy<T extends object|void> extends ObservableProxy<ObservableCtx<T>> {
     readonly [REACTIVE_NODE]: ReactiveNode;
     constructor(target: ReactiveProxy<T>) {
         super(target);

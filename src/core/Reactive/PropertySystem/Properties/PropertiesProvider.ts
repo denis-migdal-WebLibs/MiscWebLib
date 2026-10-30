@@ -1,4 +1,4 @@
-import { listen } from "../../../Observable";
+import { listen } from "MWL@2026/modules/Observable";
 import { Property } from "../Property/Property";
 import { pauseReactions, resumeReactions } from "../ReactiveObject/ReactiveScheduler";
 import { KEYS, Properties, PROPERTIES } from "./PropertiesImpl";

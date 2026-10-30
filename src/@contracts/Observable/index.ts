@@ -1,5 +1,5 @@
 import { DefineExtensionsFcts } from "MWL@2026/@types/Extensions";
-import { Callback, ClearableObservable, ObservationControllerClass, SubscribableObservable, TriggerableObservable } from "./@types/def";
+import { Callback, ClearableObservable, Hook, HookFactory, ObservableObjectClass, ObservationControllerClass, SubscribableObservable, TriggerableObservable } from "./@types/def";
 
 export interface ObservableServices {
 
@@ -67,15 +67,31 @@ export interface ObservableServices {
 
 export interface ObservableExtensions {
 
-    // callback + ObsCtx... ~> this ???
-    // Besoin Interface...
-    ObservableObject: new() => {};
+    ObservableObject: ObservableObjectClass;
     //ObservableProxy : void;
 
-    //createHook     (): void;
-    //createOwnedHook(): void;
-    //hookFactory    (): void;
+    /** `createHook(metadata)` */
+    createHook<
+                Meta extends Record<string, any> = {},
+                Args extends any[]               = []
+            >(metadata: Meta): Hook<Meta, Args>;
+
+    /** `createOwnedHook(owner, metadata)` */
+    createOwnedHook<
+                    Owner extends object,
+                    Meta extends Record<string, any> = {},
+                    Args extends any[]               = []
+                >(owner: Owner, metadata?: Meta): Hook<Meta & {owner: Owner}, Args>
+
+    /** `hookFactory<ARGS>()`
+     * Replace by ownedHookFactory ?
+    */
+    hookFactory<ARGS extends any[]>(): HookFactory<ARGS>;
 }
+
+/*
+function 
+*/
 
 export type Extensions = DefineExtensionsFcts<ObservableExtensions, [
                                             ObsCtrl: ObservationControllerClass

@@ -1,7 +1,7 @@
-import { canSkipTrigger, trigger } from "MWL@2026/@exports/Observable";
 import { REACTIVE_NODE, ReactiveObject } from "./ReactiveObject";
 import { Link } from "./link";
 import { incrVersion, ReactiveNode } from "./ReactiveNode";
+import { canSkipTrigger, trigger } from "MWL@2026/modules/Observable";
 
 function isPending(node: ReactiveNode) {
     return node.triggerPending && node.triggerDepth === 0;

@@ -1,11 +1,11 @@
 import { NULL_OBJ } from "MWL@2026/@exports/types";
 import { InferProperties, Properties, PropertiesDescriptors } from "../@contrat";
-import { ObservableObject, trigger } from "MWL@2026/@exports/Observable";
 import { REACTIVE_NODE } from "MWL@2026/core/Reactive.new/Reaction/@contract/internals";
 import { ReactiveNodeImpl } from "MWL@2026/core/Reactive.new/Reaction/@details/ReactiveNode";
 import { ReactiveObject, addLink, effect } from "MWL@2026/core/Reactive.new/Reaction";
 import { Property } from "MWL@2026/core/Reactive.new/Property/@contract";
 import { isWritable } from "MWL@2026/core/Reactive.new/Property/@details/Properties/ValueProperty";
+import { ObservableObject, trigger } from "MWL@2026/modules/Observable";
 
 export function PropertiesFactoryImpl<
                                     Desc extends PropertiesDescriptors<any>,

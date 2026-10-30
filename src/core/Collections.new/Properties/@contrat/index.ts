@@ -1,4 +1,4 @@
-import { ObservableObject } from "MWL@2026/core/Observable";
+import { ObservableObject } from "MWL@2026/@contracts/Observable/@types/def";
 import { MutableProperty, Property } from "MWL@2026/core/Reactive.new/Property/@contract";
 import { ReactiveObject } from "MWL@2026/core/Reactive.new/Reaction";
 

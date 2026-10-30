@@ -1,4 +1,4 @@
-import { ObservableWith } from "./internals";
+import { OBS_CTRLER, ObservableWith } from "./internals";
 
 type Subscribable<
         CallbackCtx  extends object|void = void,
@@ -42,6 +42,32 @@ export type ObservationControllerClass = {
 }
 
 export type ObservableCtx<T> = {readonly invoker: T};
+
+//////
+// Object
+/////
+
+export interface ObservableObject<CallbackArgs extends any[] = []> 
+        extends Observable<ObservableCtx<any>, CallbackArgs>
+        {
+
+    readonly [OBS_CTRLER]: ObservationController<ObservableCtx<this>, CallbackArgs>;
+}
+
+export type ObservableObjectClass = new <CallbackArgs extends any[] = []>() => ObservableObject<CallbackArgs>;
+
+//////
+// Hook
+/////
+
+export type Hook<
+                T extends Record<string, any> = {},
+                Args extends any[]            = []
+            > = T & Observable<ObservableCtx<T>, Args>;
+
+export type HookFactory<ARGS extends any[]> = {
+    create<M extends Record<string, any>>(metadata: M): Hook<M, ARGS>;
+};
 
 //////
 // Public

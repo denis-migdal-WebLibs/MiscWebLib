@@ -1,7 +1,5 @@
-import { createOwnedHook } from "MWL@2026/core/Observable";
+import { createOwnedHook, listen, trigger, unlisten } from "MWL@2026/modules/Observable";
 import {Task} from "./Task";
-
-import {trigger, listen, unlisten} from "MWL@2026/@exports/Observable";
 
 //TODO: move to types ?
 type Public<T> = { [K in keyof T]: T[K]; };

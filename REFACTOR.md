@@ -1,0 +1,14 @@
+-> Remove WithProperties + ObservableProxy
+-> Effect => ReactiveEffects
+
+- presentation => webui.
+    - widgets
+    - orchestrator (TPEngine)
+    - nav : capabilities or orchestrator ?
+- core => modules + contract.
+- widget/@core => modules + contract.
+- infrastructure => modules/@platform + contract.
+    - scheduling
+    - storage
+    - networking
+- remove @exports
