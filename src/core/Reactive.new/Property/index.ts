@@ -6,8 +6,7 @@ import { ValueProperty as ValuePropertyContract} from "./@contract";
 
 export const ImmutableProperty: ImmutablePropertyClass = ImmutablePropertyImpl;
 
-const ValueProperty: ValuePropertyClass = ValuePropertyImpl;
-type  ValueProperty<T> = ValuePropertyContract<T>;
+export const ValueProperty: ValuePropertyClass = ValuePropertyImpl;
+export type  ValueProperty<T> = ValuePropertyContract<T>;
 
-export {ValueProperty};
 export {forwardValue, syncValue} from "./@details/Links/ValueLinks";

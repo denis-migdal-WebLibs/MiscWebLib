@@ -7,7 +7,7 @@
     }
 }
 
-.flex-2, .flex-3, .flex-4 {
+.flex-2, .flex-3, .flex-4, .flex-5 {
     gap: 1px;
     display: grid;
 
@@ -46,6 +46,10 @@
 
     &.flex-4 {
         grid: auto / 1fr 1fr 1fr 1fr;
+    }
+
+    &.flex-5 {
+        grid: auto / 1fr 1fr 1fr 1fr 1fr;
     }
 
     & img {

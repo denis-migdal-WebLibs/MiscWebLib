@@ -64,15 +64,3 @@ const HookFactory = {
 export function hookFactory<ARGS extends any[]>() {
     return HookFactory as HookFactory<ARGS>;
 }
-
-/////
-// Event
-/////
-
-//export const createEvent = createHook;
-//type Event = Hook; //TODO...
-
-/*
-const x = hookFactory<[number]>().create({name: 34});
-void x;
-*/
