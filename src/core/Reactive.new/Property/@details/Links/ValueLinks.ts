@@ -1,4 +1,4 @@
-import { addLink, requestReaction } from "MWL@2026/core/Reactive.new/Reaction";
+import { addLink, requestReaction } from "MWL@2026/modules/Reactive/Reaction";
 import { MutableProperty, ValueProperty, ValueProvider } from "../../@contract";
 import { isValue } from "../Properties/ValueProperty";
 

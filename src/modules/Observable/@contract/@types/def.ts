@@ -1,4 +1,4 @@
-import { OBS_CTRLER, ObservableWith } from "./internals";
+import { OBS_CTRLER, ObservableWith } from "./ctrler";
 
 type Subscribable<
         CallbackCtx  extends object|void = void,

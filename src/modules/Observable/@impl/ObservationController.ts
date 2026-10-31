@@ -1,5 +1,5 @@
-import { ObservableDetails } from "MWL@2026/@contracts/Observable";
-import { Callback, ObservationController as ObsCtrlerContract, Prefixes } from "MWL@2026/@contracts/Observable/@types/def";
+import { ObservableDetails } from "MWL@2026/modules/Observable/@contract";
+import { Callback, ObservationController as ObsCtrlerContract, Prefixes } from "MWL@2026/modules/Observable/@contract/@types/def";
 import { NULL_OP } from "MWL@2026/@exports/types";
 
 export const ObservationController: ObservableDetails["ObservationController"]

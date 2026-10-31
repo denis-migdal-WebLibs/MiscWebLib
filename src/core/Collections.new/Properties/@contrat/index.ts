@@ -1,6 +1,6 @@
-import { ObservableObject } from "MWL@2026/@contracts/Observable/@types/def";
+import { ObservableObject } from "MWL@2026/modules/Observable/@contract/@types/def";
 import { MutableProperty, Property } from "MWL@2026/core/Reactive.new/Property/@contract";
-import { ReactiveObject } from "MWL@2026/core/Reactive.new/Reaction";
+import { ReactiveObject } from "MWL@2026/modules/Reactive/Reaction";
 
 export type Properties<T extends Record<string, any>> = T
     // TODO: PropertiesRecord

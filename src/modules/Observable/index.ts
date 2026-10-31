@@ -1,11 +1,9 @@
-import { ObservableContract } from "MWL@2026/@contracts/Observable";
+export * from "./@contract/@types";
+export * from "./@contract/services";
 
-export * from "MWL@2026/@contracts/Observable/@types";
-export * from "MWL@2026/@contracts/Observable/services";
+export * from "./@impl";
 
-export { ObservationController } from "./ObservationController";
-export * from "./extensions";
-
-import type { Satisfies } from "MWL@2026/@types";
+import type { Satisfies } from "MWL@2026/modules/@types";
+import { ObservableContract } from "./@contract/";
 
 declare const _: Satisfies<typeof import("."), ObservableContract>;

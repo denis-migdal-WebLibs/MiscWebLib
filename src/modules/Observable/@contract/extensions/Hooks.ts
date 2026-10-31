@@ -1,6 +1,6 @@
 import { Extensions } from "..";
 import { Hook, ObservationControllerClass, HookFactory } from "../@types/def";
-import { OBS_CTRLER } from "../@types/internals";
+import { OBS_CTRLER } from "../@types/ctrler";
 
 function _createHook<
                         Meta extends Record<string, any> = {},

@@ -1,5 +1,5 @@
 import { Extensions } from "..";
-import { OBS_CTRLER } from "../@types/internals";
+import { OBS_CTRLER } from "../@types/ctrler";
 import { ObservableCtx } from "../@types/def";
 
 export const ObservableObjectExtension: Extensions["ObservableObject"]

@@ -1,4 +1,4 @@
-import { addLink, ReactiveObject } from "MWL@2026/core/Reactive.new/Reaction";
+import { addLink, ReactiveObject } from "MWL@2026/modules/Reactive/Reaction";
 import { ViewProperty } from "../../@contract";
 import { Cstr, isClass, NO_VALUE } from "MWL@2026/core/types";
 

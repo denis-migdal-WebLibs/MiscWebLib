@@ -1,4 +1,4 @@
-import { ReactiveObject } from "MWL@2026/core/Reactive.new/Reaction";
+import { ReactiveObject } from "MWL@2026/modules/Reactive/Reaction";
 import { ImmutableProperty } from "../../@contract";
 
 export class ImmutablePropertyImpl<T> extends    ReactiveObject

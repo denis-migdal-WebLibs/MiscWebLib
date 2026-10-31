@@ -1,6 +1,6 @@
 import { NO_VALUE } from "MWL@2026/core/types";
-import { ReactiveObject, requestReaction } from "MWL@2026/core/Reactive.new/Reaction";
 import { Property, ValueProperty, ValueProvider, WritableProperty } from "../../@contract";
+import { ReactiveObject, requestReaction } from "MWL@2026/modules/Reactive/Reaction";
 
 export class ValuePropertyImpl<T> extends ReactiveObject
                                implements ValueProperty<T> {

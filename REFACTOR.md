@@ -1,6 +1,7 @@
 -> Remove WithProperties + ObservableProxy
 -> Effect => ReactiveEffects
 
+- @types => modules/@types
 - presentation => webui.
     - widgets
     - orchestrator (TPEngine)

@@ -1,7 +1,7 @@
 import { ObservableObject } from "MWL@2026/modules/Observable";
 import { ReactiveNode } from "./ReactiveNode";
-import { ObservableCtx } from "MWL@2026/@contracts/Observable/@types/def";
-import { ObservableProxy } from "MWL@2026/modules/Observable/ObservableProxy";
+import { ObservableCtx } from "MWL@2026/modules/Observable/@contract/@types/def";
+import { ObservableProxy } from "MWL@2026/modules/Observable/@impl/ObservableProxy";
 
 export const REACTIVE_NODE = Symbol();
 

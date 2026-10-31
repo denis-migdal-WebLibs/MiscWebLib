@@ -1,4 +1,4 @@
-import { DefineExtensionsFcts } from "MWL@2026/@types/Extensions";
+import { DefineExtensionsFcts } from "MWL@2026/modules/@types/contracts";
 import { Callback, ClearableObservable, Hook, HookFactory, ObservableObjectClass, ObservationControllerClass, SubscribableObservable, TriggerableObservable } from "./@types/def";
 
 export interface ObservableServices {
@@ -101,8 +101,9 @@ export interface ObservableDetails {
     readonly ObservationController: ObservationControllerClass
 }
 
+export interface ObservableImpl extends ObservableExtensions, 
+                                        ObservableDetails {}
 
 export interface ObservableContract
-                    extends ObservableDetails,
-                            ObservableServices,
-                            ObservableExtensions {}
+                    extends ObservableServices,
+                            ObservableImpl {}

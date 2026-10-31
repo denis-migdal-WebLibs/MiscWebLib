@@ -1,5 +1,5 @@
-import { Observable } from "MWL@2026/@contracts/Observable/@types/def";
-import { OBS_CTRLER } from "MWL@2026/@contracts/Observable/@types/internals";
+import { Observable } from "MWL@2026/modules/Observable/@contract/@types/def";
+import { OBS_CTRLER } from "MWL@2026/modules/Observable/@contract/@types/ctrler";
 
 /** TODO: remove... */
 export class ObservableProxy<

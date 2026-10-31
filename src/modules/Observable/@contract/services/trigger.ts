@@ -1,5 +1,5 @@
 import { ObservableServices } from "..";
-import { obsCtrler } from "../@types/internals";
+import { obsCtrler } from "../@types/ctrler";
 
 export const clear: ObservableServices["clear"]
     = function(target) {

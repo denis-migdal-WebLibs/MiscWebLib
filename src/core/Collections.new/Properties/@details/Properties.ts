@@ -1,11 +1,11 @@
 import { NULL_OBJ } from "MWL@2026/@exports/types";
 import { InferProperties, Properties, PropertiesDescriptors } from "../@contrat";
-import { REACTIVE_NODE } from "MWL@2026/core/Reactive.new/Reaction/@contract/internals";
-import { ReactiveNodeImpl } from "MWL@2026/core/Reactive.new/Reaction/@details/ReactiveNode";
-import { ReactiveObject, addLink, effect } from "MWL@2026/core/Reactive.new/Reaction";
 import { Property } from "MWL@2026/core/Reactive.new/Property/@contract";
 import { isWritable } from "MWL@2026/core/Reactive.new/Property/@details/Properties/ValueProperty";
 import { ObservableObject, trigger } from "MWL@2026/modules/Observable";
+import { addLink, reactionEffect, ReactiveObject } from "MWL@2026/modules/Reactive/Reaction";
+import { REACTION_NODE } from "MWL@2026/modules/Reactive/Reaction/@contract/@types/ctrler";
+import { ReactionNode } from "MWL@2026/modules/Reactive/Reaction/@impl/ReactionNode";
 
 export function PropertiesFactoryImpl<
                                     Desc extends PropertiesDescriptors<any>,
@@ -25,7 +25,8 @@ export class PropertiesImpl<T extends Record<string, any>>
                                                 implements ReactiveObject {
 
     // not ideal, but avoid using mixin...
-    readonly [REACTIVE_NODE] = new ReactiveNodeImpl();
+    readonly [REACTION_NODE] = new ReactionNode();
+    //TODO: factory function (?).
 
     //TODO: provider (?).
     readonly [KEYS]: readonly string[];
@@ -40,7 +41,7 @@ export class PropertiesImpl<T extends Record<string, any>>
         const properties = this[PROPERTIES];
         properties.length = this[KEYS].length;
 
-        const onChange = effect( () => trigger(this) );
+        const onChange = reactionEffect( () => trigger(this) );
 
         for(let i = 0; i < keys.length; ++i) {
 

@@ -1,4 +1,4 @@
-import { ReactiveObject } from "../../Reaction";
+import { ReactiveObject } from "MWL@2026/modules/Reactive/Reaction";
 
 export type ValueProvider<T> = { get(): T; readonly isResolved: boolean };
 export type InferValueType<V extends ValueProvider<any>> = V extends ValueProvider<infer U> ? U : never;

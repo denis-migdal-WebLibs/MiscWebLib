@@ -1,7 +1,7 @@
-import { pauseReactions, resumeReactions } from "MWL@2026/core/Reactive.new/Reaction/@details/API";
 import { Properties } from "../@contrat";
 import { Property } from "MWL@2026/core/Reactive.new/Property/@contract";
 import { PROPERTIES, KEYS } from "./Properties";
+import { pauseReactions, resumeReactions } from "MWL@2026/modules/Reactive/Reaction";
 
 /////
 // Get
