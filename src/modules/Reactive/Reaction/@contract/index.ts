@@ -16,28 +16,28 @@ export interface ReactionServices {
     executePendingReactionEffects(): void;
 }
 
-export interface ReactionDetails<ReactionNodeExtra extends Record<string, any>> {
+export interface ReactionDetails<NodeImpl extends object> {
 
-    ReactiveObject: new() => ReactiveObjectContract<ReactionNodeExtra>;
+    ReactiveObject: new() => ReactiveObjectContract<NodeImpl>;
 
-    requestReaction(target: ReactiveObjectContract<ReactionNodeExtra>,
-                    link ?: LinkContract<ReactionNodeExtra>|null
+    requestReaction(target: ReactiveObjectContract<NodeImpl>,
+                    link ?: LinkContract<NodeImpl>|null
                 ): void;
 
-    pauseReactions(...targets: readonly ReactiveObjectContract<ReactionNodeExtra>[]): void;
+    pauseReactions(...targets: readonly ReactiveObjectContract<NodeImpl>[]): void;
 
-    resumeReactions(...targets: readonly ReactiveObjectContract<ReactionNodeExtra>[]): void;
+    resumeReactions(...targets: readonly ReactiveObjectContract<NodeImpl>[]): void;
 
     addLink(
-            src     : ReactiveObjectContract<ReactionNodeExtra>,
-            dst     : ReactiveObjectContract<ReactionNodeExtra>,
+            src     : ReactiveObjectContract<NodeImpl>,
+            dst     : ReactiveObjectContract<NodeImpl>,
             execute?: ReactionEffect
-        ): LinkContract<ReactionNodeExtra>
+        ): LinkContract<NodeImpl>
 }
 
-export interface ReactionImpl<NodeExtra extends Record<string, any>>
-                    extends ReactionDetails<NodeExtra> {}
+export interface ReactionImpl<NodeImpl extends object>
+                    extends ReactionDetails<NodeImpl> {}
 
-export interface ReactionContract<NodeExtra extends Record<string, any>>
-                    extends ReactionImpl<NodeExtra>,
+export interface ReactionContract<NodeImpl extends object>
+                    extends ReactionImpl<NodeImpl>,
                             ReactionServices {}

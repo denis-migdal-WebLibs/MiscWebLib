@@ -1,8 +1,8 @@
-import { reactionNode } from "../@contract/@types/ctrler";
+import { asImpl, Impl } from "MWL@2026/modules/@types/contracts/Impl";
 import { executePendingReactionEffects } from "../@contract/services";
-import { Link, ReactionNode, ReactiveObject } from "./@types";
+import { Link, reactionNode, ReactionNodeImpl, ReactiveObject } from "./@types";
 
-function isPending(node: ReactionNode) {
+function isPending(node: ReactionNodeImpl) {
     return node.reactionPending && node.pauseDepth === 0;
 }
 
@@ -11,7 +11,7 @@ export class ReactionScheduler {
     schedule(target: ReactiveObject, link: Link|null = null) {
 
         const targetNode       = reactionNode(target);
-        targetNode.pendingLink = link;
+        targetNode.pendingLink = asImpl(link);
 
         if( targetNode.pauseDepth !== 0 ) {
             targetNode.reactionPending = true;
@@ -66,11 +66,11 @@ export class ReactionScheduler {
     }
 
     // storing links is necessary to detect and prevent loops.
-    readonly stack = new Array<Link>();
+    readonly stack = new Array<Impl<Link>>();
 
     protected prepareNode(
-                            target: ReactionNode,
-                            link  : Link|null
+                            target: ReactionNodeImpl,
+                            link  : Impl<Link>|null
                         ) {
 
         const nextLinks = target.outgoingLinks;
@@ -87,7 +87,7 @@ export class ReactionScheduler {
         }
     }
 
-    protected prepass(target: ReactionNode) {
+    protected prepass(target: ReactionNodeImpl) {
 
         this.prepareNode(target, target.pendingLink);
 
@@ -97,7 +97,9 @@ export class ReactionScheduler {
         }
     }
 
-    protected processNode(target: ReactionNode, link: Link|null) {
+    protected processNode(target: ReactionNodeImpl, link: Impl<Link>|null) {
+
+        ++target.version;
 
         const nextLinks = target.outgoingLinks;
         for(let i = nextLinks.length - 1; i >= 0; --i) {
@@ -118,7 +120,7 @@ export class ReactionScheduler {
         }
     }
 
-    protected propagate(target: ReactionNode) {
+    protected propagate(target: ReactionNodeImpl) {
 
         const pendingLink = target.pendingLink;
         if( pendingLink !== null ) {

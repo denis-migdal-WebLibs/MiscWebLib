@@ -1,15 +1,16 @@
+-> Use ctrler for Reaction + method redir.
 -> Remove WithProperties + ObservableProxy
--> Effect => ReactiveEffects
 
-- @types => modules/@types
-- presentation => webui.
-    - widgets
-    - orchestrator (TPEngine)
-    - nav : capabilities or orchestrator ?
-- core => modules + contract.
-- widget/@core => modules + contract.
-- infrastructure => modules/@platform + contract.
-    - scheduling
-    - storage
-    - networking
-- remove @exports
+- Restructure dirs
+    - @types => modules/@types
+    - presentation => webui.
+        - widgets
+        - orchestrator (TPEngine)
+        - nav : capabilities or orchestrator ?
+    - core => modules + contract.
+    - widget/@core => modules + contract.
+    - infrastructure => modules/@platform + contract.
+        - scheduling
+        - storage
+        - networking
+    - remove @exports

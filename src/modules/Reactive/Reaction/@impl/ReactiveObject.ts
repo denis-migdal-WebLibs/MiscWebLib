@@ -1,10 +1,10 @@
 import { REACTION_NODE } from "../@contract/@types/ctrler";
 import type { ReactionDetails, ReactiveObject } from "./@types";
-import { ReactionNode } from "./ReactionNode";
+import { createReactionNode } from "./ReactionNodeImpl";
 
 const ReactiveObject: ReactionDetails["ReactiveObject"]
     = class implements ReactiveObject {
-        readonly [REACTION_NODE]: ReactionNode = new ReactionNode();
+        readonly [REACTION_NODE] = createReactionNode();
     }
 
 export {ReactiveObject};

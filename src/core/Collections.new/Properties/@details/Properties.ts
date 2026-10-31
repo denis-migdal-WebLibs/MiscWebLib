@@ -5,7 +5,7 @@ import { isWritable } from "MWL@2026/core/Reactive.new/Property/@details/Propert
 import { ObservableObject, trigger } from "MWL@2026/modules/Observable";
 import { addLink, reactionEffect, ReactiveObject } from "MWL@2026/modules/Reactive/Reaction";
 import { REACTION_NODE } from "MWL@2026/modules/Reactive/Reaction/@contract/@types/ctrler";
-import { ReactionNode } from "MWL@2026/modules/Reactive/Reaction/@impl/ReactionNode";
+import { createReactionNode } from "MWL@2026/modules/Reactive/Reaction/@impl/ReactionNodeImpl";
 
 export function PropertiesFactoryImpl<
                                     Desc extends PropertiesDescriptors<any>,
@@ -25,7 +25,7 @@ export class PropertiesImpl<T extends Record<string, any>>
                                                 implements ReactiveObject {
 
     // not ideal, but avoid using mixin...
-    readonly [REACTION_NODE] = new ReactionNode();
+    readonly [REACTION_NODE] = createReactionNode();
     //TODO: factory function (?).
 
     //TODO: provider (?).
