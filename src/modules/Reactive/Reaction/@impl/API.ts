@@ -1,11 +1,9 @@
-import { ReactionEffectScheduler } from "./ReactionEffectScheduler";
 import { ReactionScheduler } from "./ReactionScheduler";
 import { Link, ReactionDetails } from "./@types";
 import { NULL_OP } from "MWL@2026/@exports/types";
 import { reactionNode } from "../@contract/@types/ctrler";
 
-const effectScheduler   = new ReactionEffectScheduler();
-const reactiveScheduler = new ReactionScheduler(effectScheduler);
+const reactiveScheduler = new ReactionScheduler();
 
 ////
 // ReactionScheduler
@@ -42,23 +40,6 @@ export const addLink: ReactionDetails["addLink"]
         reactionNode(src).outgoingLinks.push(link);
 
         return link;
-    }
-
-///////
-// ReactionEffect
-//////
-
-
-export const addReactionEffect: ReactionDetails["addReactionEffect"]
-    = function (effect) {
-        effectScheduler.schedule(effect);
-    }
-
-export const reactionEffect: ReactionDetails["reactionEffect"]
-    = function (callback) {
-        return () => {
-            effectScheduler.schedule(callback);
-        }
     }
 
 /*

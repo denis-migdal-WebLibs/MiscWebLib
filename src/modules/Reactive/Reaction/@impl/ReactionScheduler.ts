@@ -1,18 +1,12 @@
 import { reactionNode } from "../@contract/@types/ctrler";
+import { executePendingReactionEffects } from "../@contract/services";
 import { Link, ReactionNode, ReactiveObject } from "./@types";
-import { ReactionEffectScheduler } from "./ReactionEffectScheduler";
 
 function isPending(node: ReactionNode) {
     return node.reactionPending && node.pauseDepth === 0;
 }
 
 export class ReactionScheduler {
-
-    protected readonly effects: ReactionEffectScheduler;
-
-    constructor(effects: ReactionEffectScheduler) {
-        this.effects = effects;
-    }
 
     schedule(target: ReactiveObject, link: Link|null = null) {
 
@@ -27,7 +21,7 @@ export class ReactionScheduler {
         this.prepass  (targetNode);
         this.propagate(targetNode);
         
-        this.effects.execute();
+        executePendingReactionEffects();
     }
 
     flush(...targets: readonly ReactiveObject[]) {
@@ -55,7 +49,7 @@ export class ReactionScheduler {
             this.propagate(node);
         }
 
-        this.effects.execute();
+        executePendingReactionEffects();
     }
 
     pauseReactions(...targets: readonly ReactiveObject[]) {

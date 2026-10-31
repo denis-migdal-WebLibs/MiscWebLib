@@ -1,5 +1,21 @@
 import { LinkContract, ReactionEffect, ReactiveObjectContract } from "./@types/def";
 
+export interface ReactionServices {
+
+    /**
+     * Schedule an effect (executed at the end of the reaction).
+     */
+    addReactionEffect(effect: ReactionEffect): void;
+
+    /**
+     * Transform a callback into a function that will schedule an effect when called.
+     */
+    reactionEffect(callback: () => void): ReactionEffect;
+
+    // internal
+    executePendingReactionEffects(): void;
+}
+
 export interface ReactionDetails<ReactionNodeExtra extends Record<string, any>> {
 
     ReactiveObject: new() => ReactiveObjectContract<ReactionNodeExtra>;
@@ -17,17 +33,11 @@ export interface ReactionDetails<ReactionNodeExtra extends Record<string, any>> 
             dst     : ReactiveObjectContract<ReactionNodeExtra>,
             execute?: ReactionEffect
         ): LinkContract<ReactionNodeExtra>
-
-    /**
-     * Schedule an effect (executed at the end of the reaction).
-     */
-    addReactionEffect(effect: ReactionEffect): void;
-
-    /**
-     * Transform a callback into a function that will schedule an effect when called.
-     */
-    reactionEffect(callback: () => void): ReactionEffect;
 }
 
-export interface ReactionContract<NodeExtra extends Record<string, any>>
+export interface ReactionImpl<NodeExtra extends Record<string, any>>
                     extends ReactionDetails<NodeExtra> {}
+
+export interface ReactionContract<NodeExtra extends Record<string, any>>
+                    extends ReactionImpl<NodeExtra>,
+                            ReactionServices {}
