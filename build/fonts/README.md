@@ -25,8 +25,7 @@ Sources
     - https://fonts.google.com/noto/specimen/Noto+Color+Emoji/glyphs
     - WOFF2: https://github.com/applecuckoo/noto-color-emoji-builds/blob/main/NotoColorEmoji.woff2
 
-
-Possibily used fonts:
+Fonts possibly used:
 // DejaVu Sans Mono
 // FreeSerif
 // Noto Color Emoji

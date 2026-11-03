@@ -1,6 +1,6 @@
 // We need it to be here as it is required by View()
 
-import { InferValueType, Property } from ".";
+import { InferValueType, Property } from "./def";
 
 // Be careful, properties are fixed.
 export type PropertiesRecord<T extends Record<string, Property<any>>> = {

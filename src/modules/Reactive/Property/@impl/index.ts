@@ -10,3 +10,10 @@ export const ValueProperty: ValuePropertyClass = ValuePropertyImpl;
 export type  ValueProperty<T> = ValuePropertyContract<T>;
 
 export {forwardValue, syncValue} from "./@details/Links/ValueLinks";
+
+// ....
+
+import type { Satisfies } from "MWL@2026/modules/@types";
+import { PropertyImpl } from "../@contract/";
+
+declare const _: Satisfies<typeof import("."), PropertyImpl>;

@@ -20,6 +20,7 @@ export interface ReactionDetails<NodeImpl extends object> {
 
     ReactiveObject: new() => ReactiveObjectContract<NodeImpl>;
 
+    //TODO: services (redir API)
     requestReaction(target: ReactiveObjectContract<NodeImpl>,
                     link ?: LinkContract<NodeImpl>|null
                 ): void;
