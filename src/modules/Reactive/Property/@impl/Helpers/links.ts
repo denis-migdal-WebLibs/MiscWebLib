@@ -1,16 +1,13 @@
 import { addLink, requestReaction } from "MWL@2026/modules/Reactive/Reaction";
-import { MutableProperty, ValueProperty, ValueProvider } from "../../@contract";
-import { isValue } from "../Properties/ValueProperty";
+import { MutableProperty, ValueProperty } from "../../@contract/@types/def";
+import { isValue } from "./typeguards";
 
 export function linkValue<T>(src: MutableProperty<T>, dst: ValueProperty<T>) {
-    return addLink(src, dst, () => {
 
-        let srcSource: ValueProvider<T> = src;
-        if( isValue(src) ) // opti
-            srcSource = src.source;
+    if( isValue(src) ) // opti
+        return addLink(src, dst, () => dst._setSource( src.source ) );
 
-        dst._setSource( srcSource )
-    });
+    return addLink(src, dst, () => dst._setSource( src ) );
 }
 
 export function forwardValue<T>(
@@ -19,7 +16,6 @@ export function forwardValue<T>(
                             ) {
 
     const link = linkValue(src, dst);
-
     requestReaction(dst, link);
 }
 

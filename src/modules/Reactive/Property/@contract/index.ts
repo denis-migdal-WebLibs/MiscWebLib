@@ -1,13 +1,38 @@
+import { Link } from "MWL@2026/modules/Reactive/Reaction";
+import { ImmutableProperty, ImmutablePropertyClass, MutableProperty, Property, ValueProperty, ValuePropertyClass, ComputedPropertyClass, WritableProperty } from "./@types/def";
+import { InferValues, PropertiesRecordClass } from "./@types/PropertiesRecord";
+import { WithProperties } from "./@types/WithProperties";
+
 export interface PropertyDetails {
 
-    ValueProperty    : new() => {};
-    ImmutableProperty: new() => {};
+    // Properties
+    ImmutableProperty: ImmutablePropertyClass;
+    ValueProperty    : ValuePropertyClass;
+    ComputedProperty : ComputedPropertyClass;
 
-    PropertiesRecord: new() => {};
+    // properties record
+    PropertiesRecord : PropertiesRecordClass;
 
-    //TODO: services (redir API)
-    forwardValue(): void;
-    syncValue   (): void;
+    updateProperties<T extends Record<string, Property<any>>>(
+            target: WithProperties<T>,
+            values: Partial<Readonly<InferValues<NoInfer<T>>>>
+        ): void;
+
+    // factories
+    Value   <T>(defVal: T): () => ValueProperty<T>;
+    Constant<T>(value : T): () => ImmutableProperty<T>;
+    Fixed   <T>(defVal: T): (initialValue?: T) => ImmutableProperty<T>;
+
+    // type guards
+    isWritable<T>(obj: Property<T>): obj is WritableProperty<T>;
+    isValue   <T>(obj: Property<T>): obj is ValueProperty<T>;
+
+    // links
+    // Currently, we can't recognize a Mutable from an Immutable property.
+    // Therefore an isMutable() isn't currently possible.
+    linkValue   <T>(src: MutableProperty<T>, dst: ValueProperty<T>): Link;
+    forwardValue<T>(src: MutableProperty<T>, dst: ValueProperty<T>): void;
+    syncValue   <T>(src: ValueProperty<T>  , dst: ValueProperty<T>): void;
 }
 
 export interface PropertyImpl extends PropertyDetails {}

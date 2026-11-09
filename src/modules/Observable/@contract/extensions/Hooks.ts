@@ -1,4 +1,4 @@
-import { Extensions } from "..";
+import type { Extensions } from "..";
 import { Hook, ObservationControllerClass, HookFactory } from "../@types/def";
 import { OBS_CTRLER } from "../@types/ctrler";
 

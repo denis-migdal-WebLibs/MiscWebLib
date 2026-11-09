@@ -1,4 +1,4 @@
-import { ObservableServices } from "..";
+import type { ObservableServices } from "..";
 import { obsCtrler } from "../@types/ctrler";
 
 export const clear: ObservableServices["clear"]

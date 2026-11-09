@@ -2,6 +2,8 @@ import { ReactionScheduler } from "./ReactionScheduler";
 import { Link, ReactionDetails } from "./@types";
 import { NULL_OP } from "MWL@2026/@exports/types";
 import { reactionNode } from "../@contract/@types/ctrler";
+import { reactionEffect } from "../@contract/services";
+import { createReactionNode } from "./ReactionNodeImpl";
 
 const reactiveScheduler = new ReactionScheduler();
 
@@ -31,33 +33,29 @@ export const resumeReactions: ReactionDetails["resumeReactions"]
 export const addLink: ReactionDetails["addLink"]
     = function(src, dst, execute = NULL_OP) {
 
+        const srcNode = reactionNode(src);
+
         const link: Link = {
-            src    : reactionNode(src),
+            src    : srcNode,
             dst    : reactionNode(dst),
             execute
         }
 
-        reactionNode(src).outgoingLinks.push(link);
+        srcNode.outgoingLinks.push(link);
 
         return link;
     }
 
-/*
+export const attachReactionEffect: ReactionDetails["attachReactionEffect"]
+    = function(target , callback) {
 
-////
-// Testing
-////
+        const srcNode = reactionNode(target);
 
-export function addReactiveEffect(
-                                    target: ReactiveObject,
-                                    effect: () => void
-                                ) {
+        const link: Link = {
+            src    : srcNode,
+            dst    : createReactionNode(),
+            execute: reactionEffect(callback)
+        }
 
-    const fakeObj = new ReactiveObjectImpl();
-
-    return addLink(    target,
-                fakeObj,
-                () => scheduleEffect(effect)
-            );
-}
-*/
+        srcNode.outgoingLinks.push(link);
+    }

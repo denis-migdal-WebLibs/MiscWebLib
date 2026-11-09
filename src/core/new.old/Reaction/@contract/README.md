@@ -1,4 +1,0 @@
-- Node.onPropagate(link) => what to do upon propagation
-    - can schedule effect.
-    - function should be on ReactiveObject to be able to use protected properties.
-- several inputs => several ReactiveNode.

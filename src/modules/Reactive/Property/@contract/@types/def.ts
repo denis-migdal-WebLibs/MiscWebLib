@@ -30,10 +30,13 @@ export type ValuePropertyClass = {
 }
 
 // View
-export type ViewProperty<T> = MutableProperty<T>
+export type ComputedProperty<T> = MutableProperty<T>
     & {
     }
 
-export type ViewPropertyClass = {
-    new <T>(): ViewProperty<T>
+export type ComputedPropertyClass = {
+    new <T>(
+        dependencies: readonly ReactiveObject[],
+        compute     : () => T
+    ): ComputedProperty<T>
 }

@@ -1,4 +1,4 @@
-import { Extensions } from "..";
+import type { Extensions } from "..";
 import { OBS_CTRLER } from "../@types/ctrler";
 import { ObservableCtx } from "../@types/def";
 

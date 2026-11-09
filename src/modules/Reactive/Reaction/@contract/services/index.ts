@@ -1,4 +1,4 @@
-import { ReactionServices } from "..";
+import type { ReactionServices } from "..";
 import { ReactionEffectScheduler } from "./ReactionEffectScheduler";
 
 const effectScheduler = new ReactionEffectScheduler();
@@ -8,7 +8,7 @@ export const executePendingReactionEffects: ReactionServices["executePendingReac
         effectScheduler.execute();
     }
 
-export const addReactionEffect: ReactionServices["addReactionEffect"]
+export const scheduleReactionEffect: ReactionServices["scheduleReactionEffect"]
     = function (effect) {
         effectScheduler.schedule(effect);
     }

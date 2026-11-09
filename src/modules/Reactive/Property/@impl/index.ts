@@ -1,17 +1,15 @@
-import { ImmutablePropertyClass, ValuePropertyClass } from "./@contract";
-import { ImmutablePropertyImpl } from "./@details/Properties/ImmutableProperty";
-import { ValuePropertyImpl } from "./@details/Properties/ValueProperty";
+export {ImmutableProperty} from "./Properties/ImmutableProperty";
+export {ValueProperty    } from "./Properties/ValueProperty";
+export {ComputedProperty } from "./Properties/ComputedProperty";
 
-import { ValueProperty as ValuePropertyContract} from "./@contract";
+export {PropertiesRecord}  from "./PropertiesRecord";
+export {updateProperties}  from "./Helpers/WithProperties";
 
-export const ImmutableProperty: ImmutablePropertyClass = ImmutablePropertyImpl;
+export * from "./Helpers/Factories";
+export * from "./Helpers/typeguards";
+export * from "./Helpers/links";
 
-export const ValueProperty: ValuePropertyClass = ValuePropertyImpl;
-export type  ValueProperty<T> = ValuePropertyContract<T>;
-
-export {forwardValue, syncValue} from "./@details/Links/ValueLinks";
-
-// ....
+//=====
 
 import type { Satisfies } from "MWL@2026/modules/@types";
 import { PropertyImpl } from "../@contract/";

@@ -1,9 +1,11 @@
 import { NO_VALUE } from "MWL@2026/core/types";
-import { Property, ValueProperty, ValueProvider, WritableProperty } from "../../@contract";
 import { ReactiveObject, requestReaction } from "MWL@2026/modules/Reactive/Reaction";
+import { PropertyDetails } from "../../@contract";
+import type {ValueProperty, ValueProvider} from "../../@contract/@types/def";
 
-export class ValuePropertyImpl<T> extends ReactiveObject
-                               implements ValueProperty<T> {
+const ValueProperty: PropertyDetails["ValueProperty"]
+    = class <T> extends ReactiveObject
+             implements ValueProperty<T> {
 
     protected value: T;
     protected selfSource: ValueProvider<T> = {
@@ -41,14 +43,4 @@ export class ValuePropertyImpl<T> extends ReactiveObject
     }
 }
 
-export function Value<T>(defVal: T) {
-    return (defaultVal = defVal) => new ValuePropertyImpl(defaultVal);
-}
-
-export function isWritable<T>(obj: Property<T>): obj is WritableProperty<T> {
-    return "set" in obj;
-}
-
-export function isValue(obj: {}): obj is ValueProperty<any> {
-    return obj instanceof ValuePropertyImpl;
-}
+export {ValueProperty};

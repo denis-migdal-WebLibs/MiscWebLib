@@ -5,7 +5,7 @@ export interface ReactionServices {
     /**
      * Schedule an effect (executed at the end of the reaction).
      */
-    addReactionEffect(effect: ReactionEffect): void;
+    scheduleReactionEffect(effect: ReactionEffect): void;
 
     /**
      * Transform a callback into a function that will schedule an effect when called.
@@ -32,8 +32,13 @@ export interface ReactionDetails<NodeImpl extends object> {
     addLink(
             src     : ReactiveObjectContract<NodeImpl>,
             dst     : ReactiveObjectContract<NodeImpl>,
-            execute?: ReactionEffect
+            execute?: ReactionEffect,
         ): LinkContract<NodeImpl>
+
+    attachReactionEffect(
+                target  : ReactiveObjectContract<NodeImpl>,
+                callback: ReactionEffect
+            ): void;
 }
 
 export interface ReactionImpl<NodeImpl extends object>

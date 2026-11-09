@@ -1,33 +1,38 @@
 import { NULL_OBJ } from "MWL@2026/core/types";
-import { Property } from "../@contract";
-import { InferValues, PropertiesDescriptors, PropertiesRecord } from "../@contract/PropertiesRecord";
+import { Property } from "../@contract/@types/def";
+import { InferValues, PropertiesDescriptors, PropertiesRecord } from "../@contract/@types/PropertiesRecord";
 
-export class PropertiesRecordImpl<T extends Record<string, Property<any>>>
-                                            implements PropertiesRecord<T> {
+const PropertiesRecord = 
+    class <T extends Record<string, Property<any>>>
+          implements PropertiesRecord<T> {
 
-    readonly names     : readonly (keyof T)[];
-    readonly properties: readonly T[keyof T][];
+    readonly keys      : readonly string[];
+    readonly properties: readonly Property<unknown>[];
 
     readonly descriptors  : PropertiesDescriptors<T>;
-    readonly initialValues: Partial<InferValues<T>>;
+    readonly initialValues: Partial<Readonly<InferValues<T>>>;
 
     constructor(
                     descriptors: PropertiesDescriptors<T>,
-                    initialValues: Partial<InferValues<NoInfer<T>>> = NULL_OBJ
+                    initialValues: Partial<Readonly<InferValues<NoInfer<T>>>> = NULL_OBJ
                 ) {
 
         this.descriptors   = descriptors;
         this.initialValues = initialValues;
 
-        const keys = this.names = Object.keys(descriptors);
+        const keys = this.keys = Object.keys(descriptors);
         this.properties = new Array(keys.length);
 
         for(let i = 0; i < keys.length; ++i)
             this.ensureByIdx(i);
     }
 
-    get<K extends keyof T>(name: K): T[K] {
-        return this.properties[this.names.indexOf(name)] as T[K];
+    get<K extends Extract<keyof T, string>>(name: K): T[K] {
+        return this.getByIdx(this.keys.indexOf(name));
+    }
+
+    getByIdx<V extends T[keyof T]>(idx: number): V {
+        return this.properties[idx] as V;
     }
 
     protected ensureByIdx(idx: number) {
@@ -35,20 +40,21 @@ export class PropertiesRecordImpl<T extends Record<string, Property<any>>>
         if( this.properties[idx] !== undefined)
             return;
 
-        const name = this.names[idx];
+        const name = this.keys[idx];
         const property = this.descriptors[name].call(
                                             this,     
                                             this.initialValues[name]
                                         );
-        // @ts-expect-error
-        this.properties[i] = property;
+        // @ts-ignore
+        this.properties[idx] = property;
     }
-    resolve<K extends keyof T>(name: K): T[K] {
+    resolve<K extends Extract<keyof T, string>>(name: K): T[K] {
 
-        const idx = this.names.indexOf(name);
+        const idx = this.keys.indexOf(name);
 
         this.ensureByIdx(idx);
-
-        return this.properties[idx] as T[K];
+        return this.getByIdx(idx);
     }
 }
+
+export {PropertiesRecord};

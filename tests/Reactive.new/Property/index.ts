@@ -1,9 +1,11 @@
 import "@config";
 
 import { assertEquals } from "std/assert/equals";
-import { forwardValue, ImmutableProperty, ValueProperty } from "MWL@2026/core/Reactive.new/Property";
-import { addReactiveEffect } from "MWL@2026/core/Reactive.new/Reaction";
-import { syncValue } from "MWL@2026/core/Reactive.new/Property/@details/Links/ValueLinks.ts";
+import { forwardValue, syncValue, ImmutableProperty, ValueProperty } from "MWL@2026/modules/Reactive/Property";
+import { attachReactionEffect } from "MWL@2026/modules/Reactive/Reaction";
+
+//TODO: bug
+import { ValueProperty as ValuePropertyType } from "MWL@2026/modules/Reactive/Property/@contract/@types/def";
 
 Deno.test("Get", () => {
     const property = new ImmutableProperty(42);
@@ -22,7 +24,7 @@ Deno.test("Set notify", () => {
     const property = new ValueProperty(42);
 
     let count = 0;
-    addReactiveEffect(property, () => ++count);
+    attachReactionEffect(property, () => ++count);
 
     property.set(34);
 
@@ -33,7 +35,7 @@ Deno.test("Set x2 notify x1", () => {
     const property = new ValueProperty(42);
 
     let count = 0;
-    addReactiveEffect(property, () => ++count);
+    attachReactionEffect(property, () => ++count);
 
     property.set(34);
     property.set(34);
@@ -46,7 +48,7 @@ Deno.test("Set x2 notify x2", () => {
     const property = new ValueProperty(0);
 
     let count = 0;
-    addReactiveEffect(property, () => ++count);
+    attachReactionEffect(property, () => ++count);
 
     property.set(42);
     property.set(43);
@@ -99,7 +101,7 @@ Deno.test("Sync", () => {
 
 Deno.test("Bind xN", () => {
 
-    const array = new Array<ValueProperty<number>>(10);
+    const array = new Array<ValuePropertyType<number>>(10);
     for(let i = 0; i < array.length; ++i)
         array[i] = new ValueProperty(i);
 
@@ -128,7 +130,7 @@ Deno.test("Bind notify x2", () => {
     syncValue(A, B);
 
     let count = 0;
-    addReactiveEffect(A, () => ++count );
+    attachReactionEffect(A, () => ++count );
 
     A.set(2);
     B.set(3);
