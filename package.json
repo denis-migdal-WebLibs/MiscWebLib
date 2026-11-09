@@ -11,6 +11,7 @@
         "url": "git+[PROJECT_REPOSITORY]"
     },
     "scripts": {
+        "watch-types": "npx tsc --noEmit --watch",
         "build": "clear ; webpack --no-watch --mode=development",
         "watch": "clear ; webpack --watch    --mode=development",
         "build-prod": "clear ; webpack --no-watch --mode=production",
