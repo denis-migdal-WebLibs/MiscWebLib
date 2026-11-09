@@ -21,16 +21,17 @@
         "jszip": "^3.10.1"
     },
     "devDependencies": {
-        "@swc/core": "^1.15.18",
+        "@swc/core": "^1.16.22",
         "bundle-declarations-webpack-plugin": "^6.0.0",
         "copy-webpack-plugin": "^14.0.0",
         "css-loader": "^7.1.2",
         "fork-ts-checker-notifier-webpack-plugin": "^9.0.0",
-        "fork-ts-checker-webpack-plugin": "^9.0.2",
+        "fork-ts-checker-webpack-plugin": "^9.1.0",
         "glob": "^13.0.6",
         "mini-css-extract-plugin": "^2.9.0",
-        "swc-loader": "^0.2.6",
-        "webpack": "^5.106.2",
-        "webpack-cli": "^7.0.2"
+        "swc-loader": "^0.2.7",
+        "typescript": "^7.0.2",
+        "webpack": "^5.112.2",
+        "webpack-cli": "^7.3.1"
     }
 }

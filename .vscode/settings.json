@@ -1,7 +1,12 @@
 {
+    
+
     "liveServer.settings.port": 5500,
     "liveServer.settings.root": "/dist/dev/",
 
     "deno.enable"     : true,
-    "deno.enablePaths": ["./tests"],
+    "deno.enablePaths": [
+        "./tests"
+    ],
+    "js/ts.tsdk.path": "node_modules/typescript",
 }
