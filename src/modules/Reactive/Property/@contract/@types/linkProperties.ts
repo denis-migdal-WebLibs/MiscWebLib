@@ -10,7 +10,7 @@ type FMAP<T extends Record<string, any>, U extends Record<string, any>> = {
 }[keyof T];
 
 type CompatibleKeys<T, U extends Record<string, any>> = {
-  [K in keyof U]: T extends U[K] ? U[K] extends T ? K
+  [K in keyof U]: [T] extends [U[K]] ? [U[K]] extends [T] ? K
                                                   : never
                                  : never;
 }[keyof U];
