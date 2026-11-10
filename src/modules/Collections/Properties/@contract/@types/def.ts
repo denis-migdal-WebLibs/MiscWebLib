@@ -9,3 +9,7 @@ export type PropertiesProxy<T extends Record<string, Property<any>>>
 
 export type Properties<T extends Record<string, any>>
     = WithProperties<PropertiesFor<T>> & T & ObservableObject;
+
+export type PropertiesCstr<T extends Record<string, any>> = {
+        new(initialValues?: Partial<T>): Properties<T>;
+    }
