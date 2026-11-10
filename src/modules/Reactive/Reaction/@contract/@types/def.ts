@@ -15,10 +15,12 @@ export type LinkContract<NodeImpl extends object> = {
     readonly src : ReactionNodeContract<NodeImpl>;
     readonly dst : ReactionNodeContract<NodeImpl>;
     readonly execute: () => void;
+    readonly remove : () => void;
 } & WithImpl<{
     readonly src : NodeImpl;
     readonly dst : NodeImpl;
     readonly execute: () => void;
+    readonly remove : () => void;
 }>;
 
 export type ReactionNodeContract<NodeImpl extends object>

@@ -35,6 +35,7 @@ export interface ReactionDetails<NodeImpl extends object> {
             src     : ReactiveObjectContract<NodeImpl>,
             dst     : ReactiveObjectContract<NodeImpl>,
             execute?: ReactionEffect,
+            remove ?: (this: LinkContract<NodeImpl>) => void
         ): LinkContract<NodeImpl>
 
     attachReactionEffect(
