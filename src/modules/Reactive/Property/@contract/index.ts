@@ -14,6 +14,14 @@ export interface PropertyDetails {
     // properties record
     PropertiesRecord : PropertiesRecordClass;
 
+    getProperty<
+                    T extends Record<string, Property<any>>,
+                    K extends Extract<keyof T, string>
+                >(
+            target: WithProperties<T>,
+            key   : K
+        ): T[K];
+
     getProperties<T extends Record<string, Property<any>>>(
             target: WithProperties<T>,
         ): ReadonlyArray<Property<unknown>>;
