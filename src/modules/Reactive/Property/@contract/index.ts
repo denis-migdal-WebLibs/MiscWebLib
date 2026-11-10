@@ -36,6 +36,13 @@ export interface PropertyDetails {
                         mappings: ForwardMap<NoInfer<T>,NoInfer<U>>
                         // ^ required to prevent bad surprises.
                     ): void;
+
+    /**
+     * Dangerous.
+     */
+    forwardAllProperties<T extends Record<string, Property<any>>>(
+                        src: WithProperties<T>, dst: WithProperties<T>,
+                    ): void;
     
     syncProperties<
                         T extends Record<string, Property<any>>,
