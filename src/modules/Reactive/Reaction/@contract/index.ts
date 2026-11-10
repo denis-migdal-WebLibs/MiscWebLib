@@ -2,6 +2,8 @@ import { LinkContract, ReactionEffect, ReactiveObjectContract } from "./@types/d
 
 export interface ReactionServices {
 
+    getVersion(target: ReactiveObjectContract<any>): number;
+
     /**
      * Schedule an effect (executed at the end of the reaction).
      */

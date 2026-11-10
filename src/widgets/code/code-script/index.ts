@@ -1,11 +1,11 @@
 import { defineWidget, Coordinator, View } from "MWL@2026/@exports/Widget";
-import { WithProperties } from "MWL@2026/@exports/Reactive/PropertySystem";
-import { Fixed } from "MWL@2026/@exports/Reactive/PropertySystem/controllers";
+import { Properties } from "MWL@2026/modules/Collections/Properties";
+import { Fixed } from "MWL@2026/modules/Reactive/Property/";
 import { hl } from "../@core/hl";
 
 const ScriptWidget = defineWidget(
     "code-script",
-    Coordinator(WithProperties({
+    Coordinator(Properties({
             // we assume that the script content should not be modified.
             text: Fixed(""),
             lang: Fixed("text"),

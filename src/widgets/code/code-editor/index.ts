@@ -1,5 +1,5 @@
 import { defineWidget, Coordinator, View } from "MWL@2026/@exports/Widget";
-import { updateProperties } from "MWL@2026/@exports/Reactive/PropertySystem";
+import { updateProperties } from "MWL@2026/modules/Reactive/Property";
 import {on, UNDO, REDO, NEWLINE, TAB, connectEvents} from "MWL@2026/@exports/browser/UiEvents";
 import { deferredCallback } from "MWL@2026/@exports/browser/scheduler";
 
@@ -23,14 +23,14 @@ const CodeEditorWidget = defineWidget("code-editor",
 
                 const output = this.elements.output;
                 const input  = new Input(output, (text: string) => {
-                    return hl(text, controller.properties.lang);
+                    return hl(text, controller.lang);
                 });
 
                 // even if the text/pos didn't changed, we need to
                 // re-render the text to properly highlight it.
                 listen(controller, deferredCallback(this.renderer, () => {
-                    input.text = controller.properties.text;
-                    input.pos  = controller.properties.pos;
+                    input.text = controller.text;
+                    input.pos  = controller.pos;
                     input.push();
                 }))
 

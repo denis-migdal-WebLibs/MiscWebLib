@@ -21,7 +21,9 @@ export type LinkContract<NodeImpl extends object> = {
     readonly execute: () => void;
 }>;
 
-export type ReactionNodeContract<NodeImpl extends object> = WithImpl<NodeImpl>;
+export type ReactionNodeContract<NodeImpl extends object>
+    = {readonly version: number}
+    & WithImpl<NodeImpl>;
 
 export type ReactiveObjectContract<NodeImpl extends object> = {
     readonly [REACTION_NODE]: ReactionNodeContract<NodeImpl>;

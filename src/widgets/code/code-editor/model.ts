@@ -1,6 +1,6 @@
 import StateHistory from "./StateHistory";
-import { updateProperties, WithProperties } from "MWL@2026/@exports/Reactive/PropertySystem";
-import { Value } from "MWL@2026/@exports/Reactive/PropertySystem/controllers";
+import { Properties } from "MWL@2026/modules/Collections/Properties";
+import { Value, updateProperties } from "MWL@2026/modules/Reactive/Property/";
 import { observe } from "MWL@2026/modules/Observable";
 
 export type InputState = {
@@ -9,7 +9,7 @@ export type InputState = {
 };
 
 //TODO: use Model()
-const Base = WithProperties({
+const Base = Properties({
                                 lang: Value<string|null>(null),
                                 text: Value(""),
                                 pos : Value<number|null>(null),
@@ -24,8 +24,8 @@ export class CodeEditor extends Base {
 
         observe(this, () => {
 
-            const text = this.properties.text;
-            const pos  = this.properties.pos;
+            const text = this.text;
+            const pos  = this.pos;
 
             if( this.history.hasState) {
                 // do not push a state identical to the current one.
@@ -41,10 +41,10 @@ export class CodeEditor extends Base {
 
     undo() {
         this.history.prev();
-        updateProperties<CodeEditor>(this, this.history.currentState);
+        updateProperties(this, this.history.currentState);
     }
     redo() {
         this.history.next();
-        updateProperties<CodeEditor>(this, this.history.currentState);
+        updateProperties(this, this.history.currentState);
     }
 }

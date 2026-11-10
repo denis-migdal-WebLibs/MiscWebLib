@@ -2,11 +2,15 @@
     "extends": "./build/WebpackFramework/files/tsconfig.json",
 
     "include": ["./src"],
+    "exclude": [
+        "**/*.old"
+    ],
 
     "compilerOptions": {
 
         "rootDir": "./src",
-        "outDir": "./build/TS",
+        "outDir": "./build/cache/TS",
+        "tsBuildInfoFile": "./build/cache/TS/tsconfig.tsbuildinfo",
 
         "paths": {
             "MWL@2026/*"    : ["./src/*"],

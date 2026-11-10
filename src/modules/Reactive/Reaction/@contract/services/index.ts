@@ -1,7 +1,13 @@
 import type { ReactionServices } from "..";
+import { reactionNode } from "../@types/ctrler";
 import { ReactionEffectScheduler } from "./ReactionEffectScheduler";
 
 const effectScheduler = new ReactionEffectScheduler();
+
+export const getVersion: ReactionServices["getVersion"]
+    = function (target) {
+        return reactionNode(target).version;
+    }
 
 export const executePendingReactionEffects: ReactionServices["executePendingReactionEffects"]
     = function () {

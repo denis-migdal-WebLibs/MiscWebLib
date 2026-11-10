@@ -3,8 +3,8 @@ export {ValueProperty    } from "./Properties/ValueProperty";
 export {ComputedProperty } from "./Properties/ComputedProperty";
 
 export {PropertiesRecord}  from "./PropertiesRecord";
-export {updateProperties}  from "./Helpers/WithProperties";
 
+export * from "./Helpers/WithProperties";
 export * from "./Helpers/Factories";
 export * from "./Helpers/typeguards";
 export * from "./Helpers/links";

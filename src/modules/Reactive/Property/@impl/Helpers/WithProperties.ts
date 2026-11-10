@@ -29,3 +29,13 @@ export const updateProperties: PropertyDetails["updateProperties"]
 
         resumeReactions(...record.properties);
     };
+
+export const getProperties: PropertyDetails["getProperties"]
+    = function (target) {
+        return target[PROPERTIES].properties;
+    }
+
+export const getPropertiesKeys : PropertyDetails["getPropertiesKeys"]
+    = function (target) {
+        return target[PROPERTIES].keys;
+    }

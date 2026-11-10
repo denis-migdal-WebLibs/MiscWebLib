@@ -18,6 +18,14 @@ export interface PropertyDetails {
             values: Partial<Readonly<InferValues<NoInfer<T>>>>
         ): void;
 
+    getProperties<T extends Record<string, Property<any>>>(
+            target: WithProperties<T>,
+        ): ReadonlyArray<Property<unknown>>;
+
+    getPropertiesKeys<T extends Record<string, Property<any>>>(
+            target: WithProperties<T>,
+        ): ReadonlyArray<string>;
+
     // factories
     Value   <T>(defVal: T): () => ValueProperty<T>;
     Constant<T>(value : T): () => ImmutableProperty<T>;

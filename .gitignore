@@ -1,4 +1,4 @@
-build/TS
+build/cache
 build/fonts/generated/
 node_modules/
 package-lock.json
