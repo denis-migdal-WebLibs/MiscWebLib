@@ -40,14 +40,16 @@ export type InferValues<T extends Record<string, Property<any>>> = {
     [K in keyof T]: InferValueType<T[K]>;
 }
 */
-export type InferValues<T extends Record<string, Property<any>>> = {
+export type InferRWValues<T extends Record<string, Property<any>>> = {
     [K in keyof T as T[K] extends ValueProperty<any>
                             ? K
                             : never
                     ]: InferValueType<T[K]>;
-} & {
-    readonly [K in keyof T]: InferValueType<T[K]>;
-};
+}
+
+export type InferValues<T extends Record<string, Property<any>>>
+    = InferRWValues<T>
+    & { readonly [K in keyof T]: InferValueType<T[K]>; };
 
 // From Record<string, any>
 

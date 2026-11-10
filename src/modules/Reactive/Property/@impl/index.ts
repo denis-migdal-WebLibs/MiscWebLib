@@ -8,6 +8,7 @@ export * from "./Helpers/WithProperties";
 export * from "./Helpers/Factories";
 export * from "./Helpers/typeguards";
 export * from "./Helpers/links";
+export * from "./Helpers/linkProperties";
 
 //=====
 
