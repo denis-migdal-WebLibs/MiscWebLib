@@ -5,13 +5,14 @@ import { Renderer } from "./Renderer";
 import { WithProperties } from "../../Property/@contract/@types/WithProperties";
 import { getProperties, getPropertiesKeys } from "../../Property/@impl/Helpers/WithProperties";
 import { getVersion } from "../../Reaction";
+import { InferValues } from "../../Property/@contract/@types/PropertiesRecord";
 
 // 1. get nodes => get versions.
 // 2. store versions... (flip ?).
 
 const PropertiesRenderer: PropertiesRendererDetails["PropertiesRenderer"]
     = class <T extends Record<string, Property<any>>>
-                                implements PropertiesRenderer<T> {
+                                implements PropertiesRenderer<InferValues<T>> {
 
         readonly renderer = new Renderer();
         readonly changed      = new Array<boolean>();
