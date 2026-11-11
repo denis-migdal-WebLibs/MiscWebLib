@@ -35,6 +35,11 @@ export interface PropertyDetails {
             values: Partial<Readonly<InferValues<NoInfer<T>>>>
         ): void;
 
+    resetProperties<T extends Record<string, Property<any>>>(
+            target: WithProperties<T>,
+            values: Partial<Readonly<InferValues<NoInfer<T>>>>
+        ): void;
+
     forwardProperties<
                         T extends Record<string, Property<any>>,
                         U extends Record<string, Property<any>>

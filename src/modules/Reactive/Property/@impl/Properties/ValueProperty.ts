@@ -8,18 +8,19 @@ const ValueProperty: PropertyDetails["ValueProperty"]
              implements ValueProperty<T> {
 
     protected value: T;
+    protected initialValue: T;
+
     protected selfSource: ValueProvider<T> = {
                         get: () => this.value,
                         isResolved: true
                     };
+    source = this.selfSource;
 
     constructor(initialValue: T) {
         super();
-        this.value = initialValue;
+        this.value = this.initialValue = initialValue;
     }
 
-    source = this.selfSource;
-    get() { return this.source.get(); }
     set(value: T) {
 
         // should not cause issues (I guess ?).
@@ -32,9 +33,10 @@ const ValueProperty: PropertyDetails["ValueProperty"]
         requestReaction(this);
     }
 
-    get isResolved() {
-        return this.source.isResolved === true;
-    }
+    get  () { return this.source.get(); }
+    reset() { this.set(this.initialValue); }
+
+    get isResolved() { return this.source.isResolved === true; }
 
     // internal: used by Links...
     _setSource(source: ValueProvider<T>) {

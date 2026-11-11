@@ -14,6 +14,7 @@ export type ImmutablePropertyClass = {
 export type MutableProperty<T> = Property<T>;
 export type WritableProperty<T> = MutableProperty<T> & {
     set(value: T): void;
+    reset(): void;
 }
 
 // Value
