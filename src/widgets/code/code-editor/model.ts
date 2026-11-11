@@ -1,7 +1,8 @@
 import StateHistory from "./StateHistory";
-import { Properties } from "MWL@2026/modules/Collections/Properties";
+import { Properties } from "MWL@2026/modules/Reactive/Collections/Properties";
 import { Value, updateProperties } from "MWL@2026/modules/Reactive/Property/";
 import { observe } from "MWL@2026/modules/Observable";
+import { observifyReactiveObject } from "MWL@2026/modules/Observable/Observify";
 
 export type InputState = {
     text: string,
@@ -22,6 +23,13 @@ export class CodeEditor extends Base {
     constructor(...args: ConstructorParameters<typeof Base>) {
         super(...args);
 
+        this.initHistory();
+    }
+
+    // TODO: as function ?
+    protected initHistory() {
+
+        observifyReactiveObject(this);
         observe(this, () => {
 
             const text = this.text;

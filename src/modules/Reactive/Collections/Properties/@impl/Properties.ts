@@ -3,7 +3,7 @@ import { PropertiesDetails } from "../@contract";
 import { PropertiesProxy } from "./PropertiesProxy";
 import { Property } from "MWL@2026/modules/Reactive/Property/@contract/@types/def";
 import { InferValues, PropertiesDescriptors } from "MWL@2026/modules/Reactive/Property/@contract/@types/PropertiesRecord";
-import {Properties} from "MWL@2026/modules/Collections/Properties/@contract/@types/def";
+import {Properties} from "../@contract/@types/def";
 
 export const properties: PropertiesDetails["properties"]
     = function (desc, initVals) {

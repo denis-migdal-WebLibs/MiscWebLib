@@ -1,5 +1,5 @@
 import { defineWidget, Coordinator, View } from "MWL@2026/@exports/Widget";
-import { Properties } from "MWL@2026/modules/Collections/Properties";
+import { Properties } from "MWL@2026/modules/Reactive/Collections/Properties";
 import { Fixed } from "MWL@2026/modules/Reactive/Property/";
 import { hl } from "../@core/hl";
 

@@ -1,14 +1,13 @@
 import { isWritable } from "MWL@2026/modules/Reactive/Property";
 import { PropertiesProxy} from "../@contract/@types/def";
-import { ObservableObject, trigger } from "MWL@2026/modules/Observable";
-import { addLink, reactionEffect, ReactiveObject } from "MWL@2026/modules/Reactive/Reaction";
+import { addLink, ReactiveObject } from "MWL@2026/modules/Reactive/Reaction";
 import { PropertiesRecord } from "MWL@2026/modules/Reactive/Property/@contract/@types/PropertiesRecord";
 import { Property } from "MWL@2026/modules/Reactive/Property/@contract/@types/def";
 import { PROPERTIES } from "MWL@2026/modules/Reactive/Property/@contract/@types/WithProperties";
 
 const PropertiesProxy
     = class <T extends Record<string, Property<any>>>
-                                                extends ObservableObject {
+                                                extends ReactiveObject {
 
         readonly [PROPERTIES]: PropertiesRecord<T>;
 
@@ -17,17 +16,12 @@ const PropertiesProxy
 
             this[PROPERTIES] = propertiesRecord;
 
-            const onChange       = reactionEffect( () => trigger(this) );
-            const reactiveTarget = new ReactiveObject();
-
             const keys = propertiesRecord.keys;
             for(let i = 0; i < keys.length; ++i) {
-
-                const property = propertiesRecord.resolve(keys[i] as any);
-                addLink(property, reactiveTarget, onChange);
-
                 Object.defineProperty(this, keys[i], getPropertyDescriptor(i));
             }
+
+            addLink(propertiesRecord, this);
         }
     }
 

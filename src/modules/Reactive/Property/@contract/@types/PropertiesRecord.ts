@@ -1,11 +1,14 @@
 // We need it to be in Reactive/Property as it is required by View()
 
+import { ReactiveObject } from "MWL@2026/modules/Reactive/Reaction";
 import { InferValueType, Property, ValueProperty } from "./def";
 
 const T = Symbol();
 
 // Be careful, properties are fixed.
-export type PropertiesRecord<out T extends Record<string, Property<any>>> = {
+export type PropertiesRecord<T extends Record<string, Property<any>>>
+    = ReactiveObject & PropertiesRecordProps<T>;
+export type PropertiesRecordProps<T extends Record<string, Property<any>>> = {
 
     get    <K extends Extract<keyof T, string>>(name: K): T[K];
     resolve<K extends Extract<keyof T, string>>(name: K): T[K];
@@ -20,7 +23,7 @@ export type PropertiesRecord<out T extends Record<string, Property<any>>> = {
     // opti shortcuts
     readonly keys      : readonly string[];
     readonly properties: readonly Property<unknown>[];
-}
+};
 
 export type PropertiesRecordClass = {
     new<T extends Record<string, Property<any>>>(

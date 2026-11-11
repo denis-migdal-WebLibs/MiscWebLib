@@ -1,10 +1,12 @@
 import { NULL_OBJ } from "MWL@2026/core/types";
 import { Property } from "../@contract/@types/def";
 import { InferValues, PropertiesDescriptors, PropertiesRecord } from "../@contract/@types/PropertiesRecord";
+import { addLink, ReactiveObject } from "../../Reaction";
 
 const PropertiesRecord = 
     class <T extends Record<string, Property<any>>>
-          implements PropertiesRecord<T> {
+            extends ReactiveObject
+            implements PropertiesRecord<T> {
 
     readonly keys      : readonly string[];
     readonly properties: readonly Property<unknown>[];
@@ -16,6 +18,7 @@ const PropertiesRecord =
                     descriptors: PropertiesDescriptors<T>,
                     initialValues: Partial<Readonly<InferValues<NoInfer<T>>>> = NULL_OBJ
                 ) {
+        super();
 
         this.descriptors   = descriptors;
         this.initialValues = initialValues;
@@ -23,8 +26,10 @@ const PropertiesRecord =
         const keys = this.keys = Object.keys(descriptors);
         this.properties = new Array(keys.length);
 
-        for(let i = 0; i < keys.length; ++i)
+        for(let i = 0; i < keys.length; ++i) {
             this.ensureByIdx(i);
+            addLink( this.properties[i], this );
+        }
     }
 
     get<K extends Extract<keyof T, string>>(name: K): T[K] {

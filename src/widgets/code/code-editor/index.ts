@@ -7,6 +7,7 @@ import { hl } from "../@core/hl";
 import { Input } from "./Input";
 import { CodeEditor } from "./model";
 import { listen } from "MWL@2026/modules/Observable";
+import { observifyReactiveObject } from "MWL@2026/modules/Observable/Observify";
 
 const CodeEditorWidget = defineWidget("code-editor",
         Coordinator(CodeEditor),
@@ -28,6 +29,7 @@ const CodeEditorWidget = defineWidget("code-editor",
 
                 // even if the text/pos didn't changed, we need to
                 // re-render the text to properly highlight it.
+                observifyReactiveObject(controller);
                 listen(controller, deferredCallback(this.renderer, () => {
                     input.text = controller.text;
                     input.pos  = controller.pos;
