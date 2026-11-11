@@ -7,9 +7,6 @@ import { getProperties, getPropertiesKeys } from "../../Property/@impl/Helpers/W
 import { getVersion } from "../../Reaction";
 import { InferValues } from "../../Property/@contract/@types/PropertiesRecord";
 
-// 1. get nodes => get versions.
-// 2. store versions... (flip ?).
-
 const PropertiesRenderer: PropertiesRendererDetails["PropertiesRenderer"]
     = class <T extends Record<string, Property<any>>>
                                 implements PropertiesRenderer<InferValues<T>> {

@@ -6,27 +6,27 @@ import { PropertiesRenderer } from "MWL@2026/modules/Reactive/PropertiesRenderer
 import { Property } from "MWL@2026/modules/Reactive/Property/@contract/@types/def";
 import { InferValues, PropertiesFor } from "MWL@2026/modules/Reactive/Property/@contract/@types/PropertiesRecord";
 
+export type DeferredEffects<T extends Record<string, any>>
+    = PropertiesRenderer<InferValues<T>>
+    & {readonly target: PropertiesProxy<PropertiesFor<T>>};
+
 export function DeferredEffects<T extends Record<string, Property<any>>>(
     properties: PropertiesProxy<T>,
     renderer  : TaskList
 ): DeferredEffects<InferValues<T>> {
 
     const effects = new PropertiesRenderer(properties);
-    addProperties(effects, properties);
+    addTarget(effects, properties);
 
     observe(properties, deferredCallback(renderer, () => effects.render()));
 
     return effects;
 }
 
-function addProperties<T extends Record<string, Property<any>>>(
+function addTarget<T extends Record<string, Property<any>>>(
                 effects   : PropertiesRenderer<InferValues<T>>, 
                 properties: PropertiesProxy<T>
             ): asserts effects is DeferredEffects<InferValues<T>> {
     // @ts-expect-error
-    effects.properties = properties;
+    effects.target = properties;
 }
-
-export type DeferredEffects<T extends Record<string, any>>
-    = PropertiesRenderer<InferValues<T>>
-    & {readonly properties: PropertiesProxy<PropertiesFor<T>>};
