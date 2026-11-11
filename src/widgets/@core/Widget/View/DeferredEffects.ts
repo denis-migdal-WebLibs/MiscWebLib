@@ -18,7 +18,7 @@ export function DeferredEffects<T extends Record<string, Property<any>>>(
     const effects = new PropertiesRenderer(properties);
     addTarget(effects, properties);
 
-    observe(properties, deferredCallback(renderer, () => effects.render()));
+    observe(properties, deferredCallback(renderer, () => effects.render() ));
 
     return effects;
 }

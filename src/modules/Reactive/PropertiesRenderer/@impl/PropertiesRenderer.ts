@@ -38,7 +38,7 @@ const PropertiesRenderer: PropertiesRendererDetails["PropertiesRenderer"]
             const cond = () => {
 
                 for(let i = 0; i < idx.length; ++i)
-                    if( this.changed[i] )
+                    if( this.changed[idx[i]] )
                         return true;
 
                 return false;
