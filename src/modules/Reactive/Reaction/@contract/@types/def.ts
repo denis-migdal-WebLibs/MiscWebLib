@@ -1,5 +1,7 @@
-import { WithImpl } from "MWL@2026/modules/@types/contracts/Impl";
+import { WithImpl2 } from "MWL@2026/modules/@types/contracts/Impl";
 import { REACTION_NODE } from "./ctrler";
+import { CALLBACKS } from "MWL@2026/modules/Callbacks/@contract/@types/WithCallbacks";
+import { CallbackList } from "MWL@2026/modules/Callbacks";
 
 ///////
 // ReactionEffect
@@ -11,24 +13,28 @@ export type ReactionEffect = () => void;
 // ReactionScheduler
 ///////
 
-export type LinkContract<NodeImpl extends object> = {
-    readonly src : ReactionNodeContract<NodeImpl>;
-    readonly dst : ReactionNodeContract<NodeImpl>;
-    readonly execute: () => void;
-    readonly remove : () => void;
-} & WithImpl<{
-    readonly src : NodeImpl;
-    readonly dst : NodeImpl;
-    readonly execute: () => void;
-    readonly remove : () => void;
-}>;
+export type LinkContract<NodeImpl extends object>
+    = WithImpl2<{
+        readonly src : ReactionNodeContract<NodeImpl>;
+        readonly dst : ReactionNodeContract<NodeImpl>;
+        readonly execute: () => void;
+        readonly remove : () => void;
+    }, {
+        readonly src : NodeImpl;
+        readonly dst : NodeImpl;
+    }>;
 
 export type ReactionNodeContract<NodeImpl extends object>
-    = {readonly version: number}
-    & WithImpl<NodeImpl>;
+    = WithImpl2<{
+            readonly version: number
+        },
+        NodeImpl
+        >;
 
-export type ReactiveObjectContract<NodeImpl extends object> = {
-    readonly [REACTION_NODE]: ReactionNodeContract<NodeImpl>;
-} & WithImpl<{
-    readonly [REACTION_NODE]: NodeImpl;
-}>;
+export type ReactiveObjectContract<NodeImpl extends object>
+    = WithImpl2<{
+        readonly [CALLBACKS]    : CallbackList
+        readonly [REACTION_NODE]: ReactionNodeContract<NodeImpl>
+    }, {
+        readonly [REACTION_NODE]: NodeImpl;
+    }>;

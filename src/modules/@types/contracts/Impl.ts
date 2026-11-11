@@ -1,10 +1,14 @@
 export const IMPL_TYPE = Symbol();
 export type  IMPL_TYPE = typeof IMPL_TYPE;
 
-export type Impl<T extends WithImpl<any>> = Exclude<T[IMPL_TYPE], undefined>;
+export type WithImpl2<
+                        T extends object,
+                        I extends object
+                    > = {[IMPL_TYPE]?: T&I} & T;
 
 export type WithImpl<T extends object> = {[IMPL_TYPE]?: T};
 
+export type Impl<T extends WithImpl<any>> = Exclude<T[IMPL_TYPE], undefined>;
 export function impl<T extends WithImpl<any>>(o: T): Impl<T> {
     return o as any;
 }

@@ -1,10 +1,20 @@
+import { CALLBACKS } from "MWL@2026/modules/Callbacks/@contract/@types/WithCallbacks";
 import { REACTION_NODE } from "../@contract/@types/ctrler";
-import type { ReactionDetails, ReactiveObject } from "./@types";
-import { createReactionNode } from "./ReactionNodeImpl";
+import { ReactionNode, type ReactionDetails, type ReactiveObject } from "./@types";
+import { ReactionNodeImpl } from "./ReactionNodeImpl";
+import { CallbackList } from "MWL@2026/modules/Callbacks";
 
 const ReactiveObject: ReactionDetails["ReactiveObject"]
     = class implements ReactiveObject {
-        readonly [REACTION_NODE] = createReactionNode();
+        readonly [REACTION_NODE]: ReactionNode;
+        readonly [CALLBACKS]    : CallbackList;
+
+        constructor() {
+            const node = new ReactionNodeImpl();
+
+            this[REACTION_NODE] = node;
+            this[CALLBACKS    ] = node[CALLBACKS];
+        }
     }
 
 export {ReactiveObject};

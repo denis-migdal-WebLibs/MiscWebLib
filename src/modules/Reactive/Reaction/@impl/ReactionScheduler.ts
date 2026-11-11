@@ -1,6 +1,6 @@
 import { asImpl, Impl } from "MWL@2026/modules/@types/contracts/Impl";
-import { executePendingReactionEffects } from "../@contract/services";
 import { Link, reactionNode, ReactionNodeImpl, ReactiveObject } from "./@types";
+import { CallbackList, getCallbacks } from "MWL@2026/modules/Callbacks";
 
 function isPending(node: ReactionNodeImpl) {
     return node.reactionPending && node.pauseDepth === 0;
@@ -21,7 +21,7 @@ export class ReactionScheduler {
         this.prepass  (targetNode);
         this.propagate(targetNode);
         
-        executePendingReactionEffects();
+        this.executePendingEffects();
     }
 
     flush(...targets: readonly ReactiveObject[]) {
@@ -49,7 +49,7 @@ export class ReactionScheduler {
             this.propagate(node);
         }
 
-        executePendingReactionEffects();
+        this.executePendingEffects();
     }
 
     pauseReactions(...targets: readonly ReactiveObject[]) {
@@ -97,9 +97,20 @@ export class ReactionScheduler {
         }
     }
 
+    protected pendingEffects = new Array<CallbackList>();
+    protected executePendingEffects() {
+        for(let i = 0; i < this.pendingEffects.length; ++i)
+            this.pendingEffects[i].trigger();
+        this.pendingEffects.length = 0;
+    }
+
     protected processNode(target: ReactionNodeImpl, link: Impl<Link>|null) {
 
         ++target.version;
+
+        const callbacks = getCallbacks(target);
+        if( callbacks.size !== 0)
+            this.pendingEffects.push(callbacks);
 
         const nextLinks = target.outgoingLinks;
         for(let i = nextLinks.length - 1; i >= 0; --i) {
