@@ -2,7 +2,7 @@ import "@config";
 
 import { assertEquals } from "std/assert";
 
-import {properties} from "MWL@2026/modules/Collections/Properties";
+import {properties} from "MWL@2026/modules/Reactive/Collections/Properties";
 import {PropertiesRenderer} from "MWL@2026/modules/Reactive/PropertiesRenderer";
 import { Value } from "MWL@2026/modules/Reactive/Property";
 

@@ -1,7 +1,7 @@
 import "@config";
 import { assertEquals } from "std/assert";
 
-import {properties} from "MWL@2026/modules/Collections/Properties";
+import {properties} from "MWL@2026/modules/Reactive/Collections/Properties";
 
 import { Constant, Computed, Value, updateProperties } from "MWL@2026/modules/Reactive/Property"
 import { listen } from "MWL@2026/modules/Observable";

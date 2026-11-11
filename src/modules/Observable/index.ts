@@ -1,5 +1,3 @@
-export * from "./@contract/@types";
-export * from "./@contract/services";
 
 export * from "./@impl";
 

@@ -1,14 +1,16 @@
 import "@config";
 
 import { assertEquals } from "std/assert";
-import { ReactiveObject, addLink, pauseReactions, requestReaction, resumeReactions, attachReactionEffect } from "MWL@2026/modules/Reactive/Reaction";
+import { ReactiveObject, addLink, pauseReactions, requestReaction, resumeReactions } from "MWL@2026/modules/Reactive/Reaction";
+
+import { listen } from "MWL@2026/modules/Observable";
 
 Deno.test("Reaction x1", () => {
 
     const obj = new ReactiveObject();
 
     let count = 0;
-    attachReactionEffect(obj, () => ++count );
+    listen(obj, () => ++count );
 
     requestReaction(obj);
     assertEquals(count, 1);
@@ -19,7 +21,7 @@ Deno.test("Pause (noop)", () => {
     const obj = new ReactiveObject();
 
     let count = 0;
-    attachReactionEffect(obj, () => ++count);
+    listen(obj, () => ++count);
 
     pauseReactions(obj);
     assertEquals(count, 0);
@@ -32,7 +34,7 @@ Deno.test("Pause (multi-trigger)", () => {
     const obj = new ReactiveObject();
 
     let count = 0;
-    attachReactionEffect(obj, () => ++count);
+    listen(obj, () => ++count);
 
     pauseReactions(obj);
 
@@ -47,17 +49,15 @@ Deno.test("Pause (multi-trigger)", () => {
 
 Deno.test("Pause (many)", () => {
 
-    console.warn("=== HERE ===");
-
     const obj  = new ReactiveObject();
     const obj2 = new ReactiveObject();
 
     addLink(obj, obj2);
 
     let count = 0;
-    attachReactionEffect(obj2, () => ++count);
+    listen(obj2, () => ++count);
 
-    pauseReactions(obj2, obj);
+    pauseReactions(obj, obj2);
     {
         requestReaction(obj2);
         requestReaction(obj);

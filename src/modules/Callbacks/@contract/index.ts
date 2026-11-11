@@ -2,7 +2,7 @@ import { WithCallbacks } from "./@types";
 import { CallbackList } from "./@types/CallbackList";
 
 export interface CallbacksTypes {
-    getCallbacks<CallbackArgs extends any[] = []>(target: WithCallbacks<CallbackArgs>): CallbackList<CallbackArgs>;
+    getCallbacks<CallbackArgs extends any[] = []>(target: WithCallbacks<CallbackArgs>): CallbackList<CallbackArgs>|null;
 }
 
 export interface CallbacksDetails {

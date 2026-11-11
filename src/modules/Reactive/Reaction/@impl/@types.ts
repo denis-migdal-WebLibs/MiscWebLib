@@ -10,7 +10,7 @@ export type ReactionNodeImpl = {
     version             : number;
     
     // impl:
-    readonly [CALLBACKS]: CallbackList;
+    readonly [CALLBACKS]: CallbackList|null;
     readonly outgoingLinks: Impl<LinkContract<ReactionNodeImpl>>[];
 
     reactionDepth  : number;

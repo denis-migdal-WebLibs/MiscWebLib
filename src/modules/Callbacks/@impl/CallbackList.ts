@@ -12,8 +12,8 @@ const CallbackList: CallbacksDetails["CallbackList"]
         private readonly callbacks = new Array<Callback<CallbackArgs>>();
         private nbRemovePending    = 0;
         
-        get size() {
-            return this.callbacks.length - this.nbRemovePending;
+        get isEmpty() {
+            return this.callbacks.length - this.nbRemovePending === 0;
         }
 
         trigger(...args: CallbackArgs) {

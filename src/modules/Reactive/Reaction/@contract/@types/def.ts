@@ -1,7 +1,6 @@
 import { WithImpl2 } from "MWL@2026/modules/@types/contracts/Impl";
 import { REACTION_NODE } from "./ctrler";
-import { CALLBACKS } from "MWL@2026/modules/Callbacks/@contract/@types/WithCallbacks";
-import { CallbackList } from "MWL@2026/modules/Callbacks";
+import { WithCallbacks } from "MWL@2026/modules/Callbacks";
 
 ///////
 // ReactionEffect
@@ -32,8 +31,7 @@ export type ReactionNodeContract<NodeImpl extends object>
         >;
 
 export type ReactiveObjectContract<NodeImpl extends object>
-    = WithImpl2<{
-        readonly [CALLBACKS]    : CallbackList
+    = WithImpl2<WithCallbacks & {
         readonly [REACTION_NODE]: ReactionNodeContract<NodeImpl>
     }, {
         readonly [REACTION_NODE]: NodeImpl;

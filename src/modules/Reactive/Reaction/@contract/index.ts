@@ -1,21 +1,7 @@
 import { LinkContract, ReactionEffect, ReactiveObjectContract } from "./@types/def";
 
 export interface ReactionServices {
-
     getVersion(target: ReactiveObjectContract<any>): number;
-
-    /**
-     * Schedule an effect (executed at the end of the reaction).
-     */
-    scheduleReactionEffect(effect: ReactionEffect): void;
-
-    /**
-     * Transform a callback into a function that will schedule an effect when called.
-     */
-    reactionEffect(callback: () => void): ReactionEffect;
-
-    // internal
-    executePendingReactionEffects(): void;
 }
 
 export interface ReactionDetails<NodeImpl extends object> {
@@ -37,11 +23,6 @@ export interface ReactionDetails<NodeImpl extends object> {
             execute?: ReactionEffect,
             remove ?: (this: LinkContract<NodeImpl>) => void
         ): LinkContract<NodeImpl>
-
-    attachReactionEffect(
-                target  : ReactiveObjectContract<NodeImpl>,
-                callback: ReactionEffect
-            ): void;
 }
 
 export interface ReactionImpl<NodeImpl extends object>

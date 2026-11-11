@@ -12,5 +12,5 @@ export interface CallbackList<CallbackArgs extends any[] = []>
     remove(callback: Callback<CallbackArgs>): void;
 
     clear(): void;
-    readonly size: number;
+    readonly isEmpty: boolean;
 }

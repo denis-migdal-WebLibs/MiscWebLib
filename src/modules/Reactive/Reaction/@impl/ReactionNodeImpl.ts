@@ -1,7 +1,6 @@
 import { Impl } from "MWL@2026/modules/@types/contracts/Impl";
 import { ReactionNodeImpl, Link, ReactionNode } from "./@types";
 import { CALLBACKS } from "MWL@2026/modules/Callbacks/@contract/@types/WithCallbacks";
-import { CallbackList } from "MWL@2026/modules/Callbacks";
 
 const ReactionNodeImpl = class implements ReactionNodeImpl {
     
@@ -9,7 +8,7 @@ const ReactionNodeImpl = class implements ReactionNodeImpl {
 
     // impl
     readonly outgoingLinks = new Array<Impl<Link>>();
-    readonly [CALLBACKS]   = new CallbackList();
+    readonly [CALLBACKS]   = null;
 
     reactionDepth  = 0;
     reactionPending= false;

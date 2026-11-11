@@ -44,7 +44,9 @@ export class ReactionScheduler {
             if( ! isPending(node) )
                 continue; // ignore
 
-            --node.reactionDepth;
+            if( --node.reactionDepth !== 0)
+                continue;
+
             node.reactionPending = false;
             this.propagate(node);
         }
@@ -109,7 +111,7 @@ export class ReactionScheduler {
         ++target.version;
 
         const callbacks = getCallbacks(target);
-        if( callbacks.size !== 0)
+        if( callbacks !== null && ! callbacks.isEmpty )
             this.pendingEffects.push(callbacks);
 
         const nextLinks = target.outgoingLinks;

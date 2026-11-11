@@ -5,7 +5,6 @@ import { observe } from "MWL@2026/modules/Observable";
 import { PropertiesRenderer } from "MWL@2026/modules/Reactive/PropertiesRenderer";
 import { Property } from "MWL@2026/modules/Reactive/Property/@contract/@types/def";
 import { InferValues, PropertiesFor } from "MWL@2026/modules/Reactive/Property/@contract/@types/PropertiesRecord";
-import { observifyReactiveObject } from "MWL@2026/modules/Observable/Observify";
 
 export function DeferredEffects<T extends Record<string, Property<any>>>(
     properties: PropertiesProxy<T>,
@@ -15,7 +14,6 @@ export function DeferredEffects<T extends Record<string, Property<any>>>(
     const effects = new PropertiesRenderer(properties);
     addProperties(effects, properties);
 
-    observifyReactiveObject(properties);
     observe(properties, deferredCallback(renderer, () => effects.render()));
 
     return effects;

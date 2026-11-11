@@ -1,109 +1,61 @@
-import { DefineExtensionsFcts } from "MWL@2026/modules/@types/contracts";
-import { Callback, ClearableObservable, Hook, HookFactory, ObservableObjectClass, ObservationControllerClass, SubscribableObservable, TriggerableObservable } from "./@types/def";
+import { Callback } from "MWL@2026/modules/Callbacks";
+import { ClearableObservable, Observable, QueryAbleObservable, RemovableSubscribableObservable, SubscribableObservable, TriggerableObservable } from "./@types";
 
-export interface ObservableServices {
+export interface ObservableDetails {
+
+    Observable: new() => Observable;
 
     /** `listen(target, callback): void` */
-    listen<
-                CallbackCtx  extends object|void = void,
-                CallbackArgs extends any[]=[]
-            >(
-                target  : SubscribableObservable<CallbackCtx, CallbackArgs>,
-                callback: NoInfer<Callback<CallbackCtx, CallbackArgs>>
+    listen<CallbackArgs extends any[]=[]>(
+                target  : SubscribableObservable<CallbackArgs>,
+                callback: Callback<NoInfer<CallbackArgs>>
             ) : void;
+
     /** `observe(target, callback): void` */
-    observe<CallbackCtx extends object|void = void>(
-                    target  : SubscribableObservable<CallbackCtx, []>,
-                    callback: NoInfer<Callback<CallbackCtx, []>>
+    observe(
+                    target  : SubscribableObservable<[]>,
+                    callback: Callback<NoInfer<[]>>
                 ): void;
     /** `unlisten(target, callback): void` */
-    unlisten<
-                CallbackCtx extends object|void = void,
-                CallbackArgs extends any[] = []
-            >(
-                target  : SubscribableObservable<CallbackCtx, CallbackArgs>,
-                callback: NoInfer<Callback<CallbackCtx, CallbackArgs>>
+    unlisten<CallbackArgs extends any[] = []>(
+                target  : RemovableSubscribableObservable<CallbackArgs>,
+                callback: Callback<NoInfer<CallbackArgs>>
             ): void;
     /** `unobserve(target, callback): void` */
     unobserve<
-                CallbackCtx  extends object|void = void,
                 CallbackArgs extends any[] = []
             >(
-                target  : SubscribableObservable<CallbackCtx, CallbackArgs>,
-                callback: NoInfer<Callback<CallbackCtx, CallbackArgs>>
+                target  : RemovableSubscribableObservable<CallbackArgs>,
+                callback: Callback<NoInfer<CallbackArgs>>
             ): void;
     /** `isListening(target, callback): void` */
-    isListening<
-                CallbackCtx  extends object|void = void,
-                CallbackArgs extends any[] = []
-            >(
-                target  : SubscribableObservable<CallbackCtx, CallbackArgs>,
-                callback: NoInfer<Callback<CallbackCtx, CallbackArgs>>
+    isListening<CallbackArgs extends any[] = []>(
+                target  : QueryAbleObservable<CallbackArgs>,
+                callback: Callback<NoInfer<CallbackArgs>>
             ): boolean;
     /** `trigger(target, ...args): void` */
-    trigger<TriggerArgs extends any[] = []>(
-                    target: TriggerableObservable<TriggerArgs>,
-                    ...args: NoInfer<TriggerArgs>
+    trigger<CallbackArgs extends any[] = []>(
+                    target: TriggerableObservable<CallbackArgs>,
+                    ...args: NoInfer<CallbackArgs>
                 ): void;
     /** `triggerDrain(target, ...args): void`
      * 
      * Trigger the target, then clear it.
     */
-    triggerDrain<TriggerArgs extends any[] = []>(
-                    target: TriggerableObservable<TriggerArgs>
+    triggerDrain<CallbackArgs extends any[] = []>(
+                    target: TriggerableObservable<CallbackArgs>
                             & ClearableObservable,
-                    ...args: NoInfer<TriggerArgs>
+                    ...args: NoInfer<CallbackArgs>
                 ): void;
     /** `canSkipTrigger(target): boolean`
      * 
      * The target isn't currently listened, therefore we can skip the trigger process.
      */
-    canSkipTrigger<TriggerArgs extends any[] = []>(
-                    target: TriggerableObservable<TriggerArgs>
+    canSkipTrigger<CallbackArgs extends any[] = []>(
+                    target: QueryAbleObservable<CallbackArgs>
                 ): boolean;
     /** `clear(target): void` */
     clear(target: ClearableObservable): void;
 }
 
-export interface ObservableExtensions {
-
-    ObservableObject: ObservableObjectClass;
-    //ObservableProxy : void;
-
-    /** `createHook(metadata)` */
-    createHook<
-                Meta extends Record<string, any> = {},
-                Args extends any[]               = []
-            >(metadata: Meta): Hook<Meta, Args>;
-
-    /** `createOwnedHook(owner, metadata)` */
-    createOwnedHook<
-                    Owner extends object,
-                    Meta extends Record<string, any> = {},
-                    Args extends any[]               = []
-                >(owner: Owner, metadata?: Meta): Hook<Meta & {owner: Owner}, Args>
-
-    /** `hookFactory<ARGS>()`
-     * Replace by ownedHookFactory ?
-    */
-    hookFactory<ARGS extends any[]>(): HookFactory<ARGS>;
-}
-
-/*
-function 
-*/
-
-export type Extensions = DefineExtensionsFcts<ObservableExtensions, [
-                                            ObsCtrl: ObservationControllerClass
-                                        ]>;
-
-export interface ObservableDetails {
-    readonly ObservationController: ObservationControllerClass
-}
-
-export interface ObservableImpl extends ObservableExtensions, 
-                                        ObservableDetails {}
-
-export interface ObservableContract
-                    extends ObservableServices,
-                            ObservableImpl {}
+export interface ObservableContract extends ObservableDetails {}

@@ -1,5 +1,5 @@
-import { createOwnedHook, isListening, listen, triggerDrain, unlisten } from "MWL@2026/modules/Observable";
 import GuardedState from "./GuardedState";
+import { CallbackList } from "MWL@2026/modules/Callbacks";
 
 type FrameTask = () => void;
 
@@ -25,23 +25,24 @@ class FrameSchedulerCore {
 
 export class FrameScheduler {
 
-    private readonly executionHook = createOwnedHook(this);
+    private readonly executionHook = new CallbackList();
 
     private readonly core  = new FrameSchedulerCore( () => {
-        triggerDrain(this.executionHook)
+        this.executionHook.trigger();
+        this.executionHook.clear();
     });
 
     isTaskScheduled( task: FrameTask ) {
-        return isListening(this.executionHook, task);
+        return this.executionHook.has(task);
     }
 
     scheduleTask( task: FrameTask ) {
-        listen(this.executionHook, task);
+        this.executionHook.add(task);
         this.core.schedule();
     }
 
     cancelScheduledTask(task: FrameTask) {
-        unlisten(this.executionHook, task);
+        this.executionHook.remove(task);
     }
 }
 

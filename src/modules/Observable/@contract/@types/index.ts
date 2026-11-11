@@ -1,6 +1,8 @@
 export type {
-        SubscribableObservable,
-        TriggerableObservable,
-        ClearableObservable,
-        Observable
-    } from "./def";
+                Observable,
+                SubscribableObservable,
+                QueryAbleObservable,
+                RemovableSubscribableObservable,
+                TriggerableObservable,
+                ClearableObservable
+            } from "./Capabilities"
