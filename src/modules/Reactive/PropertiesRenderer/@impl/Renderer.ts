@@ -28,6 +28,8 @@ const Renderer = class implements Renderer {
 
             if( rendered )
                 this.after();
+
+            return rendered;
         }
     }
 

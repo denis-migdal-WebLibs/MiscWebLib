@@ -5,7 +5,7 @@ import { WithProperties } from "MWL@2026/modules/Reactive/Property/@contract/@ty
 export type Renderer = {
     addRule(cond: () => boolean, effect: () => void): void;
     afterRender(after: () => void): void;
-    render(): void;
+    render(): boolean;
 }
 
 export type PropertiesRenderer<T extends Record<string, any>> = {
@@ -14,7 +14,7 @@ export type PropertiesRenderer<T extends Record<string, any>> = {
             effect: () => void
         ): void;
     afterRender(after: () => void): void;
-    render(): void;
+    render(): boolean;
 }
 
 export type PropertiesRendererClass = {
