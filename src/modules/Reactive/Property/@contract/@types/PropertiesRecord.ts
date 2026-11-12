@@ -58,7 +58,7 @@ export type InferValues<T extends Record<string, Property<any>>>
 
 export type PropertiesFor<T extends Record<string, any>>
     = {
-        [K in keyof T]: Property<T[K]>
+        [K in Extract<keyof T, string>]: Property<T[K]>
     }
 
 export type PropertiesRecordFor<T extends Record<string, any>>
