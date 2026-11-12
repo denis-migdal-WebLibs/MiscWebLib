@@ -4,13 +4,13 @@ import { Property } from "MWL@2026/modules/Reactive/Property/@contract/@types/de
 
 export interface PropertiesDetails {
 
-    Properties<T extends Record<string, Property<any>>>(
-                                        desc: PropertiesDescriptors<T>
+    Properties<T extends Record<string,any>, D extends PropertiesDescriptors<T>>(
+                                        desc: D & PropertiesDescriptors<T>
                                     ): {
             new(initVals?: Partial<InferValues<NoInfer<T>>>): PropertiesProxy<T>;
 
             // don't we need the this ?
-            readonly Descriptors: PropertiesDescriptors<T>
+            readonly Descriptors: D
         };
     properties<T extends Record<string, Property<any>>>(
                                     desc     : PropertiesDescriptors<T>,
