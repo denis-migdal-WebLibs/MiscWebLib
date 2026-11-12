@@ -7,7 +7,10 @@ export interface PropertiesDetails {
     Properties<T extends Record<string, Property<any>>>(
                                         desc: PropertiesDescriptors<T>
                                     ): {
-            new(initVals?: Partial<InferValues<NoInfer<T>>>): PropertiesProxy<T>
+            new(initVals?: Partial<InferValues<NoInfer<T>>>): PropertiesProxy<T>;
+
+            // don't we need the this ?
+            readonly Descriptors: PropertiesDescriptors<T>
         };
     properties<T extends Record<string, Property<any>>>(
                                     desc     : PropertiesDescriptors<T>,

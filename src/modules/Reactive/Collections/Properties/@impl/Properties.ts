@@ -16,6 +16,8 @@ const Properties: PropertiesDetails["Properties"]
             constructor(initVals?: Partial<InferValues<NoInfer<T>>>) {
                 super( new PropertiesRecord(desc, initVals)  );
             }
+
+            static readonly Descriptors = desc;
         } as any;
     };
 
