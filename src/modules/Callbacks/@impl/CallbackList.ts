@@ -1,4 +1,4 @@
-import { NULL_OP } from "MWL@2026/@exports/types";
+import { NULL_OP } from "MWL@2026/modules/@types";
 import { CallbacksDetails } from "../@contract";
 import { Callback } from "../@contract/@types";
 import { CallbackList } from "../@contract/@types/CallbackList";

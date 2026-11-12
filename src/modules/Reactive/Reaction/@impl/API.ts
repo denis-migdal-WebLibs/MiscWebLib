@@ -1,6 +1,6 @@
 import { ReactionScheduler } from "./ReactionScheduler";
 import { Link, ReactionDetails } from "./@types";
-import { NULL_OP } from "MWL@2026/@exports/types";
+import { NULL_OP } from "MWL@2026/modules/@types";
 import { reactionNode } from "../@contract/@types/ctrler";
 import { impl } from "MWL@2026/modules/@types/contracts/Impl";
 

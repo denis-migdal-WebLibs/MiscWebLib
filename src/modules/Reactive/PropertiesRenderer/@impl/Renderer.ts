@@ -1,4 +1,4 @@
-import { NULL_OP } from "MWL@2026/core/types";
+import { NULL_OP } from "MWL@2026/modules/@types";
 import {Renderer} from "../@contract/@types/def";
 
 const Renderer = class implements Renderer {

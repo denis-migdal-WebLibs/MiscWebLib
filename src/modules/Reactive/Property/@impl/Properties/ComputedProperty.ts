@@ -1,5 +1,5 @@
 import { addLink, ReactiveObject } from "MWL@2026/modules/Reactive/Reaction";
-import { NO_VALUE } from "MWL@2026/core/types";
+import { NO_VALUE } from "MWL@2026/modules/@types";
 
 import { PropertyDetails } from "../../@contract";
 import { ComputedProperty } from "../../@contract/@types/def";

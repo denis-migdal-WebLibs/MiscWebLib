@@ -1,20 +1,32 @@
-- Deploy new version
-- PropertiesEffect
-- Widget @core
+- TPEngine
+- WebSlides
+- Cours
 
-- Restructure dirs
-    - widget/@core => modules + contract.
-    - remove core
-        - @types => modules/@types
-    - presentation => webui.
-        - widgets
-        - orchestrator (TPEngine)
-        - nav : capabilities or orchestrator ?
-    - infrastructure => modules/@platform + contract.
-        - scheduling
-        - storage
-        - networking
-    - remove @exports
+Modules
+- Widget/@core => modules/Widget
+- core => modules (dont /@types)
+- infrastructure => modules/@platform
+    - scheduling
+    - storage
+    - networking
 
--> Use ctrler for Reaction + method redir.
-    -> CTRLER.scheduler ou NODE.scheduler.
+Webui
+- presentation => webui
+- widgets      => webui/widgets
+- TPEngine : orchestrator (?)
+- nav => capabilities/orchestrator ?
+
+- remove @exports.
+
+=====
+
+-> ReactiveNode.scheduler
+    -> functions with redir.
+-> value provider factory (with cache).
+
+- trier
+    - module/@types
+    - modules/@platform
+- contracts for
+    - modules/widget
+    - modules/@platform

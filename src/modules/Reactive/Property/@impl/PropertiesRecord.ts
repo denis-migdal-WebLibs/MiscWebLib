@@ -1,4 +1,4 @@
-import { NULL_OBJ } from "MWL@2026/core/types";
+import { NULL_OBJ } from "MWL@2026/modules/@types";
 import { Property } from "../@contract/@types/def";
 import { InferValues, PropertiesDescriptors, PropertiesRecord } from "../@contract/@types/PropertiesRecord";
 import { addLink, ReactiveObject } from "../../Reaction";

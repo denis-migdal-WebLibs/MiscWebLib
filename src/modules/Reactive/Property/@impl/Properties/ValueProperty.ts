@@ -1,4 +1,4 @@
-import { NO_VALUE } from "MWL@2026/core/types";
+import { NO_VALUE } from "MWL@2026/modules/@types";
 import { ReactiveObject, requestReaction } from "MWL@2026/modules/Reactive/Reaction";
 import { PropertyDetails } from "../../@contract";
 import type {ValueProperty, ValueProvider} from "../../@contract/@types/def";
