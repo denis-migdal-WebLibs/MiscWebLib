@@ -1,4 +1,7 @@
-export {ShadowTemplate, ShadowTemplateArgs} from "./ShadowTemplate";
+export {ShadowTemplate} from "./ShadowTemplate";
+export type {ShadowTemplateArgs} from "./ShadowTemplate";
+
 export {html} from "./ShadowTemplate/parsers/html";
 
-export {createResolver, resolve, Elements, ElementsDescriptors} from "./ElementsResolver";
+export {createResolver, resolve} from "./ElementsResolver";
+export type {Elements, ElementsDescriptors} from "./ElementsResolver";
