@@ -1,13 +1,15 @@
 import { Link } from "MWL@2026/modules/Reactive/Reaction";
-import { ImmutableProperty, ImmutablePropertyClass, MutableProperty, Property, ValueProperty, ValuePropertyClass, ComputedPropertyClass, WritableProperty } from "./@types/def";
+import { ImmutableProperty, ImmutablePropertyClass, MutableProperty, Property, ValueProperty, ValuePropertyClass, ComputedPropertyClass, WritableProperty, AffixedPropertyClass, AffixedProperty } from "./@types/def";
 import { InferValues, PropertiesRecordClass } from "./@types/PropertiesRecord";
 import { WithProperties } from "./@types/WithProperties";
 import { ForwardMap, SyncMap } from "./@types/linkProperties";
+import { Cstr } from "MWL@2026/modules/@types";
 
 export interface PropertyDetails {
 
     // Properties
     ImmutableProperty: ImmutablePropertyClass;
+    AffixedProperty  : AffixedPropertyClass;
     ValueProperty    : ValuePropertyClass;
     ComputedProperty : ComputedPropertyClass;
 
@@ -71,6 +73,7 @@ export interface PropertyDetails {
     Value   <T>(defVal: T): () => ValueProperty<T>;
     Constant<T>(value : T): () => ImmutableProperty<T>;
     Fixed   <T>(defVal: T): (initialValue?: T) => ImmutableProperty<T>;
+    Affixed <T extends object>(klass: Cstr<T>): () => AffixedProperty<T>;
 
     // type guards
     isWritable<T>(obj: Property<T>): obj is WritableProperty<T>;

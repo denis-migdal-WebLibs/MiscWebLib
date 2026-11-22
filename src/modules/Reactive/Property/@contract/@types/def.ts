@@ -11,6 +11,11 @@ export type ImmutablePropertyClass = {
     new <T>(value: T): ImmutableProperty<T>
 }
 
+export type AffixedProperty<T extends object> = Property<T>;
+export type AffixedPropertyClass = {
+    new <T extends object>(value: T): AffixedProperty<T>
+}
+
 export type MutableProperty<T> = Property<T>;
 export type WritableProperty<T> = MutableProperty<T> & {
     set(value: T): void;

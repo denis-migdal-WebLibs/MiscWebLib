@@ -17,6 +17,8 @@ export interface ReactionDetails<NodeImpl extends object> {
 
     resumeReactions(...targets: readonly ReactiveObjectContract<NodeImpl>[]): void;
 
+    isReactive(target: object): target is ReactiveObjectContract<NodeImpl>;
+
     addLink(
             src     : ReactiveObjectContract<NodeImpl>,
             dst     : ReactiveObjectContract<NodeImpl>,

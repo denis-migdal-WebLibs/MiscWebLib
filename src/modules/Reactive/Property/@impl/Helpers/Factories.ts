@@ -3,6 +3,8 @@ import { ComputedProperty } from "../Properties/ComputedProperty";
 import { ImmutableProperty } from "../Properties/ImmutableProperty";
 import { ValueProperty } from "../Properties/ValueProperty";
 import { Property } from "../../@contract/@types/def";
+import { AffixedProperty } from "../Properties/AffixedProperty";
+import { Cstr } from "MWL@2026/modules/@types";
 
 export function Value<T>(defVal: T) {
     return (defaultVal = defVal) => new ValueProperty(defaultVal);
@@ -13,6 +15,9 @@ export function Constant<T>(value: T) {
 }
 export function Fixed<T>(defVal: T) {
     return (initialVal = defVal) => new ImmutableProperty(initialVal);
+}
+export function Affixed<T extends object>(Klass: Cstr<T>) {
+    return () => new AffixedProperty(new Klass() );
 }
 
 //TODO: move ?
