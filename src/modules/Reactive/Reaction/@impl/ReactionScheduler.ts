@@ -100,10 +100,16 @@ export class ReactionScheduler {
     }
 
     protected pendingEffects = new Array<CallbackList>();
+    protected pendingEffectsOffset = 0;
     protected executePendingEffects() {
-        for(let i = 0; i < this.pendingEffects.length; ++i)
+
+        const start = this.pendingEffectsOffset;
+        this.pendingEffectsOffset = this.pendingEffects.length;
+
+        for(let i = start; i < this.pendingEffects.length; ++i)
             this.pendingEffects[i].trigger();
-        this.pendingEffects.length = 0;
+
+        this.pendingEffects.length = this.pendingEffectsOffset = start;
     }
 
     protected processNode(target: ReactionNodeImpl, link: Impl<Link>|null) {
