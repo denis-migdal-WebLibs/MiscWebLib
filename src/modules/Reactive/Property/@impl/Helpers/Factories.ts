@@ -26,7 +26,7 @@ export function Computed<
                     const Values extends any   [],
                 >(
             keys    : Keys,
-            compute : ((...args: Values) => T)|{new(): Calculator<T, Values>},
+            compute : ((...args: Values) => T)|{new(): Calculator<Values, T>},
         ) {
 
     const values = new Array<unknown>(keys.length) as Values;

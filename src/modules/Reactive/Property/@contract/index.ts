@@ -80,7 +80,7 @@ export interface PropertyDetails {
                 const Values extends any   [],
                 >(
             keys    : Keys,
-            compute : ((...args: Values) => T)|{new(): Calculator<T, Values>},
+            compute : ((...args: Values) => T)|{new(): Calculator<Values, T>},
         ): (this: PropertiesRecordFor<FromEntries<Keys, Values>>) => ComputedProperty<T>;
 
     // type guards

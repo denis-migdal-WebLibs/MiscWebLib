@@ -55,6 +55,6 @@ export type FromEntries<
     [I in Exclude<keyof K, keyof any[]> as Extract<K[I], string>]: V[I & keyof V];
 }
 
-export type Calculator<T, Values extends any[]> = {
-    compute(...values: Values): T;
+export type Calculator<Inputs extends any[], Output> = {
+    compute(...values: Inputs): Output;
 }
