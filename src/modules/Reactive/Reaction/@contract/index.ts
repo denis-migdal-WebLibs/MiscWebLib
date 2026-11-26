@@ -19,6 +19,9 @@ export interface ReactionDetails<NodeImpl extends object> {
 
     isReactive(target: object): target is ReactiveObjectContract<NodeImpl>;
 
+    removeLink(src     : ReactiveObjectContract<NodeImpl>,
+               dst     : ReactiveObjectContract<NodeImpl>): void;
+
     addLink(
             src     : ReactiveObjectContract<NodeImpl>,
             dst     : ReactiveObjectContract<NodeImpl>,

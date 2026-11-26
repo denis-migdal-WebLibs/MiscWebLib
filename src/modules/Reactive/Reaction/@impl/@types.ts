@@ -11,7 +11,7 @@ export type ReactionNodeImpl = {
     
     // impl:
     readonly [CALLBACKS]: CallbackList|null;
-    readonly outgoingLinks: Impl<LinkContract<ReactionNodeImpl>>[];
+    readonly outgoingLinks: Impl<Link>[];
 
     reactionDepth  : number;
 

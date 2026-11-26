@@ -1,8 +1,8 @@
 import { ReactionScheduler } from "./ReactionScheduler";
-import { Link, ReactionDetails, ReactiveObject } from "./@types";
+import { Link, ReactionDetails, reactionNode, ReactiveObject } from "./@types";
 import { NULL_OP } from "MWL@2026/modules/@types";
-import { REACTION_NODE, reactionNode } from "../@contract/@types/ctrler";
-import { impl } from "MWL@2026/modules/@types/contracts/Impl";
+import { REACTION_NODE } from "../@contract/@types/ctrler";
+import { Impl, impl } from "MWL@2026/modules/@types/contracts/Impl";
 import { ReactionNodeImpl } from "./ReactionNodeImpl";
 
 const reactiveScheduler = new ReactionScheduler();
@@ -51,7 +51,7 @@ export const addLink: ReactionDetails["addLink"]
 
         const srcNode = reactionNode(src);
 
-        const link: Link = {
+        const link: Impl<Link> = {
             src    : srcNode,
             dst    : reactionNode(dst),
             execute,
@@ -61,4 +61,19 @@ export const addLink: ReactionDetails["addLink"]
         srcNode.outgoingLinks.push(link);
 
         return link;
+    }
+
+
+export const removeLink: ReactionDetails["removeLink"]
+    = function(src, dst) {
+
+        const links = reactionNode(src).outgoingLinks;
+        const dstNode = reactionNode(dst);
+
+        const idx = links.findIndex( link => link.dst === dstNode);
+
+        __ASSERT__(idx !== -1, "DST not found");
+
+        links[idx].remove();
+        links.splice(idx, 1);
     }
