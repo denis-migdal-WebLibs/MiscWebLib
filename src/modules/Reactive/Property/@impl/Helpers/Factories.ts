@@ -2,9 +2,9 @@ import { PropertiesRecordFor } from "../../@contract/@types/PropertiesRecord";
 import { ComputedProperty } from "../Properties/ComputedProperty";
 import { ImmutableProperty } from "../Properties/ImmutableProperty";
 import { ValueProperty } from "../Properties/ValueProperty";
-import { Property } from "../../@contract/@types/def";
+import { Calculator, FromEntries, Property } from "../../@contract/@types/def";
 import { AffixedProperty } from "../Properties/AffixedProperty";
-import { Cstr } from "MWL@2026/modules/@types";
+import { Cstr, isClass } from "MWL@2026/modules/@types";
 
 export function Value<T>(defVal: T) {
     return (defaultVal = defVal) => new ValueProperty(defaultVal);
@@ -20,27 +20,24 @@ export function Affixed<T extends object>(Klass: Cstr<T>) {
     return () => new AffixedProperty(new Klass() );
 }
 
-//TODO: move ?
-export type FromEntries<
-    K extends string[],
-    V extends    any[]
-> = {
-    [I in Exclude<keyof K, keyof any[]> as Extract<K[I], string>]: V[I & keyof V];
-}
-
 export function Computed<
                     T,
                     const Keys   extends string[],
                     const Values extends any   [],
                 >(
             keys    : Keys,
-            compute : (...args: Values) => T,
-            //converter: Cstr<ViewConverter<T, Sources>>|ConvertFct<T, Sources>
+            compute : ((...args: Values) => T)|{new(): Calculator<T, Values>},
         ) {
 
     const values = new Array<unknown>(keys.length) as Values;
 
     return function (this: PropertiesRecordFor<FromEntries<Keys, Values>>) {
+
+        let computeFct: (...args: Values) => T = compute as any;
+        if( isClass(compute) ){
+            const computer = new compute();
+            computeFct = (...args) => computer.compute(...args);
+        }
 
         const sources = new Array<Property<unknown>>(keys.length);
         for(let i = 0; i < keys.length; ++i)
@@ -51,14 +48,11 @@ export function Computed<
             for(let i = 0; i < sources.length; ++i)
                 values[i] = sources[i].get();
 
-            return compute(...values);
+            return computeFct(...values);
         }
-        /*
-        const transform = getConversionFct(converter);
-        */
 
         return new ComputedProperty(sources, fct);
-    };   
+    };
 }
 
 

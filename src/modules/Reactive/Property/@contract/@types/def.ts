@@ -46,3 +46,15 @@ export type ComputedPropertyClass = {
         compute     : () => T
     ): ComputedProperty<T>
 }
+
+//TODO: move ?
+export type FromEntries<
+    K extends string[],
+    V extends    any[]
+> = {
+    [I in Exclude<keyof K, keyof any[]> as Extract<K[I], string>]: V[I & keyof V];
+}
+
+export type Calculator<T, Values extends any[]> = {
+    compute(...values: Values): T;
+}

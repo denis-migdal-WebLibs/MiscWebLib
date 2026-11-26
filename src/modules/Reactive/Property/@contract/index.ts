@@ -1,6 +1,6 @@
 import { Link } from "MWL@2026/modules/Reactive/Reaction";
-import { ImmutableProperty, ImmutablePropertyClass, MutableProperty, Property, ValueProperty, ValuePropertyClass, ComputedPropertyClass, WritableProperty, AffixedPropertyClass, AffixedProperty } from "./@types/def";
-import { InferValues, PropertiesRecordClass } from "./@types/PropertiesRecord";
+import { ImmutableProperty, ImmutablePropertyClass, MutableProperty, Property, ValueProperty, ValuePropertyClass, ComputedPropertyClass, WritableProperty, AffixedPropertyClass, AffixedProperty, FromEntries, ComputedProperty, Calculator } from "./@types/def";
+import { InferValues, PropertiesRecordClass, PropertiesRecordFor } from "./@types/PropertiesRecord";
 import { WithProperties } from "./@types/WithProperties";
 import { ForwardMap, SyncMap } from "./@types/linkProperties";
 import { Cstr } from "MWL@2026/modules/@types";
@@ -74,6 +74,14 @@ export interface PropertyDetails {
     Constant<T>(value : T): () => ImmutableProperty<T>;
     Fixed   <T>(defVal: T): (initialValue?: T) => ImmutableProperty<T>;
     Affixed <T extends object>(klass: Cstr<T>): () => AffixedProperty<T>;
+    Computed<
+                T,
+                const Keys   extends string[],
+                const Values extends any   [],
+                >(
+            keys    : Keys,
+            compute : ((...args: Values) => T)|{new(): Calculator<T, Values>},
+        ): (this: PropertiesRecordFor<FromEntries<Keys, Values>>) => ComputedProperty<T>;
 
     // type guards
     isWritable<T>(obj: Property<T>): obj is WritableProperty<T>;
