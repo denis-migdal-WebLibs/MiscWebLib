@@ -1,8 +1,9 @@
+export type * from "../@contract/@types";
+
 export {ImmutableProperty} from "./Properties/ImmutableProperty";
 export {ValueProperty    } from "./Properties/ValueProperty";
 export {ComputedProperty } from "./Properties/ComputedProperty";
 export {AffixedProperty } from "./Properties/AffixedProperty";
-
 
 export {PropertiesRecord}  from "./PropertiesRecord";
 
