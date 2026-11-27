@@ -21,6 +21,8 @@
 
 .color-scheme-gui-btn {
     position: fixed;
+    z-index: 1000;
+
     top: 0px;
     right: 0px;
     cursor: pointer;
